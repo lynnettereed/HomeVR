@@ -17,12 +17,12 @@ import MenuVr from './components/MenuVr';
 const domMenuContent = {
   menuData: [
     {
-      sectionHeader: 'Elevation',
-      sectionOptions: ['American Classic', 'Bella Vista', 'Bella Vista Brick'],
+      sectionHeader: 'elevation',
+      sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
     },
     {
-      sectionHeader: 'Sunroom',
-      sectionOptions: ['On', 'Off'],
+      sectionHeader: 'sunroom',
+      sectionOptions: ['on', 'off'],
     },
   ],
 };
@@ -57,9 +57,9 @@ export default class ClientVR extends React.Component {
     RCTDeviceEventEmitter.addListener('overlayOptionEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       if (e.header === 'sunroom') {
-        if (e.option === 'Off') {
+        if (e.option === 'off') {
           this.setState({sunroom: 'off'});
-        } else if (e.option === 'On') {
+        } else if (e.option === 'on') {
           this.setState({sunroom: 'on'});
         } else {
           console.log('not sunroom input');

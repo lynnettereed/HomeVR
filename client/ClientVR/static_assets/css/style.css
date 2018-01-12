@@ -41,8 +41,8 @@
 
 }
 
-.menu-section {
-
+.menu-section .menu-header {
+  text-transform: capitalize;
 }
 
 .menu-section .menu-list {
@@ -50,6 +50,7 @@
 }
 
 .menu-list .menu-list-option {
+  text-transform: capitalize;
   cursor: pointer;
 }
 
