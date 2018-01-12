@@ -35,7 +35,15 @@ function init(bundle, parent, options) {
   };
   // Begin the animation loop
   vr.start();
+  console.log(vr.rootView.context.bridge);
+  vr.rootView.context.bridge._worker.addEventListener('message', onVRMessage);
   return vr;
 }
 
 window.ReactVR = {init};
+
+function onVRMessage(e) {
+  if (e.data.type === 'test message') {
+    console.log(e);
+  }
+}

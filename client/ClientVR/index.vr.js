@@ -49,6 +49,7 @@ export default class ClientVR extends React.Component {
   }
 
   componentWillMount() {
+    postMessage({ type: 'test message'});
     // Init persistent overlay
     this._togglePersistent();
     // Listen for overlay button events
