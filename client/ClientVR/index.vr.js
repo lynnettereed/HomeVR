@@ -55,7 +55,11 @@ export default class ClientVR extends React.Component {
     // Listen for overlay button events
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
-      this._toggleDisplay();
+      if (e === 'exitVR button clicked!') {
+        return;
+      } else if (e === 'menu button clicked!') {
+        this._toggleDisplay();
+      }
     });
     // Listen for overlay option events
     RCTDeviceEventEmitter.addListener('overlayOptionEvent', (e) => {

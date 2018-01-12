@@ -29,9 +29,9 @@ class DomOverlayModule extends Module {
     );
   }
 
-  handleBtnClick() {
+  handleBtnClick(btn) {
     if (this.rnctx) {
-      const data = 'menu button clicked!';
+      const data = `${btn} clicked!`;
       this.rnctx.callFunction(
         'RCTDeviceEventEmitter',
         'emit',
