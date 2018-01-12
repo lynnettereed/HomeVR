@@ -39,7 +39,8 @@ export default class ClientVR extends React.Component {
       renderVrBtnbox: false,
       menuActive: false,
       sunroomOn: false,
-      scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'
+      elevation: 'american classic',
+      scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg',
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
@@ -58,7 +59,15 @@ export default class ClientVR extends React.Component {
     // Listen for overlay option events
     RCTDeviceEventEmitter.addListener('overlayOptionEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
-      if (e.header === 'sunroom') {
+      if (e.header === 'elevation') {
+        if (e.option === 'american classic') {
+          this.setState({elevation: 'american classic'});
+        } else if (e.option === 'bella vista') {
+          this.setState({elevation: 'bella vista'});
+        } else if (e.option === 'bella vista brick') {
+          this.setState({elevation: 'bella vista brick'});
+        }
+      } else if (e.header === 'sunroom') {
         if (e.option === 'off') {
           this.setState({sunroomOn: false});
         } else if (e.option === 'on') {
@@ -72,10 +81,16 @@ export default class ClientVR extends React.Component {
   }
 
   updateScene() {
-    if (this.state.sunroomOn) {
-      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
-    } else {
-      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
+    if (this.state.elevation === 'american classic') {
+      if (this.state.sunroomOn) {
+        this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
+      } else {
+        this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
+      }
+    } else if (this.state.elevation === 'bella vista') {
+      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
+    } else if (this.state.elevation === 'bella vista brick') {
+      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
     }
   }
 
@@ -105,9 +120,10 @@ export default class ClientVR extends React.Component {
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
     console.log('menuActive: ' + this.state.menuActive);
+    console.log('elevation: ' + this.state.elevation);
     console.log('sunroomOn: ' + this.state.sunroomOn);
     return (
-      <View style>
+      <View>
         <Pano source={ asset(this.state.scenePano) } />
         {this.state.renderVrTextbox && <MenuVr text={ vrMenuContent } />}
       </View>
