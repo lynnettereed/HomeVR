@@ -1,3 +1,5 @@
+/* dom-overlay & menu */
+
 .container {
   box-sizing: border-box;
   position: fixed;
@@ -34,6 +36,24 @@
 .close:hover {
   opacity: 1;
 }
+
+.menu {
+
+}
+
+.menu-section {
+
+}
+
+.menu-section .menu-list {
+  list-style: none;
+}
+
+.menu-list .menu-list-option {
+  cursor: pointer;
+}
+
+/* Persistent overlay and buttons */
 
 .overlay {
   position: absolute;

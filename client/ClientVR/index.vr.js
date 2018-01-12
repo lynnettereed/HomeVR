@@ -15,8 +15,16 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import MenuVr from './components/MenuVr';
 
 const domMenuContent = {
-  header: 'This is a DOM Overlay!',
-  description: 'A dom overlay is a 2D window that takes over the 3D world, allowing for better interactivity and content consumption outside of VR. DOM Overlays are implemented as Native Modules, for more info on native modules, check the following links:',
+  menuData: [
+    {
+      sectionHeader: 'Elevation',
+      sectionOptions: ['American Classic', 'Bella Vista', 'Bella Vista Brick'],
+    },
+    {
+      sectionHeader: 'Sunroom',
+      sectionOptions: ['On', 'Off'],
+    },
+  ],
 };
 
 const vrMenuContent =
@@ -30,6 +38,7 @@ export default class ClientVR extends React.Component {
       renderVrMenu: false,
       renderVrBtnbox: false,
       menuActive: false,
+      sunroom: 'off',
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
@@ -39,10 +48,23 @@ export default class ClientVR extends React.Component {
   componentWillMount() {
     // Init persistent overlay
     this._togglePersistent();
-    // Listen for overlayButtonEvents
+    // Listen for overlay button events
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       this._toggleDisplay();
+    });
+    // Listen for overlay option events
+    RCTDeviceEventEmitter.addListener('overlayOptionEvent', (e) => {
+      console.log(e); // <-- for debugging purposes TODO: remove this line
+      if (e.header === 'sunroom') {
+        if (e.option === 'Off') {
+          this.setState({sunroom: 'off'});
+        } else if (e.option === 'On') {
+          this.setState({sunroom: 'on'});
+        } else {
+          console.log('not sunroom input');
+        }
+      }
     });
   }
 
@@ -70,7 +92,8 @@ export default class ClientVR extends React.Component {
   }
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
-    console.log(this.state.menuActive);
+    console.log('menuActive: ' + this.state.menuActive);
+    console.log('sunroom: ' + this.state.sunroom);
     return (
       <View style={ styles.rootView }>
         <Pano source={ asset('panos/Foster_Int_FamilyRoom_AmericanClassic.jpg') } />
