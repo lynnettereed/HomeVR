@@ -8,11 +8,13 @@ import {VRInstance} from 'react-vr-web';
 import DomOverlayModule from '../components/DomOverlayModule';
 
 function init(bundle, parent, options) {
-  // Create a div where the overlay will be displayed in the DOM.
+  // Create divs where the overlays will be displayed in the DOM.
   const domOverlayContainer = document.createElement('div');
+  const domPersistentContainer = document.createElement('div');
   domOverlayContainer.id = 'dom-overlay';
+  domPersistentContainer.id = 'persistent-overlay';
   // Create an instance of the module, to be registered below.
-  const domOverlayModule = new DomOverlayModule(domOverlayContainer);
+  const domOverlayModule = new DomOverlayModule(domOverlayContainer, domPersistentContainer);
 
   const vr = new VRInstance(bundle, 'ClientVR', parent, {
     // Add custom options here
@@ -21,8 +23,12 @@ function init(bundle, parent, options) {
     nativeModules: [domOverlayModule],
   });
 
-  // Inject DOM overlay container to the player so that it is rendered properly.
+  // RN context has been initialized, add it to the module
+  domOverlayModule.rnctx = vr.rootView.context;
+
+  // Inject DOM overlay containers to the player so that it is rendered properly.
   vr.player._wrapper.appendChild(domOverlayContainer);
+  vr.player._wrapper.appendChild(domPersistentContainer);
 
   vr.render = function() {
     // Any custom behavior you want to perform on each frame goes here
