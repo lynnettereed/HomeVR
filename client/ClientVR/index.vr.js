@@ -10,15 +10,14 @@ import {
   VrButton,
   VrHeadModel
 } from 'react-vr';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 import TextboxVr from './components/TextboxVr';
 
-// const domTextboxContent = {
-//   header: 'This is a DOM Overlay!',
-//   description: 'A dom overlay is a 2D window that takes over the 3D world, allowing for better interactivity and content consumption outside of VR. DOM Overlays are implemented as Native Modules, for more info on native modules, check the following links:',
-// };
-
-const RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+const domTextboxContent = {
+  header: 'This is a DOM Overlay!',
+  description: 'A dom overlay is a 2D window that takes over the 3D world, allowing for better interactivity and content consumption outside of VR. DOM Overlays are implemented as Native Modules, for more info on native modules, check the following links:',
+};
 
 const vrTextboxContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
@@ -33,19 +32,16 @@ export default class ClientVR extends React.Component {
       menuActive: false,
     };
 
-    this.domTextboxContent = {
-      header: 'This is a DOM Overlay!',
-      description: 'A dom overlay is a 2D window that takes over the 3D world, allowing for better interactivity and content consumption outside of VR. DOM Overlays are implemented as Native Modules, for more info on native modules, check the following links:',
-    };
-
     this._toggleDisplay = this.toggleDisplay.bind(this);
     this._togglePersistent = this.togglePersistent.bind(this);
   }
 
   componentWillMount() {
+    // Init persistent overlay
     this._togglePersistent();
+    // Listen for overlayButtonEvents
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
-      console.log(e);
+      console.log(e); // <-- for debugging purposes TODO: remove this line
       this._toggleDisplay();
     });
   }
@@ -57,7 +53,7 @@ export default class ClientVR extends React.Component {
       this.setState({renderVrTextbox: !this.state.renderVrTextbox});
     } else if (!this.state.menuActive) {
       this.setState({menuActive: !this.state.menuActive})
-      NativeModules.DomOverlayModule.openOverlay(this.domTextboxContent);
+      NativeModules.DomOverlayModule.openOverlay(domTextboxContent);
     } else {
       this.setState({menuActive: !this.state.menuActive})
       NativeModules.DomOverlayModule.closeOverlay();
@@ -72,12 +68,12 @@ export default class ClientVR extends React.Component {
       NativeModules.DomOverlayModule.openPersistent();
     }
   }
-
+  // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
     console.log(this.state.menuActive);
     return (
       <View style={ styles.rootView }>
-        <Pano source={ asset('chess-world.jpg') } />
+        <Pano source={ asset('panos/Foster_Int_FamilyRoom_AmericanClassic.jpg') } />
         {this.state.renderVrTextbox && <TextboxVr text={ vrTextboxContent } />}
       </View>
     );
