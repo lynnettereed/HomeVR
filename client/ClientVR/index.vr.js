@@ -38,11 +38,13 @@ export default class ClientVR extends React.Component {
       renderVrMenu: false,
       renderVrBtnbox: false,
       menuActive: false,
-      sunroom: 'off',
+      sunroomOn: false,
+      scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
     this._togglePersistent = this.togglePersistent.bind(this);
+    this._updateScene = this.updateScene.bind(this);
   }
 
   componentWillMount() {
@@ -58,14 +60,23 @@ export default class ClientVR extends React.Component {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       if (e.header === 'sunroom') {
         if (e.option === 'off') {
-          this.setState({sunroom: 'off'});
+          this.setState({sunroomOn: false});
         } else if (e.option === 'on') {
-          this.setState({sunroom: 'on'});
+          this.setState({sunroomOn: true});
         } else {
           console.log('not sunroom input');
         }
       }
+      this._updateScene();
     });
+  }
+
+  updateScene() {
+    if (this.state.sunroomOn) {
+      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
+    } else {
+      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
+    }
   }
 
   // Determine whether content should be displayed on the dom overlay, or as a
@@ -90,13 +101,14 @@ export default class ClientVR extends React.Component {
       NativeModules.DomOverlayModule.openPersistent();
     }
   }
+
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
     console.log('menuActive: ' + this.state.menuActive);
-    console.log('sunroom: ' + this.state.sunroom);
+    console.log('sunroomOn: ' + this.state.sunroomOn);
     return (
-      <View style={ styles.rootView }>
-        <Pano source={ asset('panos/Foster_Int_FamilyRoom_AmericanClassic.jpg') } />
+      <View style>
+        <Pano source={ asset(this.state.scenePano) } />
         {this.state.renderVrTextbox && <MenuVr text={ vrMenuContent } />}
       </View>
     );
@@ -104,10 +116,7 @@ export default class ClientVR extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  rootView: {
-    layoutOrigin: [0.5, 0.5],
-    position: 'absolute',
-  },
+
 });
 
 AppRegistry.registerComponent('ClientVR', () => ClientVR);

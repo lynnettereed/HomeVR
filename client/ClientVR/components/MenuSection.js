@@ -5,7 +5,10 @@ import MenuOption from './MenuOption';
 const MenuSection = (props) => {
   const listOptions = props.options.map((option, index) => {
     return (
-      <MenuOption key={index} option={option} handleClick={ props.handleClick } />
+      <MenuOption key={ index } 
+                  header={ props.header }
+                  option={ option }
+                  handleClick={ props.handleClick } />
     );
   });
 

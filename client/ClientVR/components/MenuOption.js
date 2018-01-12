@@ -2,7 +2,7 @@ import React from 'react';
 
 const MenuOption = (props) => {
   const details = {
-    header: 'sunroom',
+    header: props.header,
     option: props.option
   }
 
