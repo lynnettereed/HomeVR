@@ -12,14 +12,14 @@ import {
 } from 'react-vr';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
-import TextboxVr from './components/TextboxVr';
+import MenuVr from './components/MenuVr';
 
-const domTextboxContent = {
+const domMenuContent = {
   header: 'This is a DOM Overlay!',
   description: 'A dom overlay is a 2D window that takes over the 3D world, allowing for better interactivity and content consumption outside of VR. DOM Overlays are implemented as Native Modules, for more info on native modules, check the following links:',
 };
 
-const vrTextboxContent =
+const vrMenuContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
 
 export default class ClientVR extends React.Component {
@@ -27,7 +27,7 @@ export default class ClientVR extends React.Component {
     super();
 
     this.state = {
-      renderVrTextbox: false,
+      renderVrMenu: false,
       renderVrBtnbox: false,
       menuActive: false,
     };
@@ -50,10 +50,10 @@ export default class ClientVR extends React.Component {
   // react-vr component based on VrHeadModel's inVR API.
   toggleDisplay() {
     if (VrHeadModel.inVR()) {
-      this.setState({renderVrTextbox: !this.state.renderVrTextbox});
+      this.setState({renderVrMenu: !this.state.renderVrMenu});
     } else if (!this.state.menuActive) {
       this.setState({menuActive: !this.state.menuActive})
-      NativeModules.DomOverlayModule.openOverlay(domTextboxContent);
+      NativeModules.DomOverlayModule.openOverlay(domMenuContent);
     } else {
       this.setState({menuActive: !this.state.menuActive})
       NativeModules.DomOverlayModule.closeOverlay();
@@ -74,7 +74,7 @@ export default class ClientVR extends React.Component {
     return (
       <View style={ styles.rootView }>
         <Pano source={ asset('panos/Foster_Int_FamilyRoom_AmericanClassic.jpg') } />
-        {this.state.renderVrTextbox && <TextboxVr text={ vrTextboxContent } />}
+        {this.state.renderVrTextbox && <MenuVr text={ vrMenuContent } />}
       </View>
     );
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Module } from 'react-vr-web';
 
-import TextboxOverlay from './TextboxOverlay';
+import MenuOverlay from './MenuOverlay';
 import BtnboxOverlay from './BtnboxOverlay';
 
 // Module
@@ -21,7 +21,7 @@ class DomOverlayModule extends Module {
   // Open the overlay for display
   openOverlay(props) {
     ReactDOM.render(
-      <TextboxOverlay { ...props } onClose={ this._handleXBtnClick } />,
+      <MenuOverlay { ...props } onClose={ this._handleXBtnClick } />,
       this._overlayContainer
     );
   }

@@ -4,7 +4,7 @@ import {
   View
 } from 'react-vr';
 
-const TextboxVr = (props) => {
+const MenuVr = (props) => {
   return (
     <View
       style={{
@@ -27,4 +27,4 @@ const TextboxVr = (props) => {
   );
 }
 
-export default TextboxVr;
+export default MenuVr;

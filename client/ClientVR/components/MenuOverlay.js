@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Gets props via the DomOverlayModule and uses those to render content
-const TextboxOverlay = (props) => {
+const MenuOverlay = (props) => {
   return (
     <div className='container'>
       <div className='content'>
@@ -15,4 +15,4 @@ const TextboxOverlay = (props) => {
   );
 };
 
-export default TextboxOverlay;
+export default MenuOverlay;
