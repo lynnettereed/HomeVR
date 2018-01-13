@@ -1,3 +1,29 @@
+/* styles outside react-vr app */
+
+.section-main {
+  display: flex;
+  flex-direction: row;
+}
+
+#outer-menu {
+  width: 20%;
+  height: 100vh;
+  background: #FFF;
+  transition: 0.8s ease-out;
+}
+#outer-menu.vr-active {
+  width: 0%;
+}
+
+#media-container {
+  width: 80%;
+  background: #777;
+  transition: 0.8s ease-out;
+}
+#media-container.vr-active {
+  width: 100%;
+}
+
 /* dom-overlay & menu */
 
 .container {

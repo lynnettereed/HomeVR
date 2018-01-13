@@ -49,14 +49,13 @@ export default class ClientVR extends React.Component {
   }
 
   componentWillMount() {
-    postMessage({ type: 'test message'});
     // Init persistent overlay
     this._togglePersistent();
     // Listen for overlay button events
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       if (e === 'exitVR button clicked!') {
-        return;
+        postMessage({ type: 'exit VR'});
       } else if (e === 'menu button clicked!') {
         this._toggleDisplay();
       }

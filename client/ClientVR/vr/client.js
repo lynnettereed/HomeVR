@@ -43,7 +43,30 @@ function init(bundle, parent, options) {
 window.ReactVR = {init};
 
 function onVRMessage(e) {
-  if (e.data.type === 'test message') {
+  if (e.data.type === 'exit VR') {
+    console.log(e);
+    $('#media-container').html('');
+    $('#outer-menu').removeClass('vr-active');
+    $('#media-container').removeClass('vr-active');
+  } else if (e.data.type === 'init VR') {
     console.log(e);
   }
 }
+
+function initVRButton() {
+  $('#vr-btn').on('click', function() {
+    $('#outer-menu').addClass('vr-active');
+    $('#media-container').addClass('vr-active');
+    setTimeout(function() {
+      ReactVR.init(
+        // When you're ready to deploy your app, update this line to point to
+        // your compiled index.bundle.js
+        '../index.vr.bundle?platform=vr&dev=true',
+        // Attach it to the body tag
+        //document.body
+        document.getElementById('media-container')
+      );
+    }, 1000);
+  })
+}
+initVRButton();

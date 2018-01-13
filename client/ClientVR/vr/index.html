@@ -11,17 +11,29 @@
     </style>
   </head>
   <body>
+    <section class="section-main">
+      <div id="outer-menu">
+        <button id="vr-btn">Init VR</button>
+      </div>
+      <div id="media-container">
+      </div>
+    </section>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
     <!-- When you're ready to deploy your app, update this line to point to your compiled client.bundle.js -->
     <script src="./client.bundle?platform=vr"></script>
     <script>
       // Initialize the React VR application
-      ReactVR.init(
+      //ReactVR.init(
         // When you're ready to deploy your app, update this line to point to
         // your compiled index.bundle.js
-        '../index.vr.bundle?platform=vr&dev=true',
+        //'../index.vr.bundle?platform=vr&dev=true',
         // Attach it to the body tag
-        document.body
-      );
+        //document.body
+        //document.getElementById('media-container')
+      //);
     </script>
   </body>
 </html>
