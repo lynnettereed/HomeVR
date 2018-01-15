@@ -58,6 +58,8 @@ export default class ClientVR extends React.Component {
         postMessage({ type: 'exit VR'});
       } else if (e === 'menu button clicked!') {
         this._toggleDisplay();
+      } else if (e === 'menu escape clicked!') {
+        this._toggleDisplay();
       }
     });
     // Listen for overlay option events
