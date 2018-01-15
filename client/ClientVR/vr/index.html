@@ -2,7 +2,9 @@
   <head>
     <title>ClientVR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!-- css for overlay -->
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" type="text/css">
+    <!-- Custom css -->
     <link rel="stylesheet" href="../static_assets/css/style.css" type="text/css" />
     <style>
       body {
@@ -12,9 +14,68 @@
   </head>
   <body>
     <section class="section-main">
+
       <div id="outer-menu">
+        <form>
+          <fieldset class="form-group">
+            <legend>Elevation</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="elevation" value="AmericanClassic" checked="checked">
+              <label class="form-check-label">American Classic</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="elevation" value="BellaVista">
+              <label class="form-check-label">Bella Vista</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="elevation" value="BellaVistaBrick">
+              <label class="form-check-label">Bella Vista Brick</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Garage</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="garage" value="2Car" checked="checked">
+              <label class="form-check-label">2 Car</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="garage" value="3Car">
+              <label class="form-check-label">3 Car</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Sunroom</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sunroom" value="On" checked="checked">
+              <label class="form-check-label">On</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sunroom" value="Off">
+              <label class="form-check-label">Off</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>View</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="view" value="FrontRight" checked="checked">
+              <label class="form-check-label">Front Right</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="view" value="FrontLeft">
+              <label class="form-check-label">Front Left</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="view" value="Back">
+              <label class="form-check-label">Back</label>
+            </div>
+          </fieldset>
+        </form>
         <button id="vr-btn">Init VR</button>
       </div>
+
       <div id="media-container">
       </div>
     </section>

@@ -1,3 +1,10 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /* styles outside react-vr app */
 
 .section-main {
@@ -9,19 +16,35 @@
   width: 20%;
   height: 100vh;
   background: #FFF;
+  overflow: hidden;
   transition: 0.8s ease-out;
 }
 #outer-menu.vr-active {
   width: 0%;
 }
 
+#outer-menu form {
+  margin-left: 0.938rem; /* 15 ÷ 16 */
+  margin-top: 0.938rem; /* 15 ÷ 16 */
+}
+
+#outer-menu button {
+  display: block;
+  width: 75%;
+  margin: 1.25rem auto 0.938rem auto;
+  background: #000;
+  color: #FFF;
+  border: none;
+}
+
 #media-container {
   width: 80%;
-  background: #777;
+  background: #000;
   transition: 0.8s ease-out;
 }
 #media-container.vr-active {
   width: 100%;
+  box-sizing: content-box;
 }
 
 /* dom-overlay & menu */
