@@ -5,10 +5,14 @@ const BtnboxOverlay = (props) => {
   return (
     <div className='overlay'>
       <div className='btn-container-a'>
-        <div className='btn-a' onClick={ () => props.handleClick('exitVR button') } />
+        <div className='btn-a' onClick={ () => props.handleClick('exitVR button') }>
+          <i className="fa fa-lg fa-sign-out" aria-hidden="true"></i>
+        </div>
       </div>
       <div className='btn-container-b'>
-        <div className='btn-b' onClick={ () => props.handleClick('menu button') } />
+        <div className='btn-b' onClick={ () => props.handleClick('menu button') }>
+          <i className="fa fa-lg fa-bars" aria-hidden="true"></i>
+        </div>
       </div>
     </div>
   );

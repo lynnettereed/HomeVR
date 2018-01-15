@@ -45,9 +45,11 @@ window.ReactVR = {init};
 function onVRMessage(e) {
   if (e.data.type === 'exit VR') {
     console.log(e);
+    const content = '<div class="img-container"><img id="baseline" src="../static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""></div>'
     $('#media-container').html('');
     $('#outer-menu').removeClass('vr-active');
     $('#media-container').removeClass('vr-active');
+    $('#media-container').html(content);
   } else if (e.data.type === 'init VR') {
     console.log(e);
   }

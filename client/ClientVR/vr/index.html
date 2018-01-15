@@ -2,6 +2,8 @@
   <head>
     <title>ClientVR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- Font Awesome css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" type="text/css">
     <!-- Custom css -->
@@ -77,6 +79,9 @@
       </div>
 
       <div id="media-container">
+        <div class="img-container">
+          <img id="baseline" src="../static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt="">
+        </div>
       </div>
     </section>
     <script
@@ -87,14 +92,14 @@
     <script src="./client.bundle?platform=vr"></script>
     <script>
       // Initialize the React VR application
-      //ReactVR.init(
-        // When you're ready to deploy your app, update this line to point to
-        // your compiled index.bundle.js
-        //'../index.vr.bundle?platform=vr&dev=true',
-        // Attach it to the body tag
-        //document.body
-        //document.getElementById('media-container')
-      //);
+      // ReactVR.init(
+      //   //When you're ready to deploy your app, update this line to point to
+      //   //your compiled index.bundle.js
+      //   '../index.vr.bundle?platform=vr&dev=true',
+      //   //Attach it to the body tag
+      //   //document.body
+      //   document.getElementById('vr-container')
+      // );
     </script>
   </body>
 </html>
