@@ -46,6 +46,8 @@ function onVRMessage(e) {
   if (e.data.type === 'exit VR') {
     console.log(e);
     const content = '<div class="img-container"><img id="img-baseline" src="../static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""><img id="img-garage" class="overlay-img" src=""><img id="img-sunroom" class="overlay-img" src=""></div>'
+    //const content = '<div class="img-container"><img id="img-baseline" src="static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""><img id="img-garage" class="overlay-img" src=""><img id="img-sunroom" class="overlay-img" src=""></div>'
+    // uncomment line above ^ when bundling
     $('#media-container').html('');
     $('#outer-menu').removeClass('vr-active');
     $('#media-container').removeClass('vr-active');
@@ -65,6 +67,7 @@ function initVRButton() {
         // When you're ready to deploy your app, update this line to point to
         // your compiled index.bundle.js
         '../index.vr.bundle?platform=vr&dev=true',
+        //'index.bundle.js', // <-- uncomment when bundling
         // Attach it to the body tag
         //document.body
         document.getElementById('media-container')
@@ -112,6 +115,7 @@ $(document).ready(() => {
 
     // Set base and current img src strings
     let imgSrc = '../static_assets/images-2D/Foster_Ext_';
+    //let imgSrc = 'static_assets/images-2D/Foster_Ext_'; // <- uncomment when bundling
     let currentSrc = imgSrc;
 
     // Check if view = FrontRight or FrontLeft
