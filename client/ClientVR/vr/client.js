@@ -45,11 +45,12 @@ window.ReactVR = {init};
 function onVRMessage(e) {
   if (e.data.type === 'exit VR') {
     console.log(e);
-    const content = '<div class="img-container"><img id="baseline" src="../static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""></div>'
+    const content = '<div class="img-container"><img id="img-baseline" src="../static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""><img id="img-garage" class="overlay-img" src=""><img id="img-sunroom" class="overlay-img" src=""></div>'
     $('#media-container').html('');
     $('#outer-menu').removeClass('vr-active');
     $('#media-container').removeClass('vr-active');
     $('#media-container').html(content);
+    resetMenu();
   } else if (e.data.type === 'init VR') {
     console.log(e);
   }
@@ -73,193 +74,94 @@ function initVRButton() {
 }
 initVRButton();
 
+function resetMenu() {
+  const names = ['elevation', 'garage', 'sunroom', 'view'];
+  names.forEach((element) => {
+    const inputs = document.getElementsByName(element);
+    for (let i = 0; i < inputs.length; i++) {
+      if (i === 0) {
+        inputs[0].checked = true;
+      } else {
+        inputs[i].checked = false;
+      }
+    }
+  });
+}
+
 $(document).ready(() => {
+  // Add 'click' event listener to inputs
   $('.input-dom').on('click', function() {
+    // Define menu state options and tag id anchors
     const options = {
       elevation: ['AmericanClassic', 'BellaVista', 'BellaVistaBrick'],
       garage: ['2Car', '3Car'],
       sunroom: ['Sunroom', ''],
       view: ['FrontRight', 'FrontLeft', 'Back']
     };
-
     const anchors = {
       base: 'img-baseline',
       garage: 'img-garage',
       sunroom: 'img-sunroom'
     };
 
+    // Store current menu state by input
     const elevation = $('.input-dom[name="elevation"]:checked').val();
     const garage = $('.input-dom[name="garage"]:checked').val();
     const sunroom = $('.input-dom[name="sunroom"]:checked').val();
     const view = $('.input-dom[name="view"]:checked').val();
 
+    // Set base and current img src strings
     let imgSrc = '../static_assets/images-2D/Foster_Ext_';
     let currentSrc = imgSrc;
 
-    switch (view) {
-      // View: FrontRight
-      case options.view[0]:
-        $(`#${anchors.sunroom}`).removeClass('active');
-        concatSrc(view);
-        switch (elevation) {
-          // Elevation: AmericanClassic
-          case options.elevation[0]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                break;
-              // Garage: 3Car
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                break;
-            }
-            break;
-          // Elevation: BellaVista
-          case options.elevation[1]:
-            concatSrc(elevation);
-            switch (garage) {
-            // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                break;
-              // Garage: 3Car
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                break;
-            }
-            break;
-          // Elevation: BellaVistaBrick
-          case options.elevation[2]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                break;
-              // Garage: 3Car
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                break;
-            }
-            break;
-        }
-        break;
-      // View: FrontLeft
-      case options.view[1]:
-        $(`#${anchors.sunroom}`).removeClass('active');
-        concatSrc(view);
-        switch (elevation) {
-          // Elevation: AmericanClassic
-          case options.elevation[0]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                break;
-              // Garage: 3Car
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                break;
-            }
-            break;
-          // Elevation: BellaVista
-          case options.elevation[1]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                break;
-              // Garage: 3Car
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                break;
-            }
-            break;
-          // Elevation: BellaVistaBrick
-          case options.elevation[2]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                break;
-              // Garage: 3Car
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                break;
-            }
-            break;
-        }
-        break;
-      // View: Back
-      case options.view[2]:
-        concatSrc(view);
-        switch (elevation) {
-          // Elevation: AmericanClassic
-          case options.elevation[0]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                handleCaseSunroom(sunroom);
-                break;
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                handleCaseSunroom(sunroom);
-                break;
-            }
-            break;
-          // Elevation: BellaVista
-          case options.elevation[1]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                handleCaseSunroom(sunroom);
-                break;
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                handleCaseSunroom(sunroom);
-                break;
-            }
-            break;
-          // Elevation: BellaVistaBrick
-          case options.elevation[2]:
-            concatSrc(elevation);
-            switch (garage) {
-              // Garage: 2Car
-              case options.garage[0]:
-                handleCaseGarage(view, garage);
-                handleCaseSunroom(sunroom);
-                break;
-              case options.garage[1]:
-                handleCaseGarage(view, garage);
-                handleCaseSunroom(sunroom);
-                break;
-            }
-            break;
-        }
-        break;
+    // Check if view = FrontRight or FrontLeft
+    if (view === options.view[0] || view === options.view[1]) {
+      // Deactivate sunroom img layer
+      // TODO: check if class exists first
+      $(`#${anchors.sunroom}`).removeClass('active');
+      concatSrc(view);
+      concatSrc(elevation);
+      handleCaseGarage(view, garage);
+    } else if (view === options.view[2]) {
+      concatSrc(view);
+      concatSrc(elevation);
+      handleCaseGarage(view, garage);
+      handleCaseSunroom(sunroom);
     }
 
+   /**
+    * Concat menu state value onto imgSrc string
+    *
+    * @param  {String} data
+    * @return {Void}
+    */
     function concatSrc(data) {
+      // Add underscore
       const snippet = `${data}_`;
+      // Concat to imgSrc
       imgSrc = imgSrc.concat(snippet);
-      console.log(imgSrc);
     }
 
+    /**
+     * Finalize imgSrc string for insertion into 'src' attribute
+     *
+     * @param  {String} ext
+     * @return {Void}
+     */
     function capSrc(ext) {
+      // Slice off underscore from end of imgSrc string
       imgSrc = imgSrc.slice(0, -1);
-      imgSrc = imgSrc.concat(ext)
-      console.log(imgSrc);
+      // Concat extension (.jpg / .png) to end of imgSrc string
+      imgSrc = imgSrc.concat(ext);
     }
 
+    /**
+     * Update img 'src' attribute by tag id anchor
+     *
+     * @param  {String} anchor
+     * @param  {String} source
+     * @return {Void}
+     */
     function updateImg(anchor, source) {
       if (anchor === anchors.base) {
         $(`#${anchors.base}`).attr('src', source);
@@ -272,35 +174,58 @@ $(document).ready(() => {
       }
     }
 
+    /**
+     * Handle garage case sequence
+     *
+     * @param  {String} view
+     * @param  {String} garage
+     * @return {Void}
+     */
     function handleCaseGarage(view, garage) {
       if (view === options.view[0] || view === options.view[1] || view === options.view[2]) {
         if (garage === options.garage[0]) {
+          // Garage: 2Car
+          // Store ref to current imgSrc string
           currentSrc = imgSrc;
           capSrc('.jpg');
           updateImg(anchors.base, imgSrc);
           $(`#${anchors.garage}`).removeClass('active');
+          // Reset imgSrc
           imgSrc = currentSrc;
         } else {
+          // Garage: 3Car
+          // Store ref to current imgSrc string
           currentSrc = imgSrc;
           capSrc('.jpg');
           updateImg(anchors.base, imgSrc);
+          // Reset imgSrc
           imgSrc = currentSrc;
+          // Store ref to current imgSrc string
           currentSrc = imgSrc;
           concatSrc(garage);
           capSrc('.png');
           updateImg(anchors.garage, imgSrc);
+          // Reset imgSrc
           imgSrc = currentSrc;
           console.log(imgSrc);
         }
       }
     }
 
+    /**
+     * Handle sunroom case sequence
+     *
+     * @param  {String} sunroom
+     * @return {Void}
+     */
     function handleCaseSunroom(sunroom) {
       if (sunroom === options.sunroom[0]) {
+        // Sunroom: sunroom (on)
         concatSrc(sunroom);
         capSrc('.png');
         updateImg(anchors.sunroom, imgSrc);
       } else {
+        // Sunroom: '' (off)
         $(`#${anchors.sunroom}`).removeClass('active');
       }
     }
