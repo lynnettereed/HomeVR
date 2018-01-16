@@ -72,3 +72,237 @@ function initVRButton() {
   })
 }
 initVRButton();
+
+$(document).ready(() => {
+  $('.input-dom').on('click', function() {
+    const options = {
+      elevation: ['AmericanClassic', 'BellaVista', 'BellaVistaBrick'],
+      garage: ['2Car', '3Car'],
+      sunroom: ['Sunroom', ''],
+      view: ['FrontRight', 'FrontLeft', 'Back']
+    };
+
+    const anchors = {
+      base: 'img-baseline',
+      garage: 'img-garage',
+      sunroom: 'img-sunroom'
+    };
+
+    const elevation = $('.input-dom[name="elevation"]:checked').val();
+    const garage = $('.input-dom[name="garage"]:checked').val();
+    const sunroom = $('.input-dom[name="sunroom"]:checked').val();
+    const view = $('.input-dom[name="view"]:checked').val();
+
+    let imgSrc = '../static_assets/images-2D/Foster_Ext_';
+    let currentSrc = imgSrc;
+
+    switch (view) {
+      // View: FrontRight
+      case options.view[0]:
+        $(`#${anchors.sunroom}`).removeClass('active');
+        concatSrc(view);
+        switch (elevation) {
+          // Elevation: AmericanClassic
+          case options.elevation[0]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                break;
+              // Garage: 3Car
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                break;
+            }
+            break;
+          // Elevation: BellaVista
+          case options.elevation[1]:
+            concatSrc(elevation);
+            switch (garage) {
+            // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                break;
+              // Garage: 3Car
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                break;
+            }
+            break;
+          // Elevation: BellaVistaBrick
+          case options.elevation[2]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                break;
+              // Garage: 3Car
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                break;
+            }
+            break;
+        }
+        break;
+      // View: FrontLeft
+      case options.view[1]:
+        $(`#${anchors.sunroom}`).removeClass('active');
+        concatSrc(view);
+        switch (elevation) {
+          // Elevation: AmericanClassic
+          case options.elevation[0]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                break;
+              // Garage: 3Car
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                break;
+            }
+            break;
+          // Elevation: BellaVista
+          case options.elevation[1]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                break;
+              // Garage: 3Car
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                break;
+            }
+            break;
+          // Elevation: BellaVistaBrick
+          case options.elevation[2]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                break;
+              // Garage: 3Car
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                break;
+            }
+            break;
+        }
+        break;
+      // View: Back
+      case options.view[2]:
+        concatSrc(view);
+        switch (elevation) {
+          // Elevation: AmericanClassic
+          case options.elevation[0]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                handleCaseSunroom(sunroom);
+                break;
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                handleCaseSunroom(sunroom);
+                break;
+            }
+            break;
+          // Elevation: BellaVista
+          case options.elevation[1]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                handleCaseSunroom(sunroom);
+                break;
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                handleCaseSunroom(sunroom);
+                break;
+            }
+            break;
+          // Elevation: BellaVistaBrick
+          case options.elevation[2]:
+            concatSrc(elevation);
+            switch (garage) {
+              // Garage: 2Car
+              case options.garage[0]:
+                handleCaseGarage(view, garage);
+                handleCaseSunroom(sunroom);
+                break;
+              case options.garage[1]:
+                handleCaseGarage(view, garage);
+                handleCaseSunroom(sunroom);
+                break;
+            }
+            break;
+        }
+        break;
+    }
+
+    function concatSrc(data) {
+      const snippet = `${data}_`;
+      imgSrc = imgSrc.concat(snippet);
+      console.log(imgSrc);
+    }
+
+    function capSrc(ext) {
+      imgSrc = imgSrc.slice(0, -1);
+      imgSrc = imgSrc.concat(ext)
+      console.log(imgSrc);
+    }
+
+    function updateImg(anchor, source) {
+      if (anchor === anchors.base) {
+        $(`#${anchors.base}`).attr('src', source);
+      } else if (anchor === anchors.garage) {
+        $(`#${anchors.garage}`).attr('src', source);
+        $(`#${anchors.garage}`).addClass('active');
+      } else if (anchor === anchors.sunroom) {
+        $(`#${anchors.sunroom}`).attr('src', source);
+        $(`#${anchors.sunroom}`).addClass('active');
+      }
+    }
+
+    function handleCaseGarage(view, garage) {
+      if (view === options.view[0] || view === options.view[1] || view === options.view[2]) {
+        if (garage === options.garage[0]) {
+          currentSrc = imgSrc;
+          capSrc('.jpg');
+          updateImg(anchors.base, imgSrc);
+          $(`#${anchors.garage}`).removeClass('active');
+          imgSrc = currentSrc;
+        } else {
+          currentSrc = imgSrc;
+          capSrc('.jpg');
+          updateImg(anchors.base, imgSrc);
+          imgSrc = currentSrc;
+          currentSrc = imgSrc;
+          concatSrc(garage);
+          capSrc('.png');
+          updateImg(anchors.garage, imgSrc);
+          imgSrc = currentSrc;
+          console.log(imgSrc);
+        }
+      }
+    }
+
+    function handleCaseSunroom(sunroom) {
+      if (sunroom === options.sunroom[0]) {
+        concatSrc(sunroom);
+        capSrc('.png');
+        updateImg(anchors.sunroom, imgSrc);
+      } else {
+        $(`#${anchors.sunroom}`).removeClass('active');
+      }
+    }
+  });
+});

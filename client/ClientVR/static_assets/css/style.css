@@ -64,6 +64,19 @@ html {
   width: 100%;
 }
 
+.img-container .overlay-img {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.img-container .overlay-img.active {
+  display: block;
+}
+
 /* dom-overlay & menu */
 
 .container {
