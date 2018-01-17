@@ -2,8 +2,8 @@ import React from 'react';
 import {
   AppRegistry,
   asset,
-  Pano,
   View,
+  Pano,
   NativeModules,
   StyleSheet,
   Text,
@@ -13,6 +13,7 @@ import {
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 import MenuVr from './components/MenuVr';
+import PanoLayer from './components/PanoLayer';
 
 const domMenuContent = {
   menuData: [
@@ -130,7 +131,9 @@ export default class ClientVR extends React.Component {
     console.log('sunroomOn: ' + this.state.sunroomOn);
     return (
       <View>
-        <Pano source={ asset(this.state.scenePano) } />
+        <Pano source={ asset(this.state.scenePano) }>
+          <PanoLayer radius={900} source={ asset('layers/Foster_Int_FamilyRoom_americanClassic_Fireplace.png') } />
+        </Pano>
         {this.state.renderVrTextbox && <MenuVr text={ vrMenuContent } />}
       </View>
     );

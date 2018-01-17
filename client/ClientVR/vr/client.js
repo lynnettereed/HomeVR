@@ -2,10 +2,12 @@
 // This file contains the boilerplate to set up your React app.
 // If you want to modify your application, start in "index.vr.js"
 
+
 // Auto-generated content.
 import '../process';
-import {VRInstance} from 'react-vr-web';
+import { VRInstance } from 'react-vr-web';
 import DomOverlayModule from '../components/DomOverlayModule';
+import RCTPanoLayer from '../views/PanoLayer';
 
 function init(bundle, parent, options) {
   // Create divs where the overlays will be displayed in the DOM.
@@ -21,6 +23,8 @@ function init(bundle, parent, options) {
     ...options,
     // Register dom overlay module upon initialization.
     nativeModules: [domOverlayModule],
+    // Register custom PanoLayer view to the ReactVR context
+    customViews: [{name: 'PanoLayer', view: RCTPanoLayer}],
   });
 
   // RN context has been initialized, add it to the module
@@ -35,7 +39,6 @@ function init(bundle, parent, options) {
   };
   // Begin the animation loop
   vr.start();
-  console.log(vr.rootView.context.bridge);
   vr.rootView.context.bridge._worker.addEventListener('message', onVRMessage);
   return vr;
 }
