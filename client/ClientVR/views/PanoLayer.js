@@ -82,7 +82,7 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
     super();
 
     // Set radius to default of 1000m
-    this._radius = 900;
+    this._radius = 1000;
     console.log(this._radius);
 
     sphereGeometry = sphereGeometry || new THREE.SphereGeometry(this._radius, 50, 50);
@@ -96,6 +96,7 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
       color: 'white',
       side: THREE.DoubleSide,
     });
+    console.log(this._material);
 
     this._globe = new THREE.Mesh(this._sphereGeometry, this._material);
     this._globe.onBeforeRender = function(renderer, scene, camera, geometry, material, group) {
@@ -130,6 +131,8 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
       set: value => {
         this._radius = value;
         this._sphereGeometry = new THREE.SphereGeometry(this._radius, 50, 50);
+        this.view.zOffset = this._radius;
+        this._material.transparent = true;
       },
     });
     Object.defineProperty(this.props, 'source', {

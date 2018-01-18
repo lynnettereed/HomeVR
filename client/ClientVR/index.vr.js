@@ -132,7 +132,7 @@ export default class ClientVR extends React.Component {
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
-          <PanoLayer radius={900} source={ asset('layers/Foster_Int_FamilyRoom_americanClassic_Fireplace.png') } />
+          <PanoLayer radius={990} source={ asset('layers/Foster_Int_FamilyRoom_americanClassic_Fireplace.png') } />
         </Pano>
         {this.state.renderVrTextbox && <MenuVr text={ vrMenuContent } />}
       </View>
