@@ -6,7 +6,7 @@
 // Auto-generated content.
 import '../process';
 import { VRInstance } from 'react-vr-web';
-import DomOverlayModule from '../components/DomOverlayModule';
+import DomOverlayModule from '../modules/DomOverlayModule';
 import RCTPanoLayer from '../views/PanoLayer';
 
 function init(bundle, parent, options) {
@@ -78,7 +78,6 @@ function initVRButton() {
     }, 1000);
   })
 }
-initVRButton();
 
 function resetMenu() {
   const names = ['elevation', 'garage', 'sunroom', 'view'];
@@ -95,6 +94,8 @@ function resetMenu() {
 }
 
 $(document).ready(() => {
+  // Set 'init VR' button event handler
+  initVRButton();
   // Add 'click' event listener to inputs
   $('.input-dom').on('click', function() {
     // Define menu state options and tag id anchors
@@ -121,8 +122,8 @@ $(document).ready(() => {
     //let imgSrc = 'static_assets/images-2D/Foster_Ext_'; // <- uncomment when bundling
     let currentSrc = imgSrc;
 
-    // Check if view = FrontRight or FrontLeft
     if (view === options.view[0] || view === options.view[1]) {
+      // view = FrontRight || FrontLeft
       // Deactivate sunroom img layer
       // TODO: check if class exists first
       $(`#${anchors.sunroom}`).removeClass('active');
@@ -214,7 +215,6 @@ $(document).ready(() => {
           updateImg(anchors.garage, imgSrc);
           // Reset imgSrc
           imgSrc = currentSrc;
-          console.log(imgSrc);
         }
       }
     }

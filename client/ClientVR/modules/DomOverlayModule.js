@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Module } from 'react-vr-web';
 
-import MenuOverlay from './MenuOverlay';
-import BtnboxOverlay from './BtnboxOverlay';
+import MenuOverlay from '../components/MenuOverlay';
+import BtnboxOverlay from '../components/BtnboxOverlay';
 
 // Module
 class DomOverlayModule extends Module {

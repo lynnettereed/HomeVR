@@ -1,16 +1,8 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-/**
  * RCTPanoLayer: runtime implementation of the <PanoLayer source={{uri:URL}} radius={{1000}}>
- * creates a radius globe that as a child of the view
- * view responds to layout and transforms with pivot point the center
+ * Creates a globe that functions identical to that of the <Pano> component, but takes
+ * an added radius parameter to allow for layering of components
+ * View responds to layout and transforms with pivot point the center
  * of the view
  * @class RCTPanoLayer
  * @extends RCTBaseView
@@ -83,8 +75,8 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
 
     // Set radius to default of 1000m
     this._radius = 1000;
-    console.log(this._radius);
 
+    // Define sphereGeometry to include radius parameter
     sphereGeometry = sphereGeometry || new THREE.SphereGeometry(this._radius, 50, 50);
     cubeGeometry = cubeGeometry || new CubePanoBufferGeometry(2000, 3, 2, 1.01);
 
@@ -96,7 +88,6 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
       color: 'white',
       side: THREE.DoubleSide,
     });
-    console.log(this._material);
 
     this._globe = new THREE.Mesh(this._sphereGeometry, this._material);
     this._globe.onBeforeRender = function(renderer, scene, camera, geometry, material, group) {
@@ -126,12 +117,18 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
     this._localResource = new RCTBindedResource(rnctx.RCTResourceManager);
     this.globeOnUpdate = this.globeOnUpdate.bind(this);
 
-    // register a setter for the radius so the globe can change size
+    // register a setter for the radius so the globe can change size and layer properly
     Object.defineProperty(this.props, 'radius', {
       set: value => {
+        // Update radius value with radius prop value from component
         this._radius = value;
+        // Redefine sphereGeometry to include updated radius value
         this._sphereGeometry = new THREE.SphereGeometry(this._radius, 50, 50);
+        // Update zOffset of view with new radius value. This helps prevent the
+        // PanoLayer's transparency from affecting other views as a result of
+        // rendering order.
         this.view.zOffset = this._radius;
+        // Enable transparency
         this._material.transparent = true;
       },
     });
@@ -182,8 +179,6 @@ export default class RCTPanoLayer extends ReactVR.RCTBaseView {
         this._globe.scale.z = -1;
         this._material.useUV = 1;
       } else {
-        console.log(this._radius);
-        console.log(this._sphereGeometry);
         this._globe.geometry = this._sphereGeometry;
         this._globe.scale.z = 1;
         this._material.useUV = 0;

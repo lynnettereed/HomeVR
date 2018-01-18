@@ -47,12 +47,20 @@ export default class ClientVR extends React.Component {
     this._toggleDisplay = this.toggleDisplay.bind(this);
     this._togglePersistent = this.togglePersistent.bind(this);
     this._updateScene = this.updateScene.bind(this);
+    this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
+    this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
   }
 
   componentWillMount() {
     // Init persistent overlay
     this._togglePersistent();
-    // Listen for overlay button events
+    // Register overlay button event listeners
+    this._addOverlayButtonListeners();
+    // Register overlay option event listeners
+    this._addOverlayOptionListeners();
+  }
+
+  addOverlayButtonListeners() {
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       if (e === 'exitVR button clicked!') {
@@ -63,7 +71,9 @@ export default class ClientVR extends React.Component {
         this._toggleDisplay();
       }
     });
-    // Listen for overlay option events
+  }
+
+  addOverlayOptionListeners() {
     RCTDeviceEventEmitter.addListener('overlayOptionEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       if (e.header === 'elevation') {
