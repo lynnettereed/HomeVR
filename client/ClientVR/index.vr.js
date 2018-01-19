@@ -11,12 +11,21 @@ import {
   VrHeadModel
 } from 'react-vr';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import axios from 'react-native-axios';
 
 import MenuVr from './components/MenuVr';
 import PanoLayer from './components/PanoLayer';
 
+import FamilyRoom from './scenes/FamilyRoom';
+
+const sceneSelection = ['FamilyRoom', 'Kitchen'];
+
 const domMenuContent = {
   menuData: [
+    // {
+    //   sectionHeader: 'scene',
+    //   sectionOptions: ['FamilyRoom', 'Kitchen'],
+    // },
     {
       sectionHeader: 'elevation',
       sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
@@ -41,23 +50,35 @@ export default class ClientVR extends React.Component {
       menuActive: false,
       sunroomOn: false,
       elevation: 'american classic',
-      scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg',
+      currentScene: sceneSelection[0],
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
     this._togglePersistent = this.togglePersistent.bind(this);
-    this._updateScene = this.updateScene.bind(this);
+    //this._updateScene = this.updateScene.bind(this);
     this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
+    this._fetchApiData = this.fetchApiData.bind(this);
   }
 
   componentWillMount() {
+    // Fetch API data
+    //this._fetchApiData(); // <-- TODO: fix CORS issue or find workaround
     // Init persistent overlay
     this._togglePersistent();
     // Register overlay button event listeners
     this._addOverlayButtonListeners();
     // Register overlay option event listeners
     this._addOverlayOptionListeners();
+  }
+
+  fetchApiData() {
+    axios.get('https://customerdemo.kovasolutions.com/KovaBIMaireWebConfigurator/api/v4/Test')
+    .then(response => {
+      console.log(response);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   addOverlayButtonListeners() {
@@ -93,23 +114,23 @@ export default class ClientVR extends React.Component {
           console.log('not sunroom input');
         }
       }
-      this._updateScene();
+      //this._updateScene();
     });
   }
 
-  updateScene() {
-    if (this.state.elevation === 'american classic') {
-      if (this.state.sunroomOn) {
-        this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
-      } else {
-        this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
-      }
-    } else if (this.state.elevation === 'bella vista') {
-      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
-    } else if (this.state.elevation === 'bella vista brick') {
-      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
-    }
-  }
+  // updateScene() {
+  //   if (this.state.elevation === 'american classic') {
+  //     if (this.state.sunroomOn) {
+  //       this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
+  //     } else {
+  //       this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
+  //     }
+  //   } else if (this.state.elevation === 'bella vista') {
+  //     this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
+  //   } else if (this.state.elevation === 'bella vista brick') {
+  //     this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
+  //   }
+  // }
 
   // Determine whether content should be displayed on the dom overlay, or as a
   // react-vr component based on VrHeadModel's inVR API.
@@ -134,17 +155,42 @@ export default class ClientVR extends React.Component {
     }
   }
 
+  changeScenes(nextScene) {
+    if (nextScene === this.state.currentScene) {
+      console.log('same scene');
+      return;
+    } else if (sceneSelection.indexOf(nextScene) !== -1) {
+      switch (nextScene) {
+        case sceneSelection[0]:
+          this.setState({currentScene: sceneSelection[0]});
+          break;
+        case sceneSelection[1]:
+          this.setState({currentScene: sceneSelection[1]});
+          break;
+      }
+    } else {
+      console.error('scene does not exist');
+    }
+
+  }
+
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
-    console.log('menuActive: ' + this.state.menuActive);
-    console.log('elevation: ' + this.state.elevation);
-    console.log('sunroomOn: ' + this.state.sunroomOn);
+    const scene = this.state.currentScene;
+    console.log('menuActive: ' + this.state.menuActive); // <-- for debugging purposes only, TODO: delete this line
+    console.log('elevation: ' + this.state.elevation); // <-- for debugging purposes only, TODO: delete this line
+    console.log('sunroomOn: ' + this.state.sunroomOn); // <-- for debugging purposes only, TODO: delete this line
     return (
       <View>
-        <Pano source={ asset(this.state.scenePano) }>
-          <PanoLayer radius={990} source={ asset('layers/Foster_Int_FamilyRoom_americanClassic_Fireplace.png') } />
-        </Pano>
-        {this.state.renderVrTextbox && <MenuVr text={ vrMenuContent } />}
+        {scene === sceneSelection[0] ? (
+          <FamilyRoom
+            renderVrMenu={ this.state.renderVrMenu }
+            elevation={ this.state.elevation }
+            sunroomOn={ this.state.sunroomOn }/>
+        ) : (
+          <Pano source={ asset(this.state.scenePano) } />
+        )
+        }
       </View>
     );
   }
