@@ -13,7 +13,7 @@ class Kitchen extends Component {
     super(props);
 
     this.state = {
-      scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg',
+      scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg',
       sunroomPano: '',
       cabinetsPano: '',
     };
@@ -31,7 +31,11 @@ class Kitchen extends Component {
 
   updateScene(props) {
     if (props.elevation === 'american classic') {
-      this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg'});
+      if (props.sunroomOn) {
+        this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg',});
+      } else {
+        this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg'});
+      }
     } else if (props.elevation === 'bella vista') {
       if (props.sunroomOn) {
         this.setState({
