@@ -79,7 +79,6 @@ export default class ClientVR extends React.Component {
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
     this._togglePersistent = this.togglePersistent.bind(this);
-    //this._updateScene = this.updateScene.bind(this);
     this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
     this._fetchApiData = this.fetchApiData.bind(this);
@@ -143,23 +142,8 @@ export default class ClientVR extends React.Component {
       } else if (e.header === 'cabinets') {
         this.setState({cabinets: e.option})
       }
-      //this._updateScene();
     });
   }
-
-  // updateScene() {
-  //   if (this.state.elevation === 'american classic') {
-  //     if (this.state.sunroomOn) {
-  //       this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
-  //     } else {
-  //       this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
-  //     }
-  //   } else if (this.state.elevation === 'bella vista') {
-  //     this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
-  //   } else if (this.state.elevation === 'bella vista brick') {
-  //     this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
-  //   }
-  // }
 
   // Determine whether content should be displayed on the dom overlay, or as a
   // react-vr component based on VrHeadModel's inVR API.
@@ -202,9 +186,9 @@ export default class ClientVR extends React.Component {
           this._toggleDisplay();
           this.setState({currentScene: sceneSelection[1]});
           break;
+        default:
+          console.error('scene does not exist');
       }
-    } else {
-      console.error('scene does not exist');
     }
   }
 
@@ -218,18 +202,17 @@ export default class ClientVR extends React.Component {
     console.log('scene: ' + this.state.currentScene); // <-- for debugging purposes only, TODO: delete this line
     return (
       <View>
-        {scene === sceneSelection[0] ? (
-          <FamilyRoom
-            renderVrMenu={ this.state.renderVrMenu }
-            elevation={ this.state.elevation }
-            sunroomOn={ this.state.sunroomOn }/>
-        ) : (
-          <Kitchen renderVrMenu={ this.state.renderVrMenu }
-                   elevation={ this.state.elevation }
-                   sunroomOn={ this.state.sunroomOn }
-                   cabinets={ this.state.cabinets }/>
-        )
-        }
+        {{
+          FamilyRoom: <FamilyRoom
+                               renderVrMenu={ this.state.renderVrMenu }
+                               elevation={ this.state.elevation }
+                               sunroomOn={ this.state.sunroomOn }/>,
+          Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
+                               elevation={ this.state.elevation }
+                               sunroomOn={ this.state.sunroomOn }
+                               cabinets={ this.state.cabinets }/>,
+
+        }[scene]}
       </View>
     );
   }
