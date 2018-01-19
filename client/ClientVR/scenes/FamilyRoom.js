@@ -14,6 +14,7 @@ class FamilyRoom extends Component {
 
     this.state = {
       scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg',
+      sunroomPano: '',
     };
 
     this._updateScene = this.updateScene.bind(this);
@@ -35,20 +36,35 @@ class FamilyRoom extends Component {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
       }
     } else if (props.elevation === 'bella vista') {
-      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
+      if (props.sunroomOn) {
+        this.setState({
+          sunroomPano: 'layers/Foster_Int_FamilyRoom_BellaVista_Sunroom.png',
+          scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg',
+        });
+      } else {
+        this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
+      }
     } else if (props.elevation === 'bella vista brick') {
-      this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
+      if (props.sunroomOn) {
+        this.setState({
+          sunroomPano: 'layers/Foster_Int_FamilyRoom_BellaVistaBrick_Sunroom.png',
+          scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg',
+        });
+      } else {
+        this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
+      }
     }
   }
 
   render() {
-    console.log(this.state.scenePano);
-    console.log(this.props.elevation);
-    console.log(this.props.sunroomOn);
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
-          <PanoLayer radius={990} source={ asset('layers/Foster_Int_FamilyRoom_americanClassic_Fireplace.png') } />
+          {this.props.elevation !== 'american classic' && this.props.sunroomOn ? (
+            <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } />
+          ) : (
+            <View />
+          )}
         </Pano>
         {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
       </View>

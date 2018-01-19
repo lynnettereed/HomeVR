@@ -17,24 +17,47 @@ import MenuVr from './components/MenuVr';
 import PanoLayer from './components/PanoLayer';
 
 import FamilyRoom from './scenes/FamilyRoom';
+import Kitchen from './scenes/Kitchen';
 
 const sceneSelection = ['FamilyRoom', 'Kitchen'];
 
 const domMenuContent = {
-  menuData: [
-    // {
-    //   sectionHeader: 'scene',
-    //   sectionOptions: ['FamilyRoom', 'Kitchen'],
-    // },
-    {
-      sectionHeader: 'elevation',
-      sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
-    },
-    {
-      sectionHeader: 'sunroom',
-      sectionOptions: ['on', 'off'],
-    },
-  ],
+  menuFamilyRoom: {
+    menuData: [
+      {
+        sectionHeader: 'scene',
+        sectionOptions: ['FamilyRoom', 'Kitchen'],
+      },
+      {
+        sectionHeader: 'elevation',
+        sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
+      },
+      {
+        sectionHeader: 'sunroom',
+        sectionOptions: ['on', 'off'],
+      },
+    ],
+  },
+  menuKitchen: {
+    menuData: [
+      {
+        sectionHeader: 'scene',
+        sectionOptions: ['FamilyRoom', 'Kitchen'],
+      },
+      {
+        sectionHeader: 'elevation',
+        sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
+      },
+      {
+        sectionHeader: 'sunroom',
+        sectionOptions: ['on', 'off'],
+      },
+      {
+        sectionHeader: 'cabinets',
+        sectionOptions: ['option1', 'option2'],
+      },
+    ],
+  }
 };
 
 const vrMenuContent =
@@ -50,6 +73,7 @@ export default class ClientVR extends React.Component {
       menuActive: false,
       sunroomOn: false,
       elevation: 'american classic',
+      cabinets: 'option1',
       currentScene: sceneSelection[0],
     };
 
@@ -59,6 +83,7 @@ export default class ClientVR extends React.Component {
     this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
     this._fetchApiData = this.fetchApiData.bind(this);
+    this._changeScene = this.changeScene.bind(this);
   }
 
   componentWillMount() {
@@ -113,6 +138,10 @@ export default class ClientVR extends React.Component {
         } else {
           console.log('not sunroom input');
         }
+      } else if (e.header === 'scene') {
+        this._changeScene(e.option);
+      } else if (e.header === 'cabinets') {
+        this.setState({cabinets: e.option})
       }
       //this._updateScene();
     });
@@ -139,7 +168,11 @@ export default class ClientVR extends React.Component {
       this.setState({renderVrMenu: !this.state.renderVrMenu});
     } else if (!this.state.menuActive) {
       this.setState({menuActive: !this.state.menuActive})
-      NativeModules.DomOverlayModule.openOverlay(domMenuContent);
+      if (this.state.currentScene === 'FamilyRoom') {
+        NativeModules.DomOverlayModule.openOverlay(domMenuContent.menuFamilyRoom);
+      } else {
+        NativeModules.DomOverlayModule.openOverlay(domMenuContent.menuKitchen);
+      }
     } else {
       this.setState({menuActive: !this.state.menuActive})
       NativeModules.DomOverlayModule.closeOverlay();
@@ -155,23 +188,24 @@ export default class ClientVR extends React.Component {
     }
   }
 
-  changeScenes(nextScene) {
+  changeScene(nextScene) {
     if (nextScene === this.state.currentScene) {
       console.log('same scene');
       return;
     } else if (sceneSelection.indexOf(nextScene) !== -1) {
       switch (nextScene) {
         case sceneSelection[0]:
+          this._toggleDisplay();
           this.setState({currentScene: sceneSelection[0]});
           break;
         case sceneSelection[1]:
+          this._toggleDisplay();
           this.setState({currentScene: sceneSelection[1]});
           break;
       }
     } else {
       console.error('scene does not exist');
     }
-
   }
 
   // TODO: create BtnboxVr component and add conditional below TextboxVr
@@ -180,6 +214,8 @@ export default class ClientVR extends React.Component {
     console.log('menuActive: ' + this.state.menuActive); // <-- for debugging purposes only, TODO: delete this line
     console.log('elevation: ' + this.state.elevation); // <-- for debugging purposes only, TODO: delete this line
     console.log('sunroomOn: ' + this.state.sunroomOn); // <-- for debugging purposes only, TODO: delete this line
+    console.log('cabinets: ' + this.state.cabinets); // <-- for debugging purposes only, TODO: delete this line
+    console.log('scene: ' + this.state.currentScene); // <-- for debugging purposes only, TODO: delete this line
     return (
       <View>
         {scene === sceneSelection[0] ? (
@@ -188,7 +224,10 @@ export default class ClientVR extends React.Component {
             elevation={ this.state.elevation }
             sunroomOn={ this.state.sunroomOn }/>
         ) : (
-          <Pano source={ asset(this.state.scenePano) } />
+          <Kitchen renderVrMenu={ this.state.renderVrMenu }
+                   elevation={ this.state.elevation }
+                   sunroomOn={ this.state.sunroomOn }
+                   cabinets={ this.state.cabinets }/>
         )
         }
       </View>
