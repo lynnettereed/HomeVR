@@ -54,7 +54,7 @@ const domMenuContent = {
       },
       {
         sectionHeader: 'cabinets',
-        sectionOptions: ['option1', 'option2'],
+        sectionOptions: ['option1', 'option2', 'option3', 'option4'],
       },
     ],
   }

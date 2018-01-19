@@ -19,6 +19,7 @@ class Kitchen extends Component {
     };
 
     this._updateScene = this.updateScene.bind(this);
+    this._handleCabs = this.handleCabs.bind(this);
   }
 
   componentWillMount() {
@@ -27,6 +28,22 @@ class Kitchen extends Component {
 
   componentWillReceiveProps(nextProps) {
     this._updateScene(nextProps);
+  }
+
+  handleCabs(props) {
+    if (props.cabinets === 'option2') {
+      props.sunroomOn
+        ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs2.png'})
+        : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs2.png'})
+    } else if (props.cabinets === 'option3') {
+      props.sunroomOn
+        ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs3.png'})
+        : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs3.png'})
+    } else if (props.cabinets === 'option4') {
+      props.sunroomOn
+        ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs4.png'})
+        : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs4.png'})
+    }
   }
 
   updateScene(props) {
@@ -55,14 +72,13 @@ class Kitchen extends Component {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'});
       }
     }
-    if (props.cabinets === 'option2') {
-      this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs4.png'});
-    }
+    this._handleCabs(props);
   }
 
   render() {
     console.log(this.state.scenePano);
     console.log(this.props.cabinets);
+    console.log(this.props.cabinetsPano);
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
@@ -71,7 +87,7 @@ class Kitchen extends Component {
           ) : (
             <View />
           )}
-          {this.props.cabinets === 'option2' ? (
+          {this.props.cabinets !== 'option1' ? (
             <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } />
           ) : (
             <View />
