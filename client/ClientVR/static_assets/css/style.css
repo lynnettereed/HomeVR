@@ -9,18 +9,40 @@ html {
 
 .section-main {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
+}
+
+@media screen and (min-width: 970px) {
+  .section-main {
+    flex-direction: row;
+  }
 }
 
 #outer-menu {
-  width: 20%;
-  height: 100vh;
+  width: 100%;
   background: #FFF;
+  max-height: 100vh;
   overflow: hidden;
   transition: 0.8s ease-out;
 }
 #outer-menu.vr-active {
-  width: 0%;
+  max-height: 0%;
+}
+
+@media screen and (min-width: 970px) {
+  #outer-menu {
+    width: 20%;
+    max-height: 100vh;
+  }
+  #outer-menu.vr-active {
+    width: 0%;
+  }
+}
+
+@media screen and (min-width: 1483px) {
+  #outer-menu {
+    width: 296px;
+  }
 }
 
 #outer-menu form {
@@ -30,30 +52,57 @@ html {
 
 #outer-menu button {
   display: block;
-  width: 75%;
+  width: 190px;
   margin: 1.25rem auto 0.938rem auto;
   background: #000;
   color: #FFF;
   border: none;
 }
 
+@media screen and (min-width: 970px) {
+  #outer-menu button {
+    width: 75%;
+  }
+}
+@media screen and (min-width: 1264px) {
+  #outer-menu button {
+    width: 190px;
+  }
+}
+
 #media-container {
   position: relative;
-  width: 80%;
+  width: 100%;
   background: #000;
   transition: 0.8s ease-out;
 }
 #media-container.vr-active {
   width: 100%;
+  height: 100vh;
   box-sizing: content-box;
 }
 
+@media screen and (min-width: 970px) {
+  #media-container {
+    width: 80%;
+  }
+
+  #media-container .img-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+  }
+}
+
+@media screen and (min-width: 1483px) {
+  #media-container {
+    width: 1186px;
+  }
+}
+
 #media-container .img-container {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100vh;
   background: #FFF;
 }
 #media-container.vr-active .img-container {
