@@ -56,6 +56,14 @@ const domMenuContent = {
         sectionHeader: 'cabinets',
         sectionOptions: ['option1', 'option2', 'option3', 'option4'],
       },
+      {
+        sectionHeader: 'backsplash',
+        sectionOptions: ['option1', 'option2', 'option3', 'option4'],
+      },
+      {
+        sectionHeader: 'counter',
+        sectionOptions: ['option1', 'option2', 'option3', 'option4'],
+      },
     ],
   }
 };
@@ -74,6 +82,8 @@ export default class ClientVR extends React.Component {
       sunroomOn: false,
       elevation: 'american classic',
       cabinets: 'option1',
+      backsplash: 'option1',
+      counter: 'option1',
       currentScene: sceneSelection[0],
     };
 
@@ -140,7 +150,11 @@ export default class ClientVR extends React.Component {
       } else if (e.header === 'scene') {
         this._changeScene(e.option);
       } else if (e.header === 'cabinets') {
-        this.setState({cabinets: e.option})
+        this.setState({cabinets: e.option});
+      } else if (e.header === 'backsplash') {
+        this.setState({backsplash: e.option});
+      } else if (e.header === 'counter') {
+        this.setState({counter: e.option});
       }
     });
   }
@@ -199,6 +213,8 @@ export default class ClientVR extends React.Component {
     console.log('elevation: ' + this.state.elevation); // <-- for debugging purposes only, TODO: delete this line
     console.log('sunroomOn: ' + this.state.sunroomOn); // <-- for debugging purposes only, TODO: delete this line
     console.log('cabinets: ' + this.state.cabinets); // <-- for debugging purposes only, TODO: delete this line
+    console.log('backsplash: ' + this.state.backsplash); // <-- for debugging purposes only, TODO: delete this line
+    console.log('counter: ' + this.state.counter); // <-- for debugging purposes only, TODO: delete this line
     console.log('scene: ' + this.state.currentScene); // <-- for debugging purposes only, TODO: delete this line
     return (
       <View>
@@ -210,7 +226,9 @@ export default class ClientVR extends React.Component {
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
                                elevation={ this.state.elevation }
                                sunroomOn={ this.state.sunroomOn }
-                               cabinets={ this.state.cabinets }/>,
+                               cabinets={ this.state.cabinets }
+                               backsplash={ this.state.backsplash }
+                               counter = { this.state.counter }/>,
 
         }[scene]}
       </View>

@@ -16,10 +16,13 @@ class Kitchen extends Component {
       scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg',
       sunroomPano: '',
       cabinetsPano: '',
+      backsplashPano: '',
     };
 
     this._updateScene = this.updateScene.bind(this);
     this._handleCabs = this.handleCabs.bind(this);
+    this._handleBacksplash = this.handleBacksplash.bind(this);
+    this._handleCounter = this.handleCounter.bind(this);
   }
 
   componentWillMount() {
@@ -43,6 +46,38 @@ class Kitchen extends Component {
       props.sunroomOn
         ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs4.png'})
         : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs4.png'})
+    }
+  }
+
+  handleBacksplash(props) {
+    if (props.backsplash === 'option2') {
+      props.sunroomOn
+        ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash2.png'})
+        : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash2.png'})
+    } else if (props.backsplash === 'option3') {
+      props.sunroomOn
+        ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash3.png'})
+        : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash3.png'})
+    } else if (props.backsplash === 'option4') {
+      props.sunroomOn
+        ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash4.png'})
+        : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash4.png'})
+    }
+  }
+
+  handleCounter(props) {
+    if (props.counter === 'option2') {
+      props.sunroomOn
+        ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter2.png'})
+        : this.setState({counterPano: 'layers/Kitchen_AC_Counter2.png'})
+    } else if (props.counter === 'option3') {
+      props.sunroomOn
+        ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter3.png'})
+        : this.setState({counterPano: 'layers/Kitchen_AC_Counter3.png'})
+    } else if (props.counter === 'option4') {
+      props.sunroomOn
+        ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter4.png'})
+        : this.setState({counterPano: 'layers/Kitchen_AC_Counter4.png'})
     }
   }
 
@@ -73,12 +108,15 @@ class Kitchen extends Component {
       }
     }
     this._handleCabs(props);
+    this._handleBacksplash(props);
+    this._handleCounter(props);
   }
 
   render() {
     console.log(this.state.scenePano);
     console.log(this.props.cabinets);
-    console.log(this.props.cabinetsPano);
+    console.log(this.props.backsplash);
+    console.log(this.props.counter);
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
@@ -89,6 +127,16 @@ class Kitchen extends Component {
           )}
           {this.props.cabinets !== 'option1' ? (
             <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } />
+          ) : (
+            <View />
+          )}
+          {this.props.backsplash !== 'option1' ? (
+            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } />
+          ) : (
+            <View />
+          )}
+          {this.props.counter !== 'option1' ? (
+            <PanoLayer radius={960} source={ asset(this.state.counterPano) } />
           ) : (
             <View />
           )}
