@@ -5,6 +5,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import 'react-native';
 import 'react-vr';
+import sinon from 'sinon';
 import { NativeModules } from 'react-native';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -22,12 +23,16 @@ jest.mock('NativeModules', () => {
 });
 
 describe('<ClientVR />', () => {
+  const openPersistentSpy = sinon.spy(NativeModules.DomOverlayModule, 'openPersistent');
+  const wrapper = shallow(
+    <ClientVR />
+  );
 
   it('renders correctly', () => {
-    const wrapper = shallow(
-      <ClientVR />
-    );
-
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('calls openPersistent method on render', () => {
+    expect(openPersistentSpy.calledOnce).toBe(true);
   });
 });
