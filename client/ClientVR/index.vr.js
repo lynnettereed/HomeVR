@@ -209,13 +209,13 @@ export default class ClientVR extends React.Component {
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
     const scene = this.state.currentScene;
-    console.log('menuActive: ' + this.state.menuActive); // <-- for debugging purposes only, TODO: delete this line
-    console.log('elevation: ' + this.state.elevation); // <-- for debugging purposes only, TODO: delete this line
-    console.log('sunroomOn: ' + this.state.sunroomOn); // <-- for debugging purposes only, TODO: delete this line
-    console.log('cabinets: ' + this.state.cabinets); // <-- for debugging purposes only, TODO: delete this line
-    console.log('backsplash: ' + this.state.backsplash); // <-- for debugging purposes only, TODO: delete this line
-    console.log('counter: ' + this.state.counter); // <-- for debugging purposes only, TODO: delete this line
-    console.log('scene: ' + this.state.currentScene); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('menuActive: ' + this.state.menuActive); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('elevation: ' + this.state.elevation); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('sunroomOn: ' + this.state.sunroomOn); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('cabinets: ' + this.state.cabinets); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('backsplash: ' + this.state.backsplash); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('counter: ' + this.state.counter); // <-- for debugging purposes only, TODO: delete this line
+    //console.log('scene: ' + this.state.currentScene); // <-- for debugging purposes only, TODO: delete this line
     return (
       <View>
         {{
