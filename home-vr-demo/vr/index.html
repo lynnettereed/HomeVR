@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>ClientVR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- Font Awesome css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" type="text/css">
+    <!-- Custom css -->
+    <link rel="stylesheet" href="./static_assets/css/style.css" type="text/css" />
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <!-- When you're ready to deploy your app, update this line to point to your compiled client.bundle.js -->
+    <script src="./client.bundle.js"></script>
+    <script>
+      // Initialize the React VR application
+      ReactVR.init(
+        //When you're ready to deploy your app, update this line to point to
+        //your compiled index.bundle.js
+        './index.bundle.js',
+        //Attach it to the body tag
+        document.body
+      );
+    </script>
+  </body>
+</html>

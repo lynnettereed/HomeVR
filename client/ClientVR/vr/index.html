@@ -15,77 +15,6 @@
     </style>
   </head>
   <body>
-    <section class="section-main">
-
-      <div id="outer-menu">
-        <form>
-          <fieldset class="form-group">
-            <legend>Elevation</legend>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="elevation" value="AmericanClassic" checked="checked">
-              <label class="form-check-label">American Classic</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="elevation" value="BellaVista">
-              <label class="form-check-label">Bella Vista</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="elevation" value="BellaVistaBrick">
-              <label class="form-check-label">Bella Vista Brick</label>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <legend>Garage</legend>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="garage" value="2Car" checked="checked">
-              <label class="form-check-label">2 Car</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="garage" value="3Car">
-              <label class="form-check-label">3 Car</label>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <legend>Sunroom</legend>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="sunroom" value="Sunroom" checked="checked">
-              <label class="form-check-label">On</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="sunroom" value="">
-              <label class="form-check-label">Off</label>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <legend>View</legend>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="view" value="FrontRight" checked="checked">
-              <label class="form-check-label">Front Right</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="view" value="FrontLeft">
-              <label class="form-check-label">Front Left</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input input-dom" type="radio" name="view" value="Back">
-              <label class="form-check-label">Back</label>
-            </div>
-          </fieldset>
-        </form>
-        <button id="vr-btn">Init VR</button>
-      </div>
-
-      <div id="media-container">
-        <div class="img-container">
-          <img id="img-baseline" src="../static_assets/images-2D/Foster_Ext_FrontRight_AmericanClassic.jpg" alt="">
-          <img id="img-garage" class="overlay-img" src="">
-          <img id="img-sunroom" class="overlay-img" src="">
-        </div>
-      </div>
-    </section>
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -94,14 +23,13 @@
     <script src="./client.bundle?platform=vr"></script>
     <script>
       // Initialize the React VR application
-      // ReactVR.init(
-      //   //When you're ready to deploy your app, update this line to point to
-      //   //your compiled index.bundle.js
-      //   '../index.vr.bundle?platform=vr&dev=true',
-      //   //Attach it to the body tag
-      //   //document.body
-      //   document.getElementById('vr-container')
-      // );
+      ReactVR.init(
+        //When you're ready to deploy your app, update this line to point to
+        //your compiled index.bundle.js
+        '../index.vr.bundle?platform=vr&dev=true',
+        //Attach it to the body tag
+        document.body
+      );
     </script>
   </body>
 </html>
