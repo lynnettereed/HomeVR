@@ -28,6 +28,7 @@
     "jest": "^19.0.2",
     "react-devtools": "^2.5.2",
     "react-test-renderer": "16.0.0",
+    "sinon": "^4.2.1",
     "xopen": "1.0.0"
   },
   "jest": {
