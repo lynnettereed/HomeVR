@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClientVR /> renders correctly 1`] = `
+<View>
+  <FamilyRoom
+    elevation="american classic"
+    renderVrMenu={false}
+    sunroomOn={false}
+  />
+</View>
+`;

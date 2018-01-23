@@ -22,12 +22,18 @@
   "devDependencies": {
     "babel-jest": "^19.0.0",
     "babel-preset-react-native": "^1.9.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "jest": "^19.0.2",
     "react-devtools": "^2.5.2",
     "react-test-renderer": "16.0.0",
     "xopen": "1.0.0"
   },
   "jest": {
-    "preset": "react-vr"
+    "preset": "react-vr",
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ]
   }
 }
