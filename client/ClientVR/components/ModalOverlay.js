@@ -5,7 +5,7 @@ const ModalOverlay = (props) => {
 
   return (
     <div className='container-modal'>
-      <div className='close' onClick={ props.onClose } />
+      <div className='close' onClick={ props.closeModal } />
     </div>
   );
 };

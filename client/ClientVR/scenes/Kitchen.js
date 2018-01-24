@@ -146,7 +146,7 @@ class Kitchen extends Component {
             <View />
           )}
         </Pano>
-        <IconButton />
+        <IconButton toggleModal={ this.props.toggleModal } />
         {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
       </View>
     );

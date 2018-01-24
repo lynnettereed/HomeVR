@@ -78,6 +78,7 @@ export default class ClientVR extends React.Component {
     this.state = {
       renderVrMenu: false,
       renderVrBtnbox: false,
+      renderVrModal: false,
       menuActive: false,
       sunroomOn: false,
       elevation: 'american classic',
@@ -89,6 +90,7 @@ export default class ClientVR extends React.Component {
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
     this._togglePersistent = this.togglePersistent.bind(this);
+    this._toggleModal = this.toggleModal.bind(this);
     this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
     this._fetchApiData = this.fetchApiData.bind(this);
@@ -186,6 +188,15 @@ export default class ClientVR extends React.Component {
     }
   }
 
+  toggleModal() {
+    if (VrHeadModel.inVR()) {
+      this.setState({renderVrBtnbox: !this.state.renderVrBtnbox});
+    } else {
+      // Not in VR, use the dom overlay
+      NativeModules.DomOverlayModule.openModal();
+    }
+  }
+
   changeScene(nextScene) {
     if (nextScene === this.state.currentScene) {
       console.log('same scene');
@@ -224,6 +235,7 @@ export default class ClientVR extends React.Component {
                                elevation={ this.state.elevation }
                                sunroomOn={ this.state.sunroomOn }/>,
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
+                            toggleModal={ this._toggleModal }
                                elevation={ this.state.elevation }
                                sunroomOn={ this.state.sunroomOn }
                                cabinets={ this.state.cabinets }

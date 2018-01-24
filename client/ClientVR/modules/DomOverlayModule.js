@@ -81,7 +81,7 @@ class DomOverlayModule extends Module {
   // Open the modal for display
   openModal(props) {
     ReactDOM.render(
-      <ModalOverlay { ...props } onClose={ this._handleXBtnClick } />,
+      <ModalOverlay { ...props } closeModal={ this._closeModal } />,
       this._modalContainer
     );
   }

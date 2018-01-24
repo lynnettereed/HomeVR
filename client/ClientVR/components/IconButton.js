@@ -7,11 +7,12 @@ import {
   asset
 } from 'react-vr';
 
-const IconButton = () => {
+const IconButton = (props) => {
   return (
-    <VrButton style={styles.iconContainer}>
+    <VrButton style={ styles.iconContainer }
+              onClick={ props.toggleModal }>
       <Image
-        style={styles.icon}
+        style={ styles.icon }
         source={ asset('icons/info-circle.png') }
       />
     </VrButton>
