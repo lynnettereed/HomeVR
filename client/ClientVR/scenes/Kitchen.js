@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import {
   View,
   asset,
-  Pano
+  Pano,
+  VrButton,
+  Text,
+  StyleSheet,
+  Image
 } from 'react-vr';
 
 import MenuVr from '../components/MenuVr';
 import PanoLayer from '../components/PanoLayer';
+import IconButton from '../components/IconButton';
 
 class Kitchen extends Component {
   constructor(props) {
@@ -113,10 +118,10 @@ class Kitchen extends Component {
   }
 
   render() {
-    console.log(this.state.scenePano);
-    console.log(this.props.cabinets);
-    console.log(this.props.backsplash);
-    console.log(this.props.counter);
+    //console.log(this.state.scenePano);
+    //console.log(this.props.cabinets);
+    //console.log(this.props.backsplash);
+    //console.log(this.props.counter);
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
@@ -141,10 +146,25 @@ class Kitchen extends Component {
             <View />
           )}
         </Pano>
+        <IconButton />
         {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    backgroundColor: '#777879',
+    fontSize: 0.8,
+    layoutOrigin: [0.5, 0.5],
+    paddingLeft: 0.2,
+    paddingRight: 0.2,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    transform: [{translate: [7, -2, -14]},
+                {rotateY: -30}],
+  }
+});
 
 export default Kitchen;
