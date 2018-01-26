@@ -176,11 +176,16 @@ html {
 /* Modal overlay */
 .container-modal {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.8);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .container-modal .close {
@@ -197,4 +202,30 @@ html {
 }
 .container-modal .close:hover {
   opacity: 1;
+}
+
+.container-modal .section-a {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-details {
+  color: #FFF;
+}
+
+.section-a figure {
+  display: flex;
+  justify-content: center;
+}
+
+.section-a figure img {
+  /* width: 400px; */
+}
+
+.modal-details h1 {
+
+}
+
+.modal-details p {
+
 }

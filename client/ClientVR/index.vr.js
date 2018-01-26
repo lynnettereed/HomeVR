@@ -68,6 +68,42 @@ const domMenuContent = {
   }
 };
 
+const modalContent = {
+  appliances: {
+    refrigerator: {
+      data: {
+        title: '36-inch Wide Side-by-Side Refrigerator - 28 cu. ft.',
+        model: 'WRS588FIHV',
+        msrp: '$1,899.00',
+        quickFeatures: [
+          '-Exterior Ice with EveryDrop™ Filtration',
+          '-In-Door-Ice® Storage',
+          '-Accu-Chill™ Temperature Management System'
+        ],
+        additionalFeatures: [
+          {
+            title: 'Exterior Ice and Water Dispenser with EveryDrop™ Filtration',
+            info: 'Access fresh filtered water and ice without ever opening the refrigerator door.'
+          },
+          {
+            title: 'In-Door-Ice® Storage',
+            info: 'Get an extra full shelf in the freezer with an ice bin that\'s been moved to the door.'
+          },
+          {
+            title: 'Accu-Chill™ Temperature Management System',
+            info: 'Cool food quickly with technology that senses and adapts to create the ideal environment for food.'
+          },
+          {
+            title: 'Frameless Glass Shelves',
+            info: 'Store more items on each shelf with wall-to-wall frameless glass shelves, which offer greater storage flexibility.'
+          }
+        ],
+        imgSrc: '/static_assets/images/refrigerator.png'
+      }
+    }
+  }
+}
+
 const vrMenuContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
 
@@ -193,7 +229,7 @@ export default class ClientVR extends React.Component {
       this.setState({renderVrBtnbox: !this.state.renderVrBtnbox});
     } else {
       // Not in VR, use the dom overlay
-      NativeModules.DomOverlayModule.openModal();
+      NativeModules.DomOverlayModule.openModal(modalContent.appliances.refrigerator);
     }
   }
 
