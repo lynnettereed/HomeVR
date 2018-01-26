@@ -98,7 +98,25 @@ const modalContent = {
             info: 'Store more items on each shelf with wall-to-wall frameless glass shelves, which offer greater storage flexibility.'
           }
         ],
-        imgSrc: '/static_assets/images/refrigerator.png'
+        imgSrc: '/static_assets/images/refrigerator.png',
+        colorOptions: [
+          {
+            name: 'black',
+            value: '#000'
+          },
+          {
+            name: 'fingerprint resistant black stainless',
+            value: '#5B5959'
+          },
+          {
+            name: 'white',
+            value: '#FFF'
+          },
+          {
+            name: 'fingerprint resistant stainless steel',
+            value: '#D8D8D8'
+          },
+        ]
       }
     }
   }
