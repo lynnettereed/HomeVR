@@ -12,6 +12,7 @@ import {
 } from 'react-vr';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import axios from 'react-native-axios';
+import fakeAPI from './fakeAPI';
 
 import MenuVr from './components/MenuVr';
 import PanoLayer from './components/PanoLayer';
@@ -140,6 +141,7 @@ export default class ClientVR extends React.Component {
       backsplash: 'option1',
       counter: 'option1',
       currentScene: sceneSelection[0],
+      menuData: {},
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
@@ -151,7 +153,7 @@ export default class ClientVR extends React.Component {
     this._changeScene = this.changeScene.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // Fetch API data
     //this._fetchApiData(); // <-- TODO: fix CORS issue or find workaround
     // Init persistent overlay
@@ -160,6 +162,15 @@ export default class ClientVR extends React.Component {
     this._addOverlayButtonListeners();
     // Register overlay option event listeners
     this._addOverlayOptionListeners();
+
+    fakeAPI.getMenuContent()
+    .then((data) => {
+      console.log(data);
+      this.setState({menuData: data});
+    })
+    .catch((e) => {
+      console.log(e);
+    })
   }
 
   fetchApiData() {
@@ -221,11 +232,12 @@ export default class ClientVR extends React.Component {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrMenu: !this.state.renderVrMenu});
     } else if (!this.state.menuActive) {
+      console.log(this.menuData);
       this.setState({menuActive: !this.state.menuActive})
       if (this.state.currentScene === 'FamilyRoom') {
-        NativeModules.DomOverlayModule.openOverlay(domMenuContent.menuFamilyRoom);
+        NativeModules.DomOverlayModule.openOverlay(this.state.menuData.menuFamilyRoom);
       } else {
-        NativeModules.DomOverlayModule.openOverlay(domMenuContent.menuKitchen);
+        NativeModules.DomOverlayModule.openOverlay(this.state.menuData.menuKitchen);
       }
     } else {
       this.setState({menuActive: !this.state.menuActive})
