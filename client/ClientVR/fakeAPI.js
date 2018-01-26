@@ -98,12 +98,18 @@ const fakeAPI = {
       }
     }
   },
-  getMenuContent: function() {
+  getMenuData: function() {
     return new Promise((resolve, reject) => {
       const menuDescriptor = Object.getOwnPropertyDescriptor(this, 'domMenuContent');
-      menuDescriptor ? resolve(menuDescriptor.value) : reject('menu category not found');
+      menuDescriptor ? resolve(menuDescriptor.value) : reject(new Error('menu content not found'));
     });
   },
+  getModalData: function() {
+    return new Promise((resolve, reject) => {
+      const modalDescriptor = Object.getOwnPropertyDescriptor(this, 'modalContent');
+      modalDescriptor ? resolve(modalDescriptor.value) : reject(new Error('modal content not found'));
+    });
+  }
 }
 
 export default fakeAPI;

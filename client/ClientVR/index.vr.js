@@ -22,107 +22,6 @@ import Kitchen from './scenes/Kitchen';
 
 const sceneSelection = ['FamilyRoom', 'Kitchen'];
 
-const domMenuContent = {
-  menuFamilyRoom: {
-    menuData: [
-      {
-        sectionHeader: 'scene',
-        sectionOptions: ['FamilyRoom', 'Kitchen'],
-      },
-      {
-        sectionHeader: 'elevation',
-        sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
-      },
-      {
-        sectionHeader: 'sunroom',
-        sectionOptions: ['on', 'off'],
-      },
-    ],
-  },
-  menuKitchen: {
-    menuData: [
-      {
-        sectionHeader: 'scene',
-        sectionOptions: ['FamilyRoom', 'Kitchen'],
-      },
-      {
-        sectionHeader: 'elevation',
-        sectionOptions: ['american classic', 'bella vista', 'bella vista brick'],
-      },
-      {
-        sectionHeader: 'sunroom',
-        sectionOptions: ['on', 'off'],
-      },
-      {
-        sectionHeader: 'cabinets',
-        sectionOptions: ['option1', 'option2', 'option3', 'option4'],
-      },
-      {
-        sectionHeader: 'backsplash',
-        sectionOptions: ['option1', 'option2', 'option3', 'option4'],
-      },
-      {
-        sectionHeader: 'counter',
-        sectionOptions: ['option1', 'option2', 'option3', 'option4'],
-      },
-    ],
-  }
-};
-
-const modalContent = {
-  appliances: {
-    refrigerator: {
-      data: {
-        title: '36-inch Wide Side-by-Side Refrigerator - 28 cu. ft.',
-        model: 'WRS588FIHV',
-        msrp: '$1,899.00',
-        quickFeatures: [
-          '-Exterior Ice with EveryDrop™ Filtration',
-          '-In-Door-Ice® Storage',
-          '-Accu-Chill™ Temperature Management System'
-        ],
-        additionalFeatures: [
-          {
-            title: 'Exterior Ice and Water Dispenser with EveryDrop™ Filtration',
-            info: 'Access fresh filtered water and ice without ever opening the refrigerator door.'
-          },
-          {
-            title: 'In-Door-Ice® Storage',
-            info: 'Get an extra full shelf in the freezer with an ice bin that\'s been moved to the door.'
-          },
-          {
-            title: 'Accu-Chill™ Temperature Management System',
-            info: 'Cool food quickly with technology that senses and adapts to create the ideal environment for food.'
-          },
-          {
-            title: 'Frameless Glass Shelves',
-            info: 'Store more items on each shelf with wall-to-wall frameless glass shelves, which offer greater storage flexibility.'
-          }
-        ],
-        imgSrc: '/static_assets/images/refrigerator.png',
-        colorOptions: [
-          {
-            name: 'black',
-            value: '#000'
-          },
-          {
-            name: 'fingerprint resistant black stainless',
-            value: '#5B5959'
-          },
-          {
-            name: 'white',
-            value: '#FFF'
-          },
-          {
-            name: 'fingerprint resistant stainless steel',
-            value: '#D8D8D8'
-          },
-        ]
-      }
-    }
-  }
-}
-
 const vrMenuContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
 
@@ -142,6 +41,7 @@ export default class ClientVR extends React.Component {
       counter: 'option1',
       currentScene: sceneSelection[0],
       menuData: {},
+      modalData: {},
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
@@ -154,23 +54,29 @@ export default class ClientVR extends React.Component {
   }
 
   componentDidMount() {
-    // Fetch API data
     //this._fetchApiData(); // <-- TODO: fix CORS issue or find workaround
     // Init persistent overlay
     this._togglePersistent();
-    // Register overlay button event listeners
     this._addOverlayButtonListeners();
-    // Register overlay option event listeners
     this._addOverlayOptionListeners();
 
-    fakeAPI.getMenuContent()
+    fakeAPI.getMenuData()
     .then((data) => {
       console.log(data);
       this.setState({menuData: data});
     })
-    .catch((e) => {
-      console.log(e);
+    .catch((err) => {
+      console.log(err);
+    });
+
+    fakeAPI.getModalData()
+    .then((data) => {
+      console.log(data);
+      this.setState({modalData: data})
     })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   fetchApiData() {
@@ -232,7 +138,6 @@ export default class ClientVR extends React.Component {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrMenu: !this.state.renderVrMenu});
     } else if (!this.state.menuActive) {
-      console.log(this.menuData);
       this.setState({menuActive: !this.state.menuActive})
       if (this.state.currentScene === 'FamilyRoom') {
         NativeModules.DomOverlayModule.openOverlay(this.state.menuData.menuFamilyRoom);
@@ -259,13 +164,12 @@ export default class ClientVR extends React.Component {
       this.setState({renderVrBtnbox: !this.state.renderVrBtnbox});
     } else {
       // Not in VR, use the dom overlay
-      NativeModules.DomOverlayModule.openModal(modalContent.appliances.refrigerator);
+      NativeModules.DomOverlayModule.openModal(this.state.modalData.appliances.refrigerator);
     }
   }
 
   changeScene(nextScene) {
     if (nextScene === this.state.currentScene) {
-      console.log('same scene');
       return;
     } else if (sceneSelection.indexOf(nextScene) !== -1) {
       switch (nextScene) {
@@ -286,13 +190,6 @@ export default class ClientVR extends React.Component {
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
     const scene = this.state.currentScene;
-    //console.log('menuActive: ' + this.state.menuActive); // <-- for debugging purposes only, TODO: delete this line
-    //console.log('elevation: ' + this.state.elevation); // <-- for debugging purposes only, TODO: delete this line
-    //console.log('sunroomOn: ' + this.state.sunroomOn); // <-- for debugging purposes only, TODO: delete this line
-    //console.log('cabinets: ' + this.state.cabinets); // <-- for debugging purposes only, TODO: delete this line
-    //console.log('backsplash: ' + this.state.backsplash); // <-- for debugging purposes only, TODO: delete this line
-    //console.log('counter: ' + this.state.counter); // <-- for debugging purposes only, TODO: delete this line
-    //console.log('scene: ' + this.state.currentScene); // <-- for debugging purposes only, TODO: delete this line
     return (
       <View>
         {{
@@ -313,9 +210,5 @@ export default class ClientVR extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-});
 
 AppRegistry.registerComponent('ClientVR', () => ClientVR);
