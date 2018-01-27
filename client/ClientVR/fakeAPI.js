@@ -76,6 +76,7 @@ const fakeAPI = {
             }
           ],
           imgSrc: '/static_assets/images/refrigerator.png',
+          prodImgSrc: '/vr/static_assets/images/refrigerator.png',
           colorOptions: [
             {
               name: 'black',

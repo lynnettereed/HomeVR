@@ -2,7 +2,10 @@ import React from 'react';
 
 // Gets props via the DomOverlayModule and uses those to render content
 const ModalOverlay = (props) => {
+  const devEnv = true;
   const refrigerator = props.data;
+  let imgSrc;
+  devEnv ? imgSrc = refrigerator.imgSrc : imgSrc = refrigerator.prodImgSrc;
   const listQuickFeatures = refrigerator.quickFeatures.map((feature, index) =>
     <li key={index}>{feature}</li>
   );
@@ -31,7 +34,7 @@ const ModalOverlay = (props) => {
             <ul>{listQuickFeatures}</ul>
           </div>
           <figure>
-            <img src={refrigerator.imgSrc} alt='refrigerator'/>
+            <img src={imgSrc} alt='refrigerator'/>
             <div className='container-option-blocks'>{listColorOptions}</div>
           </figure>
         </section>
