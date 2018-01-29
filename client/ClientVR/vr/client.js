@@ -1,13 +1,10 @@
-// Auto-generated content.
-// This file contains the boilerplate to set up your React app.
-// If you want to modify your application, start in "index.vr.js"
-
-
-// Auto-generated content.
+//import WebVRPolyfill from 'webvr-polyfill';
 import '../process';
 import { VRInstance } from 'react-vr-web';
 import DomOverlayModule from '../modules/DomOverlayModule';
 import RCTPanoLayer from '../views/PanoLayer';
+
+const polyfill = new WebVRPolyfill();
 
 function init(bundle, parent, options) {
   // Create divs where the overlays will be displayed in the DOM.
