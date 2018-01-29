@@ -7,7 +7,7 @@ $(document).ready(() => {
   function handleExitVRMode(e) {
     // console.log(e.detail); // <-- For debugging purposes only TODO: remove this line
     if (e.detail.message === 'exit VR') {
-      const content = '<div class="img-container"><img id="img-baseline" src="./public/images/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""><img id="img-garage" class="overlay-img" src=""><img id="img-sunroom" class="overlay-img" src=""></div><iframe id="frame-vr" src=""></iframe>'
+      const content = '<div class="img-container"><img id="img-baseline" src="./public/images/Foster_Ext_FrontRight_AmericanClassic.jpg" alt=""><img id="img-garage" class="overlay-img" src=""><img id="img-sunroom" class="overlay-img" src=""></div><iframe allowvr id="frame-vr" src=""></iframe>'
       $('#media-container').html('');
       $('#outer-menu').removeClass('vr-active');
       $('#media-container').removeClass('vr-active');
