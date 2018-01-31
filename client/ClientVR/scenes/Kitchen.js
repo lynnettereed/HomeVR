@@ -18,10 +18,11 @@ class Kitchen extends Component {
     super(props);
 
     this.state = {
-      scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg',
+      scenePano: '',
       sunroomPano: '',
       cabinetsPano: '',
       backsplashPano: '',
+      counterPano: '',
     };
 
     this._updateScene = this.updateScene.bind(this);
@@ -35,6 +36,12 @@ class Kitchen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // console.log(nextProps);
+    // console.log(this.props);
+    // if (nextProps.sunroomOn !== this.props.sunroomOn) {
+    //   console.log('scene updated');
+    //   this._updateScene(nextProps);
+    // }
     this._updateScene(nextProps);
   }
 
@@ -118,10 +125,6 @@ class Kitchen extends Component {
   }
 
   render() {
-    //console.log(this.state.scenePano);
-    //console.log(this.props.cabinets);
-    //console.log(this.props.backsplash);
-    //console.log(this.props.counter);
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>

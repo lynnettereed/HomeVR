@@ -66,7 +66,7 @@ class FamilyRoom extends Component {
             <View />
           )}
         </Pano>
-        {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
+        {this.props.renderVrMenu && <MenuVr menuData={ this.props.menuData } />}
       </View>
     );
   }

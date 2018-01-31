@@ -1,4 +1,4 @@
-//import WebVRPolyfill from 'webvr-polyfill';
+import WebVRPolyfill from 'webvr-polyfill';
 import '../process';
 import { VRInstance } from 'react-vr-web';
 import DomOverlayModule from '../modules/DomOverlayModule';

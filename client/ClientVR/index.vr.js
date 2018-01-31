@@ -50,7 +50,7 @@ export default class ClientVR extends React.Component {
     this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
     this._fetchApiData = this.fetchApiData.bind(this);
-    this._changeScene = this.changeScene.bind(this);
+    this._initSceneChange = this.initSceneChange.bind(this);
   }
 
   componentDidMount() {
@@ -91,13 +91,7 @@ export default class ClientVR extends React.Component {
   addOverlayButtonListeners() {
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
-      if (e === 'exitVR button clicked!') {
-        postMessage({ type: 'exit VR'});
-      } else if (e === 'menu button clicked!') {
-        this._toggleDisplay();
-      } else if (e === 'menu escape clicked!') {
-        this._toggleDisplay();
-      }
+      e === 'exitVR button clicked!' ? postMessage({ type: 'exit VR'}) : this._toggleDisplay();
     });
   }
 
@@ -121,7 +115,7 @@ export default class ClientVR extends React.Component {
           console.log('not sunroom input');
         }
       } else if (e.header === 'scene') {
-        this._changeScene(e.option);
+        this._initSceneChange(e.option);
       } else if (e.header === 'cabinets') {
         this.setState({cabinets: e.option});
       } else if (e.header === 'backsplash') {
@@ -161,14 +155,14 @@ export default class ClientVR extends React.Component {
 
   toggleModal() {
     if (VrHeadModel.inVR()) {
-      this.setState({renderVrBtnbox: !this.state.renderVrBtnbox});
+      this.setState({renderVrModal: !this.state.renderVrModal});
     } else {
       // Not in VR, use the dom overlay
       NativeModules.DomOverlayModule.openModal(this.state.modalData.appliances.refrigerator);
     }
   }
 
-  changeScene(nextScene) {
+  initSceneChange(nextScene) {
     if (nextScene === this.state.currentScene) {
       return;
     } else if (sceneSelection.indexOf(nextScene) !== -1) {
@@ -195,15 +189,17 @@ export default class ClientVR extends React.Component {
         {{
           FamilyRoom: <FamilyRoom
                                renderVrMenu={ this.state.renderVrMenu }
+                               menuData={ this.state.menuData.menuFamilyRoom }
                                elevation={ this.state.elevation }
                                sunroomOn={ this.state.sunroomOn }/>,
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
+                            menuData={ this.state.menuData.menuKitchen }
                             toggleModal={ this._toggleModal }
-                               elevation={ this.state.elevation }
-                               sunroomOn={ this.state.sunroomOn }
-                               cabinets={ this.state.cabinets }
-                               backsplash={ this.state.backsplash }
-                               counter = { this.state.counter }/>,
+                            elevation={ this.state.elevation }
+                            sunroomOn={ this.state.sunroomOn }
+                            cabinets={ this.state.cabinets }
+                            backsplash={ this.state.backsplash }
+                            counter = { this.state.counter }/>,
 
         }[scene]}
       </View>
