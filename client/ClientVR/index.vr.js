@@ -15,6 +15,7 @@ import {
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import axios from 'react-native-axios';
 import fakeAPI from './fakeAPI';
+import AsyncStorageUtils from './utils/AsyncStorageUtils';
 
 import MenuVr from './components/MenuVr';
 import PanoLayer from './components/PanoLayer';
@@ -23,6 +24,7 @@ import FamilyRoom from './scenes/FamilyRoom';
 import Kitchen from './scenes/Kitchen';
 
 const sceneSelection = ['FamilyRoom', 'Kitchen'];
+const asyncStorageKeys = ['KitchenScenePano', 'SunroomPano'];
 
 const vrMenuContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
@@ -53,6 +55,10 @@ export default class ClientVR extends React.Component {
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
     //this._fetchApiData = this.fetchApiData.bind(this);
     this._initSceneChange = this.initSceneChange.bind(this);
+  }
+
+  componentWillMount() {
+    AsyncStorageUtils.clearAsyncStorage(asyncStorageKeys);
   }
 
   componentDidMount() {
