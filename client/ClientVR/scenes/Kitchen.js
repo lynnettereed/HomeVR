@@ -119,7 +119,7 @@ class Kitchen extends Component {
           scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg',
           sunroomPano: 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png',
         });
-        AsyncStorageUtils.setManyPano(['KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVista.jpg'], ['SunroomPano', 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png'])
+        AsyncStorageUtils.setManyPano(['KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVista.jpg'], ['KitchenSunroomPano', 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png'])
       } else {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg'});
         AsyncStorageUtils.setPano('KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVista.jpg');
@@ -130,7 +130,7 @@ class Kitchen extends Component {
           scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg',
           sunroomPano: 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png',
         });
-        AsyncStorageUtils.setManyPano(['KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'], ['SunroomPano', 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png'])
+        AsyncStorageUtils.setManyPano(['KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'], ['KitchenSunroomPano', 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png'])
       } else {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'});
         AsyncStorageUtils.setPano('KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg');

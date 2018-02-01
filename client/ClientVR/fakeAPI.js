@@ -1,5 +1,5 @@
 const fakeAPI = {
-  domMenuContent: {
+  domMenuData: {
     menuFamilyRoom: {
       menuData: [
         {
@@ -45,7 +45,7 @@ const fakeAPI = {
       ],
     }
   },
-  modalContent: {
+  modalData: {
     appliances: {
       refrigerator: {
         data: {
@@ -99,16 +99,30 @@ const fakeAPI = {
       }
     }
   },
+  storageKeyData: {
+    kitchen: {
+      scene: 'KitchenScenePano',
+      sunroom: 'KitchenSunroomPano',
+      all: ['KitchenScenePano', 'KitchenSunroomPano']
+    },
+    all: ['KitchenScenePano', 'KitchenSunroomPano']
+  },
   getMenuData: function() {
     return new Promise((resolve, reject) => {
-      const menuDescriptor = Object.getOwnPropertyDescriptor(this, 'domMenuContent');
-      menuDescriptor ? resolve(menuDescriptor.value) : reject(new Error('menu content not found'));
+      const menuDescriptor = Object.getOwnPropertyDescriptor(this, 'domMenuData');
+      menuDescriptor ? resolve(menuDescriptor.value) : reject(new Error('menu data not found'));
     });
   },
   getModalData: function() {
     return new Promise((resolve, reject) => {
-      const modalDescriptor = Object.getOwnPropertyDescriptor(this, 'modalContent');
-      modalDescriptor ? resolve(modalDescriptor.value) : reject(new Error('modal content not found'));
+      const modalDescriptor = Object.getOwnPropertyDescriptor(this, 'modalData');
+      modalDescriptor ? resolve(modalDescriptor.value) : reject(new Error('modal data not found'));
+    });
+  },
+  getStorageKeyData: function() {
+    return new Promise((resolve, reject) => {
+      const modalDescriptor = Object.getOwnPropertyDescriptor(this, 'storageKeyData');
+      modalDescriptor ? resolve(modalDescriptor.value) : reject(new Error('storage key data not found'));
     });
   }
 }

@@ -24,7 +24,7 @@ import FamilyRoom from './scenes/FamilyRoom';
 import Kitchen from './scenes/Kitchen';
 
 const sceneSelection = ['FamilyRoom', 'Kitchen'];
-const asyncStorageKeys = ['KitchenScenePano', 'SunroomPano'];
+const asyncStorageKeys = ['KitchenScenePano', 'KitchenSunroomPano'];
 
 const vrMenuContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
@@ -46,6 +46,7 @@ export default class ClientVR extends React.Component {
       currentScene: sceneSelection[0],
       menuData: {},
       modalData: {},
+      storageKeyData: {},
     };
 
     this._toggleDisplay = this.toggleDisplay.bind(this);
@@ -68,24 +69,53 @@ export default class ClientVR extends React.Component {
     this._addOverlayButtonListeners();
     this._addOverlayOptionListeners();
 
-    fakeAPI.getMenuData()
-    .then((data) => {
-      console.log(data);
-      this.setState({menuData: data});
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    this.fetchFakeApiData();
 
-    fakeAPI.getModalData()
-    .then((data) => {
-      console.log(data);
-      this.setState({modalData: data})
-    })
-    .catch((err) => {
-      console.log(err);
+    // fakeAPI.getMenuData()
+    // .then((data) => {
+    //   console.log(data);
+    //   this.setState({menuData: data});
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+    //
+    // fakeAPI.getModalData()
+    // .then((data) => {
+    //   console.log(data);
+    //   this.setState({modalData: data})
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+    //
+    // fakeAPI.getStorageKeyData()
+    // .then((data) => {
+    //   console.log(data);
+    //   this.setState({storageKeyData: data})
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+  }
+
+  fetchFakeApiData = () => {
+    Promise.all([fakeAPI.getMenuData(), fakeAPI.getModalData(), fakeAPI.getStorageKeyData()])
+    .then(data => {
+      const menuData = data[0];
+      const modalData = data[1];
+      const storageKeyData = data[2];
+
+      this.setState({
+        menuData: menuData,
+        modalData: modalData,
+        storageKeyData: storageKeyData
+      });
+    }).catch(err => {
+      throw new Error(`failed to fetch fakeAPI data: ${err}`);
     });
   }
+
   // TODO: uncomment and implement when API access cleared
   // fetchApiData() {
   //   axios.get('https://customerdemo.kovasolutions.com/KovaBIMaireWebConfigurator/api/v4/Test')
@@ -197,7 +227,7 @@ export default class ClientVR extends React.Component {
         {{
           FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
                                   menuData={ this.state.menuData.menuFamilyRoom }
-                                  asyncStorageKeys={asyncStorageKeys}
+                                  asyncStorageKeys={ asyncStorageKeys }
                                   elevation={ this.state.elevation }
                                   sunroomOn={ this.state.sunroomOn }/>,
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
