@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   Pano,
   View,
-  asset
+  asset,
+  AsyncStorage,
+  Prefetch
 } from 'react-vr';
 
 import PanoLayer from '../components/PanoLayer';
@@ -15,6 +17,7 @@ class FamilyRoom extends Component {
     this.state = {
       scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg',
       sunroomPano: '',
+      prefetchUris: [],
     };
 
     this._updateScene = this.updateScene.bind(this);
@@ -22,6 +25,10 @@ class FamilyRoom extends Component {
 
   componentWillMount() {
     this._updateScene(this.props);
+  }
+
+  componentDidMount() {
+    this.initScene();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,7 +63,33 @@ class FamilyRoom extends Component {
     }
   }
 
+  initScene = async () => {
+    const keys = ['KitchenScenePano', 'SunroomPano'];
+    try {
+      keys.forEach(async (key) => {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+          this.setState(prevState => ({
+            prefetchUris: [...prevState.prefetchUris, value]
+          }));
+          console.log(`${key}: ${value}`);
+          console.log(this.state.prefetchUris);
+        } else {
+          console.log(`${key} not set`);
+        }
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   render() {
+    const listPrefetch = this.state.prefetchUris.map((uri, index) => {
+      return (
+        <Prefetch key={index} source={asset(uri)}/>
+      );
+    });
+
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
@@ -67,6 +100,7 @@ class FamilyRoom extends Component {
           )}
         </Pano>
         {this.props.renderVrMenu && <MenuVr menuData={ this.props.menuData } />}
+        {listPrefetch}
       </View>
     );
   }

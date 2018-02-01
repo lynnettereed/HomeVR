@@ -6,7 +6,8 @@ import {
   VrButton,
   Text,
   StyleSheet,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-vr';
 
 import MenuVr from '../components/MenuVr';
@@ -25,14 +26,18 @@ class Kitchen extends Component {
       counterPano: '',
     };
 
+    this._initScene = this.initScene.bind(this);
     this._updateScene = this.updateScene.bind(this);
+    this._handleElevation = this.handleElevation.bind(this);
     this._handleCabs = this.handleCabs.bind(this);
     this._handleBacksplash = this.handleBacksplash.bind(this);
     this._handleCounter = this.handleCounter.bind(this);
+    this._sceneOnLoad = this.sceneOnLoad.bind(this);
+    this._sceneOnLoadEnd = this.sceneOnLoadEnd.bind(this);
   }
 
   componentWillMount() {
-    this._updateScene(this.props);
+    this._initScene(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,6 +48,10 @@ class Kitchen extends Component {
     //   this._updateScene(nextProps);
     // }
     this._updateScene(nextProps);
+  }
+
+  componentDidUpdate() {
+    //console.log('component updated');
   }
 
   handleCabs(props) {
@@ -93,12 +102,14 @@ class Kitchen extends Component {
     }
   }
 
-  updateScene(props) {
+  handleElevation(props) {
     if (props.elevation === 'american classic') {
       if (props.sunroomOn) {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg',});
+        this.setPano('KitchenScenePano', 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg');
       } else {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg'});
+        this.setPano('KitchenScenePano', 'panos/Foster_Int_Kitchen_AmericanClassic.jpg');
       }
     } else if (props.elevation === 'bella vista') {
       if (props.sunroomOn) {
@@ -106,8 +117,10 @@ class Kitchen extends Component {
           scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg',
           sunroomPano: 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png',
         });
+        this.setManyPano(['KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVista.jpg'], ['SunroomPano', 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png'])
       } else {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg'});
+        this.setPano('KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVista.jpg');
       }
     } else if (props.elevation === 'bella vista brick') {
       if (props.sunroomOn) {
@@ -115,36 +128,84 @@ class Kitchen extends Component {
           scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg',
           sunroomPano: 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png',
         });
+        this.setManyPano(['KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'], ['SunroomPano', 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png'])
       } else {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'});
+        this.setPano('KitchenScenePano', 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg');
       }
     }
+  }
+
+  setPano = async (key, uri) => {
+    try {
+      await AsyncStorage.setItem(key, uri);
+    } catch (err) {
+      console.error('failed to set uri');
+    }
+  }
+
+  setManyPano = async (...keyVal) => {
+    try {
+      await AsyncStorage.multiSet([...keyVal]);
+    } catch (err) {
+      console.error('failed to set uris');
+    }
+  }
+
+
+  initScene(props) {
+    this._handleElevation(props);
     this._handleCabs(props);
     this._handleBacksplash(props);
     this._handleCounter(props);
   }
 
+  updateScene(props) {
+    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
+      this._handleElevation(props);
+    }
+    if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
+      this._handleCabs(props);
+    }
+    if (props.backsplash !== this.props.backsplash || props.sunroomOn !== this.props.sunroomOn) {
+      this._handleBacksplash(props);
+    }
+    if (props.counter !== this.props.counter || props.sunroomOn !== this.props.sunroomOn) {
+      this._handleCounter(props);
+    }
+  }
+
+  sceneOnLoad() {
+    //console.log('pano loading');
+  }
+
+  sceneOnLoadEnd() {
+    //console.log('pano loaded');
+  }
+
   render() {
     return (
       <View>
-        <Pano source={ asset(this.state.scenePano) }>
+        <Pano source={ asset(this.state.scenePano) }
+              onLoad={ this._sceneOnLoad }
+              onLoadEnd={ this._sceneOnLoadEnd }>
           {this.props.elevation !== 'american classic' && this.props.sunroomOn ? (
-            <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } />
+            <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
           ) : (
             <View />
           )}
           {this.props.cabinets !== 'option1' ? (
-            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } />
+            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
           ) : (
             <View />
           )}
           {this.props.backsplash !== 'option1' ? (
-            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } />
+            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
           ) : (
             <View />
           )}
           {this.props.counter !== 'option1' ? (
-            <PanoLayer radius={960} source={ asset(this.state.counterPano) } />
+            <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
           ) : (
             <View />
           )}

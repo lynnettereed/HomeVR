@@ -8,7 +8,9 @@ import {
   StyleSheet,
   Text,
   VrButton,
-  VrHeadModel
+  VrHeadModel,
+  Prefetch,
+  AsyncStorage
 } from 'react-vr';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import axios from 'react-native-axios';
@@ -49,7 +51,7 @@ export default class ClientVR extends React.Component {
     this._toggleModal = this.toggleModal.bind(this);
     this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
     this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
-    this._fetchApiData = this.fetchApiData.bind(this);
+    //this._fetchApiData = this.fetchApiData.bind(this);
     this._initSceneChange = this.initSceneChange.bind(this);
   }
 
@@ -78,15 +80,15 @@ export default class ClientVR extends React.Component {
       console.log(err);
     });
   }
-
-  fetchApiData() {
-    axios.get('https://customerdemo.kovasolutions.com/KovaBIMaireWebConfigurator/api/v4/Test')
-    .then(response => {
-      console.log(response);
-    }).catch(err => {
-      console.log(err);
-    });
-  }
+  // TODO: uncomment and implement when API access cleared
+  // fetchApiData() {
+  //   axios.get('https://customerdemo.kovasolutions.com/KovaBIMaireWebConfigurator/api/v4/Test')
+  //   .then(response => {
+  //     console.log(response);
+  //   }).catch(err => {
+  //     console.log(err);
+  //   });
+  // }
 
   addOverlayButtonListeners() {
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
