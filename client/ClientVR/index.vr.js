@@ -195,11 +195,11 @@ export default class ClientVR extends React.Component {
     return (
       <View>
         {{
-          FamilyRoom: <FamilyRoom
-                               renderVrMenu={ this.state.renderVrMenu }
-                               menuData={ this.state.menuData.menuFamilyRoom }
-                               elevation={ this.state.elevation }
-                               sunroomOn={ this.state.sunroomOn }/>,
+          FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
+                                  menuData={ this.state.menuData.menuFamilyRoom }
+                                  asyncStorageKeys={asyncStorageKeys}
+                                  elevation={ this.state.elevation }
+                                  sunroomOn={ this.state.sunroomOn }/>,
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
                             menuData={ this.state.menuData.menuKitchen }
                             toggleModal={ this._toggleModal }

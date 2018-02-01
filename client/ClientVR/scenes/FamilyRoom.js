@@ -6,6 +6,7 @@ import {
   AsyncStorage,
   Prefetch
 } from 'react-vr';
+import AsyncStorageUtils from '../utils/AsyncStorageUtils';
 
 import PanoLayer from '../components/PanoLayer';
 import MenuVr from '../components/MenuVr';
@@ -28,7 +29,7 @@ class FamilyRoom extends Component {
   }
 
   componentDidMount() {
-    this.initScene();
+    this.initScene(this.props.asyncStorageKeys);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,32 +64,56 @@ class FamilyRoom extends Component {
     }
   }
 
-  initScene = async () => {
-    const keys = ['KitchenScenePano', 'SunroomPano'];
+  initScene = async (keys) => {
     try {
-      keys.forEach(async (key) => {
-        const value = await AsyncStorage.getItem(key);
-        if (value !== null) {
-          this.setState(prevState => ({
-            prefetchUris: [...prevState.prefetchUris, value]
-          }));
-          console.log(`${key}: ${value}`);
-          console.log(this.state.prefetchUris);
-        } else {
-          console.log(`${key} not set`);
-        }
-      })
+      const prefetchValueArr = await this.buildPrefetchArr(keys);
+      await this.pushToPrefetchUris(prefetchValueArr);
     } catch (err) {
-      console.error(err);
+      throw new Error(`failed to init Scene: ${err}`);
     }
   }
 
+  buildPrefetchArr = async (keys) => {
+    let valueArr = [];
+    const keyValues = await AsyncStorage.multiGet(keys);
+    keyValues.forEach((keyValue) => {
+      const key = keyValue[0];
+      const value = keyValue[1];
+      if (value !== null) {
+        console.log(`${key}: ${value}`);
+        valueArr.push(value)
+      } else {
+        if (key === 'KitchenScenePano') {
+          console.log(`${key} not set...setting ${key} default`);
+          valueArr.push('panos/Foster_Int_Kitchen_AmericanClassic.jpg');
+        } else {
+          console.log(`${key} not set`);
+        }
+      }
+    });
+    return valueArr;
+  }
+
+  asyncForEach = async (array, callback) => {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+  }
+
+  pushToPrefetchUris = async (valueArr) => {
+    await this.setState(prevState => ({
+      prefetchUris: [...prevState.prefetchUris, ...valueArr]
+    }));
+  }
+
   render() {
-    const listPrefetch = this.state.prefetchUris.map((uri, index) => {
+    const listPrefetch = this.state.prefetchUris.map((uri) => {
       return (
-        <Prefetch key={index} source={asset(uri)}/>
+        <Prefetch key={uri} source={asset(uri)}/>
       );
     });
+    console.log('rendered');
+    console.log(this.state.prefetchUris);
 
     return (
       <View>

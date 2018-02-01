@@ -9,7 +9,7 @@ class AsyncStorageUtils {
     try {
       await AsyncStorage.setItem(key, uri);
     } catch (err) {
-      console.error('failed to set pano');
+      throw new Error(`failed to set pano: ${err}`);
     }
   }
 
@@ -17,7 +17,7 @@ class AsyncStorageUtils {
     try {
       await AsyncStorage.multiSet([...keyValArr]);
     } catch (err) {
-      console.error('failed to set many pano');
+      throw new Error(`failed to set many pano: ${err}`);
     }
   }
 
@@ -26,7 +26,7 @@ class AsyncStorageUtils {
       await AsyncStorage.multiRemove(keys);
       console.log('keys removed');
     } catch (err) {
-      console.error(err);
+      throw new Error(`failed to clear AsyncStorage: ${err}`);
     }
   }
 }
