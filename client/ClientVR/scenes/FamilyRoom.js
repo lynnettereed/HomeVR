@@ -94,12 +94,6 @@ class FamilyRoom extends Component {
     return valueArr;
   }
 
-  asyncForEach = async (array, callback) => {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
-    }
-  }
-
   pushToPrefetchUris = async (valueArr) => {
     await this.setState(prevState => ({
       prefetchUris: [...prevState.prefetchUris, ...valueArr]
