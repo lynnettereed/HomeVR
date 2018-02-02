@@ -49,13 +49,13 @@ export default class ClientVR extends React.Component {
       storageKeyData: {},
     };
 
-    this._toggleDisplay = this.toggleDisplay.bind(this);
-    this._togglePersistent = this.togglePersistent.bind(this);
-    this._toggleModal = this.toggleModal.bind(this);
-    this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
-    this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
-    //this._fetchApiData = this.fetchApiData.bind(this);
-    this._initSceneChange = this.initSceneChange.bind(this);
+    // this._toggleDisplay = this.toggleDisplay.bind(this);
+    // this._togglePersistent = this.togglePersistent.bind(this);
+    // this._toggleModal = this.toggleModal.bind(this);
+    // this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
+    // this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
+    // //this._fetchApiData = this.fetchApiData.bind(this);
+    // this._initSceneChange = this.initSceneChange.bind(this);
   }
 
   componentWillMount() {
@@ -65,9 +65,9 @@ export default class ClientVR extends React.Component {
   componentDidMount() {
     //this._fetchApiData(); // <-- TODO: fix CORS issue or find workaround
     // Init persistent overlay
-    this._togglePersistent();
-    this._addOverlayButtonListeners();
-    this._addOverlayOptionListeners();
+    this.togglePersistent();
+    this.addOverlayButtonListeners();
+    this.addOverlayOptionListeners();
     this.fetchFakeApiData();
   }
 
@@ -98,14 +98,14 @@ export default class ClientVR extends React.Component {
   //   });
   // }
 
-  addOverlayButtonListeners() {
+  addOverlayButtonListeners = () => {
     RCTDeviceEventEmitter.addListener('overlayButtonEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
-      e === 'exitVR button clicked!' ? postMessage({ type: 'exit VR'}) : this._toggleDisplay();
+      e === 'exitVR button clicked!' ? postMessage({ type: 'exit VR'}) : this.toggleDisplay();
     });
   }
 
-  addOverlayOptionListeners() {
+  addOverlayOptionListeners = () => {
     RCTDeviceEventEmitter.addListener('overlayOptionEvent', (e) => {
       console.log(e); // <-- for debugging purposes TODO: remove this line
       if (e.header === 'elevation') {
@@ -125,7 +125,7 @@ export default class ClientVR extends React.Component {
           console.log('not sunroom input');
         }
       } else if (e.header === 'scene') {
-        this._initSceneChange(e.option);
+        this.initSceneChange(e.option);
       } else if (e.header === 'cabinets') {
         this.setState({cabinets: e.option});
       } else if (e.header === 'backsplash') {
@@ -138,7 +138,7 @@ export default class ClientVR extends React.Component {
 
   // Determine whether content should be displayed on the dom overlay, or as a
   // react-vr component based on VrHeadModel's inVR API.
-  toggleDisplay() {
+  toggleDisplay = () => {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrMenu: !this.state.renderVrMenu});
     } else if (!this.state.menuActive) {
@@ -154,7 +154,7 @@ export default class ClientVR extends React.Component {
     }
   }
 
-  togglePersistent() {
+  togglePersistent = () => {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrBtnbox: !this.state.renderVrBtnbox});
     } else {
@@ -163,7 +163,7 @@ export default class ClientVR extends React.Component {
     }
   }
 
-  toggleModal() {
+  toggleModal = () => {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrModal: !this.state.renderVrModal});
     } else {
@@ -172,18 +172,18 @@ export default class ClientVR extends React.Component {
     }
   }
 
-  initSceneChange(nextScene) {
+  initSceneChange = (nextScene) => {
     if (nextScene === this.state.currentScene) {
       return;
     } else if (sceneSelection.indexOf(nextScene) !== -1) {
       switch (nextScene) {
         case sceneSelection[0]:
           this.setState({currentScene: sceneSelection[0]});
-          this._toggleDisplay();
+          this.toggleDisplay();
           break;
         case sceneSelection[1]:
           this.setState({currentScene: sceneSelection[1]});
-          this._toggleDisplay();
+          this.toggleDisplay();
           break;
         default:
           console.error('scene does not exist');
@@ -205,7 +205,7 @@ export default class ClientVR extends React.Component {
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
                             menuData={ this.state.menuData.menuKitchen }
                             storageKeyData={ this.state.storageKeyData }
-                            toggleModal={ this._toggleModal }
+                            toggleModal={ this.toggleModal }
                             elevation={ this.state.elevation }
                             sunroomOn={ this.state.sunroomOn }
                             cabinets={ this.state.cabinets }

@@ -20,12 +20,10 @@ class FamilyRoom extends Component {
       sunroomPano: '',
       prefetchUris: [],
     };
-
-    this._updateScene = this.updateScene.bind(this);
   }
 
   componentWillMount() {
-    this._updateScene(this.props);
+    this.updateScene(this.props);
   }
 
   componentDidMount() {
@@ -35,11 +33,11 @@ class FamilyRoom extends Component {
   componentWillReceiveProps(nextProps) {
     console.log(this.props);
     console.log(nextProps);
-    this._updateScene(nextProps);
+    this.updateScene(nextProps);
     this.updatePrefetchUris(nextProps.storageKeyData.kitchen.all);
   }
 
-  updateScene(props) {
+  updateScene = (props) => {
     if (props.elevation === 'american classic') {
       if (props.sunroomOn) {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
@@ -120,7 +118,7 @@ class FamilyRoom extends Component {
   render() {
     const listPrefetch = this.state.prefetchUris.map((uri) => {
       return (
-        <Prefetch key={uri} source={asset(uri)}/>
+        <Prefetch key={uri} source={asset(uri)} />
       );
     });
     console.log(this.state.prefetchUris);

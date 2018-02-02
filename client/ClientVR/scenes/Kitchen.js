@@ -27,36 +27,21 @@ class Kitchen extends Component {
       backsplashPano: '',
       counterPano: '',
     };
-
-    this._initScene = this.initScene.bind(this);
-    this._updateScene = this.updateScene.bind(this);
-    this._handleElevation = this.handleElevation.bind(this);
-    this._handleCabs = this.handleCabs.bind(this);
-    this._handleBacksplash = this.handleBacksplash.bind(this);
-    this._handleCounter = this.handleCounter.bind(this);
-    this._sceneOnLoad = this.sceneOnLoad.bind(this);
-    this._sceneOnLoadEnd = this.sceneOnLoadEnd.bind(this);
   }
 
   componentWillMount() {
-    this._initScene(this.props);
+    this.initScene(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log(nextProps);
-    // console.log(this.props);
-    // if (nextProps.sunroomOn !== this.props.sunroomOn) {
-    //   console.log('scene updated');
-    //   this._updateScene(nextProps);
-    // }
-    this._updateScene(nextProps);
+    this.updateScene(nextProps);
   }
 
   componentDidUpdate() {
     //console.log('component updated');
   }
 
-  handleCabs(props) {
+  handleCabs = (props) => {
     if (props.cabinets === 'option2') {
       props.sunroomOn
         ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs2.png'})
@@ -72,7 +57,7 @@ class Kitchen extends Component {
     }
   }
 
-  handleBacksplash(props) {
+  handleBacksplash = (props) => {
     if (props.backsplash === 'option2') {
       props.sunroomOn
         ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash2.png'})
@@ -88,7 +73,7 @@ class Kitchen extends Component {
     }
   }
 
-  handleCounter(props) {
+  handleCounter = (props) => {
     if (props.counter === 'option2') {
       props.sunroomOn
         ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter2.png'})
@@ -104,7 +89,7 @@ class Kitchen extends Component {
     }
   }
 
-  handleElevation(props) {
+  handleElevation = (props) => {
     if (props.elevation === 'american classic') {
       if (props.sunroomOn) {
         this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg'});
@@ -140,33 +125,33 @@ class Kitchen extends Component {
     }
   }
 
-  initScene(props) {
-    this._handleElevation(props);
-    this._handleCabs(props);
-    this._handleBacksplash(props);
-    this._handleCounter(props);
+  initScene = (props) => {
+    this.handleElevation(props);
+    this.handleCabs(props);
+    this.handleBacksplash(props);
+    this.handleCounter(props);
   }
 
-  updateScene(props) {
+  updateScene = (props) => {
     if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
-      this._handleElevation(props);
+      this.handleElevation(props);
     }
     if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
-      this._handleCabs(props);
+      this.handleCabs(props);
     }
     if (props.backsplash !== this.props.backsplash || props.sunroomOn !== this.props.sunroomOn) {
-      this._handleBacksplash(props);
+      this.handleBacksplash(props);
     }
     if (props.counter !== this.props.counter || props.sunroomOn !== this.props.sunroomOn) {
-      this._handleCounter(props);
+      this.handleCounter(props);
     }
   }
 
-  sceneOnLoad() {
+  sceneOnLoad = () => {
     //console.log('pano loading');
   }
 
-  sceneOnLoadEnd() {
+  sceneOnLoadEnd = () => {
     //console.log('pano loaded');
   }
 
@@ -174,25 +159,25 @@ class Kitchen extends Component {
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }
-              onLoad={ this._sceneOnLoad }
-              onLoadEnd={ this._sceneOnLoadEnd }>
+              onLoad={ this.sceneOnLoad }
+              onLoadEnd={ this.sceneOnLoadEnd }>
           {this.props.elevation !== 'american classic' && this.props.sunroomOn ? (
-            <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
+            <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
           ) : (
             <View />
           )}
           {this.props.cabinets !== 'option1' ? (
-            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
+            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
           ) : (
             <View />
           )}
           {this.props.backsplash !== 'option1' ? (
-            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
+            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
           ) : (
             <View />
           )}
           {this.props.counter !== 'option1' ? (
-            <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this._sceneOnLoad} onLoadEnd={this._sceneOnLoadEnd} />
+            <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
           ) : (
             <View />
           )}

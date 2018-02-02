@@ -13,6 +13,7 @@ class DomOverlayModule extends Module {
 
     this._closeOverlay = this.closeOverlay.bind(this);
     this._openOverlay = this.openOverlay.bind(this);
+    this._openPersistent = this.openPersistent.bind(this);
     this._handleBtnClick = this.handleBtnClick.bind(this);
     this._handleXBtnClick = this.handleXBtnClick.bind(this);
     this._handleOptionClick = this.handleOptionClick.bind(this);
