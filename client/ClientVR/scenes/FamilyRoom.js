@@ -41,8 +41,10 @@ class FamilyRoom extends Component {
     if (props.elevation === 'american classic') {
       if (props.sunroomOn) {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
+        //AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg');
       } else {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
+        //AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg');
       }
     } else if (props.elevation === 'bella vista') {
       if (props.sunroomOn) {
@@ -72,6 +74,7 @@ class FamilyRoom extends Component {
     } catch (err) {
       throw new Error(`failed to update prefetchUris: ${err}`);
     }
+    console.log('prefetchUris updated');
   }
 
   setPrefetchUris = async (keys) => {
@@ -85,7 +88,7 @@ class FamilyRoom extends Component {
 
   clearPrefetchUris = () => {
     this.setState({prefetchUris: []});
-    console.log(`prefetchUris cleared: ${this.state.prefetchUris}`);
+    console.log('prefetchUris cleared');
   }
 
   buildPrefetchArr = async (keys) => {

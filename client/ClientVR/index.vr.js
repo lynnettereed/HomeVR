@@ -24,7 +24,6 @@ import FamilyRoom from './scenes/FamilyRoom';
 import Kitchen from './scenes/Kitchen';
 
 const sceneSelection = ['FamilyRoom', 'Kitchen'];
-const asyncStorageKeys = ['KitchenScenePano', 'KitchenSunroomPano'];
 
 const vrMenuContent =
   'This is a React VR textbox! This is how you would show text in VR, where DOM Overlay is not accessible.';
@@ -48,18 +47,10 @@ export default class ClientVR extends React.Component {
       modalData: {},
       storageKeyData: {},
     };
-
-    // this._toggleDisplay = this.toggleDisplay.bind(this);
-    // this._togglePersistent = this.togglePersistent.bind(this);
-    // this._toggleModal = this.toggleModal.bind(this);
-    // this._addOverlayButtonListeners = this.addOverlayButtonListeners.bind(this);
-    // this._addOverlayOptionListeners = this.addOverlayOptionListeners.bind(this);
-    // //this._fetchApiData = this.fetchApiData.bind(this);
-    // this._initSceneChange = this.initSceneChange.bind(this);
   }
 
   componentWillMount() {
-    AsyncStorageUtils.clearAsyncStorage(asyncStorageKeys);
+
   }
 
   componentDidMount() {
@@ -83,6 +74,8 @@ export default class ClientVR extends React.Component {
         modalData: modalData,
         storageKeyData: storageKeyData
       });
+    }).then(() => {
+      AsyncStorageUtils.clearAsyncStorage(this.state.storageKeyData.all);
     }).catch(err => {
       throw new Error(`failed to fetch fakeAPI data: ${err}`);
     });
