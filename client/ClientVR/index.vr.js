@@ -68,35 +68,7 @@ export default class ClientVR extends React.Component {
     this._togglePersistent();
     this._addOverlayButtonListeners();
     this._addOverlayOptionListeners();
-
     this.fetchFakeApiData();
-
-    // fakeAPI.getMenuData()
-    // .then((data) => {
-    //   console.log(data);
-    //   this.setState({menuData: data});
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-    //
-    // fakeAPI.getModalData()
-    // .then((data) => {
-    //   console.log(data);
-    //   this.setState({modalData: data})
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-    //
-    // fakeAPI.getStorageKeyData()
-    // .then((data) => {
-    //   console.log(data);
-    //   this.setState({storageKeyData: data})
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
   }
 
   fetchFakeApiData = () => {
@@ -228,10 +200,12 @@ export default class ClientVR extends React.Component {
           FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
                                   menuData={ this.state.menuData.menuFamilyRoom }
                                   asyncStorageKeys={ asyncStorageKeys }
+                                  storageKeyData={ this.state.storageKeyData }
                                   elevation={ this.state.elevation }
                                   sunroomOn={ this.state.sunroomOn }/>,
           Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
                             menuData={ this.state.menuData.menuKitchen }
+                            storageKeyData={ this.state.storageKeyData }
                             toggleModal={ this._toggleModal }
                             elevation={ this.state.elevation }
                             sunroomOn={ this.state.sunroomOn }

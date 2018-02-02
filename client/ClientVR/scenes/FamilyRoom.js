@@ -29,7 +29,7 @@ class FamilyRoom extends Component {
   }
 
   componentDidMount() {
-    this.initScene(this.props.asyncStorageKeys);
+    this.setPrefetchUris(this.props.asyncStorageKeys);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,13 +64,27 @@ class FamilyRoom extends Component {
     }
   }
 
-  initScene = async (keys) => {
+  updatePrefetchUris = async (keys) => {
+    try {
+      await this.clearPrefetchUris();
+      await this.setPrefetchUris(keys);
+    } catch (err) {
+      throw new Error(`failed to update prefetchUris: ${err}`);
+    }
+  }
+
+  setPrefetchUris = async (keys) => {
     try {
       const prefetchValueArr = await this.buildPrefetchArr(keys);
       await this.pushToPrefetchUris(prefetchValueArr);
     } catch (err) {
-      throw new Error(`failed to init Scene: ${err}`);
+      throw new Error(`failed to set prefetchUris: ${err}`);
     }
+  }
+
+  clearPrefetchUris = () => {
+    this.setState({prefetchUris: []});
+    console.log(`prefetchUris cleared: ${this.state.prefetchUris}`);
   }
 
   buildPrefetchArr = async (keys) => {
@@ -106,9 +120,8 @@ class FamilyRoom extends Component {
         <Prefetch key={uri} source={asset(uri)}/>
       );
     });
-    console.log('rendered');
     console.log(this.state.prefetchUris);
-
+    
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>
