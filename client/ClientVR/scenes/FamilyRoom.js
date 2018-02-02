@@ -29,11 +29,14 @@ class FamilyRoom extends Component {
   }
 
   componentDidMount() {
-    this.setPrefetchUris(this.props.asyncStorageKeys);
+    //this.setPrefetchUris(this.props.asyncStorageKeys);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(this.props);
+    console.log(nextProps);
     this._updateScene(nextProps);
+    this.updatePrefetchUris(nextProps.storageKeyData.kitchen.all);
   }
 
   updateScene(props) {
@@ -121,7 +124,7 @@ class FamilyRoom extends Component {
       );
     });
     console.log(this.state.prefetchUris);
-    
+
     return (
       <View>
         <Pano source={ asset(this.state.scenePano) }>

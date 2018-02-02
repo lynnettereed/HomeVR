@@ -178,12 +178,12 @@ export default class ClientVR extends React.Component {
     } else if (sceneSelection.indexOf(nextScene) !== -1) {
       switch (nextScene) {
         case sceneSelection[0]:
-          this._toggleDisplay();
           this.setState({currentScene: sceneSelection[0]});
+          this._toggleDisplay();
           break;
         case sceneSelection[1]:
-          this._toggleDisplay();
           this.setState({currentScene: sceneSelection[1]});
+          this._toggleDisplay();
           break;
         default:
           console.error('scene does not exist');
@@ -199,7 +199,6 @@ export default class ClientVR extends React.Component {
         {{
           FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
                                   menuData={ this.state.menuData.menuFamilyRoom }
-                                  asyncStorageKeys={ asyncStorageKeys }
                                   storageKeyData={ this.state.storageKeyData }
                                   elevation={ this.state.elevation }
                                   sunroomOn={ this.state.sunroomOn }/>,
