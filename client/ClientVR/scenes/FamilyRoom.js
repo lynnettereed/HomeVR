@@ -23,28 +23,41 @@ class FamilyRoom extends Component {
   }
 
   componentWillMount() {
-    this.updateScene(this.props);
+    console.log(this.props);
+    this.initScene(this.props);
   }
 
   componentDidMount() {
-    //this.setPrefetchUris(this.props.asyncStorageKeys);
+
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props);
-    console.log(nextProps);
+    //console.log(this.props);
+    //console.log(nextProps);
     this.updateScene(nextProps);
     this.updatePrefetchUris(nextProps.storageKeyData.kitchen.all);
+    console.log('received props');
+  }
+
+  initScene = (props) => {
+    this.handleElevation(props);
   }
 
   updateScene = (props) => {
+    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
+      this.handleElevation(props);
+      console.log('elevation updated');
+    }
+  }
+
+  handleElevation = (props) => {
     if (props.elevation === 'american classic') {
       if (props.sunroomOn) {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic_Sunroom.jpg'});
-        //AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg');
+        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg');
       } else {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg'});
-        //AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg');
+        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg');
       }
     } else if (props.elevation === 'bella vista') {
       if (props.sunroomOn) {
@@ -52,8 +65,11 @@ class FamilyRoom extends Component {
           sunroomPano: 'layers/Foster_Int_FamilyRoom_BellaVista_Sunroom.png',
           scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg',
         });
+        AsyncStorageUtils.setManyPano([props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg'],
+                                      [props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png']);
       } else {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVista.jpg'});
+        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg');
       }
     } else if (props.elevation === 'bella vista brick') {
       if (props.sunroomOn) {
@@ -61,8 +77,11 @@ class FamilyRoom extends Component {
           sunroomPano: 'layers/Foster_Int_FamilyRoom_BellaVistaBrick_Sunroom.png',
           scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg',
         });
+        AsyncStorageUtils.setManyPano([props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'],
+                                      [props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png']);
       } else {
         this.setState({scenePano: 'panos/Foster_Int_FamilyRoom_BellaVistaBrick.jpg'});
+        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg');
       }
     }
   }

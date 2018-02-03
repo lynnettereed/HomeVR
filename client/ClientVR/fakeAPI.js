@@ -103,9 +103,12 @@ const fakeAPI = {
     kitchen: {
       scene: 'KitchenScenePano',
       sunroom: 'KitchenSunroomPano',
-      all: ['KitchenScenePano', 'KitchenSunroomPano']
+      cabinets: 'KitchenCabinetsPano',
+      backsplash: 'KitchenBacksplashPano',
+      counter: 'KitchenCounterPano',
+      all: ['KitchenScenePano', 'KitchenSunroomPano', 'KitchenCabinetsPano', 'KitchenBacksplashPano', 'KitchenCounterPano']
     },
-    all: ['KitchenScenePano', 'KitchenSunroomPano']
+    all: ['KitchenScenePano', 'KitchenSunroomPano', 'KitchenCabinetsPano', 'KitchenBacksplashPano', 'KitchenCounterPano']
   },
   getMenuData: function() {
     return new Promise((resolve, reject) => {

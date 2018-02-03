@@ -37,115 +37,248 @@ class Kitchen extends Component {
     this.updateScene(nextProps);
   }
 
-  componentDidUpdate() {
-    //console.log('component updated');
+  // updateStateAndStorage = (panoKey, storageKey, uri) => {
+  //   const newState = {};
+  //   newState[panoKey] = uri;
+  //   console.log(newState);
+  //   this.setState(newState);
+  //   AsyncStorageUtils.setPano(storageKey, uri);
+  // }
+
+  // handleCabs = (props) => {
+  //   if (props.cabinets === 'option2') {
+  //     props.sunroomOn
+  //       ? this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs2.png')
+  //       : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs2.png'})
+  //   } else if (props.cabinets === 'option3') {
+  //     props.sunroomOn
+  //       ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs3.png'})
+  //       : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs3.png'})
+  //   } else if (props.cabinets === 'option4') {
+  //     props.sunroomOn
+  //       ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs4.png'})
+  //       : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs4.png'})
+  //   }
+  // }
+  //
+  // handleBacksplash = (props) => {
+  //   if (props.backsplash === 'option2') {
+  //     props.sunroomOn
+  //       ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash2.png'})
+  //       : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash2.png'})
+  //   } else if (props.backsplash === 'option3') {
+  //     props.sunroomOn
+  //       ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash3.png'})
+  //       : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash3.png'})
+  //   } else if (props.backsplash === 'option4') {
+  //     props.sunroomOn
+  //       ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash4.png'})
+  //       : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash4.png'})
+  //   }
+  // }
+  //
+  // handleCounter = (props) => {
+  //   if (props.counter === 'option2') {
+  //     props.sunroomOn
+  //       ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter2.png'})
+  //       : this.setState({counterPano: 'layers/Kitchen_AC_Counter2.png'})
+  //   } else if (props.counter === 'option3') {
+  //     props.sunroomOn
+  //       ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter3.png'})
+  //       : this.setState({counterPano: 'layers/Kitchen_AC_Counter3.png'})
+  //   } else if (props.counter === 'option4') {
+  //     props.sunroomOn
+  //       ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter4.png'})
+  //       : this.setState({counterPano: 'layers/Kitchen_AC_Counter4.png'})
+  //   }
+  // }
+  //
+  // handleElevation = (props) => {
+  //   if (props.elevation === 'american classic') {
+  //     if (props.sunroomOn) {
+  //       this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg'});
+  //       AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg');
+  //     } else {
+  //       this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg'});
+  //       AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg');
+  //     }
+  //   } else if (props.elevation === 'bella vista') {
+  //     if (props.sunroomOn) {
+  //       this.setState({
+  //         scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg',
+  //         sunroomPano: 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png',
+  //       });
+  //       AsyncStorageUtils.setManyPano([props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg'],
+  //                                     [props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png']);
+  //     } else {
+  //       this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg'});
+  //       AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg');
+  //     }
+  //   } else if (props.elevation === 'bella vista brick') {
+  //     if (props.sunroomOn) {
+  //       this.setState({
+  //         scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg',
+  //         sunroomPano: 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png',
+  //       });
+  //       AsyncStorageUtils.setManyPano([props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'],
+  //                                     [props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png']);
+  //     } else {
+  //       this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'});
+  //       AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg');
+  //     }
+  //   }
+  // }
+
+  updateStateAndStorage = (panoKey, storageKey, uri) => {
+    AsyncStorageUtils.setPano(storageKey, uri);
+    const stateObj = {
+      key: panoKey,
+      value: uri
+    }
+    return [stateObj];
   }
 
-  handleCabs = (props) => {
+  updateManyStateAndStorage = (stateStorageArr) => {
+    const storageArr = [];
+    const stateObjArr = []
+
+    stateStorageArr.forEach(el => {
+      const storageKey = el[1];
+      const storageVal = el[2];
+      const storageArrEntry = [storageKey, storageVal];
+      storageArr.push(storageArrEntry);
+
+      const objKey = el[0];
+      const objVal = el[2];
+      const stateObjArrEntry = {
+        key: objKey,
+        value: objVal
+      }
+      stateObjArr.push(stateObjArrEntry);
+    });
+
+    AsyncStorageUtils.setManyPano(...storageArr);
+    return stateObjArr;
+  }
+
+  handleCabs = async (props) => {
     if (props.cabinets === 'option2') {
-      props.sunroomOn
-        ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs2.png'})
-        : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs2.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs2.png')
+        : await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Cabs2.png')
     } else if (props.cabinets === 'option3') {
-      props.sunroomOn
-        ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs3.png'})
-        : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs3.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs3.png')
+        : await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Cabs3.png')
     } else if (props.cabinets === 'option4') {
-      props.sunroomOn
-        ? this.setState({cabinetsPano: 'layers/Kitchen_AC_Sunroom_Cabs4.png'})
-        : this.setState({cabinetsPano: 'layers/Kitchen_AC_Cabs4.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs4.png')
+        : await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Cabs4.png')
     }
   }
 
-  handleBacksplash = (props) => {
+  handleBacksplash = async (props) =>  {
     if (props.backsplash === 'option2') {
-      props.sunroomOn
-        ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash2.png'})
-        : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash2.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Sunroom_Backsplash2.png')
+        : await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Backsplash2.png')
     } else if (props.backsplash === 'option3') {
-      props.sunroomOn
-        ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash3.png'})
-        : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash3.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Sunroom_Backsplash3.png')
+        : await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Backsplash3.png')
     } else if (props.backsplash === 'option4') {
-      props.sunroomOn
-        ? this.setState({backsplashPano: 'layers/Kitchen_AC_Sunroom_Backsplash4.png'})
-        : this.setState({backsplashPano: 'layers/Kitchen_AC_Backsplash4.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Sunroom_Backsplash4.png')
+        : await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Backsplash4.png')
     }
   }
 
-  handleCounter = (props) => {
+  handleCounter = async (props) => {
     if (props.counter === 'option2') {
-      props.sunroomOn
-        ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter2.png'})
-        : this.setState({counterPano: 'layers/Kitchen_AC_Counter2.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Sunroom_Counter2.png')
+        : await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Counter2.png')
     } else if (props.counter === 'option3') {
-      props.sunroomOn
-        ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter3.png'})
-        : this.setState({counterPano: 'layers/Kitchen_AC_Counter3.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Sunroom_Counter3.png')
+        : await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Counter3.png')
     } else if (props.counter === 'option4') {
-      props.sunroomOn
-        ? this.setState({counterPano: 'layers/Kitchen_AC_Sunroom_Counter4.png'})
-        : this.setState({counterPano: 'layers/Kitchen_AC_Counter4.png'})
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Sunroom_Counter4.png')
+        : await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Counter4.png')
     }
   }
 
-  handleElevation = (props) => {
+  handleElevation = async (props) => {
     if (props.elevation === 'american classic') {
-      if (props.sunroomOn) {
-        this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg'});
-        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg');
-      } else {
-        this.setState({scenePano: 'panos/Foster_Int_Kitchen_AmericanClassic.jpg'});
-        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg');
-      }
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg')
+        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg')
     } else if (props.elevation === 'bella vista') {
-      if (props.sunroomOn) {
-        this.setState({
-          scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg',
-          sunroomPano: 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png',
-        });
-        AsyncStorageUtils.setManyPano([props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg'],
-                                      [props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png']);
-      } else {
-        this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVista.jpg'});
-        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg');
-      }
+      return props.sunroomOn
+        ? await this.updateManyStateAndStorage([['scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg'], ['sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png']])
+        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg')
     } else if (props.elevation === 'bella vista brick') {
-      if (props.sunroomOn) {
-        this.setState({
-          scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg',
-          sunroomPano: 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png',
-        });
-        AsyncStorageUtils.setManyPano([props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'],
-                                      [props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png'])
-      } else {
-        this.setState({scenePano: 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'});
-        AsyncStorageUtils.setPano(props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg');
-      }
+      return props.sunroomOn
+        ? await this.updateManyStateAndStorage([['scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'], ['sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png']])
+        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg')
     }
   }
 
   initScene = (props) => {
-    this.handleElevation(props);
-    this.handleCabs(props);
-    this.handleBacksplash(props);
-    this.handleCounter(props);
+    Promise.all([this.handleElevation(props),
+                 this.handleCabs(props),
+                 this.handleBacksplash(props),
+                 this.handleCounter(props)])
+    .then((result) => {
+      const stateObj = {};
+      const arr = [result[0], result[1], result[2], result[3]];
+      arr.forEach(el => {
+        if (el) {
+          el.forEach(item => {
+            stateObj[item.key] = item.value;
+          });
+        }
+      });
+      console.log(stateObj);
+      this.setState(stateObj);
+    });
   }
 
-  updateScene = (props) => {
-    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
-      this.handleElevation(props);
-    }
-    if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
-      this.handleCabs(props);
-    }
-    if (props.backsplash !== this.props.backsplash || props.sunroomOn !== this.props.sunroomOn) {
-      this.handleBacksplash(props);
-    }
-    if (props.counter !== this.props.counter || props.sunroomOn !== this.props.sunroomOn) {
-      this.handleCounter(props);
-    }
+  updateScene = async (props) => {
+    Promise.all([this.handleElevation(props),
+                 this.handleCabs(props),
+                 this.handleBacksplash(props),
+                 this.handleCounter(props)])
+    .then((result) => {
+      const stateObj = {};
+      const arr = [result[0], result[1], result[2], result[3]];
+      arr.forEach(el => {
+        if (el) {
+          el.forEach(item => {
+            stateObj[item.key] = item.value;
+          });
+        }
+      });
+      console.log(stateObj);
+      this.setState(stateObj);
+    });
   }
+
+  // updateScene = (props) => {
+  //   if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
+  //     this.handleElevation(props);
+  //   }
+  //   if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
+  //     this.handleCabs(props);
+  //   }
+  //   if (props.backsplash !== this.props.backsplash || props.sunroomOn !== this.props.sunroomOn) {
+  //     this.handleBacksplash(props);
+  //   }
+  //   if (props.counter !== this.props.counter || props.sunroomOn !== this.props.sunroomOn) {
+  //     this.handleCounter(props);
+  //   }
+  // }
 
   sceneOnLoad = () => {
     //console.log('pano loading');

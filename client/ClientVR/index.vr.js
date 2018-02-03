@@ -46,6 +46,7 @@ export default class ClientVR extends React.Component {
       menuData: {},
       modalData: {},
       storageKeyData: {},
+      hasData: false,
     };
   }
 
@@ -76,6 +77,7 @@ export default class ClientVR extends React.Component {
       });
     }).then(() => {
       AsyncStorageUtils.clearAsyncStorage(this.state.storageKeyData.all);
+      this.setState({hasData: true});
     }).catch(err => {
       throw new Error(`failed to fetch fakeAPI data: ${err}`);
     });
@@ -187,27 +189,34 @@ export default class ClientVR extends React.Component {
   // TODO: create BtnboxVr component and add conditional below TextboxVr
   render() {
     const scene = this.state.currentScene;
-    return (
-      <View>
-        {{
-          FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
-                                  menuData={ this.state.menuData.menuFamilyRoom }
-                                  storageKeyData={ this.state.storageKeyData }
-                                  elevation={ this.state.elevation }
-                                  sunroomOn={ this.state.sunroomOn }/>,
-          Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
-                            menuData={ this.state.menuData.menuKitchen }
-                            storageKeyData={ this.state.storageKeyData }
-                            toggleModal={ this.toggleModal }
-                            elevation={ this.state.elevation }
-                            sunroomOn={ this.state.sunroomOn }
-                            cabinets={ this.state.cabinets }
-                            backsplash={ this.state.backsplash }
-                            counter = { this.state.counter }/>,
+    if (this.state.hasData) {
+      return (
+        <View>
+          {{
+            FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
+                                    menuData={ this.state.menuData.menuFamilyRoom }
+                                    storageKeyData={ this.state.storageKeyData }
+                                    elevation={ this.state.elevation }
+                                    sunroomOn={ this.state.sunroomOn }/>,
+            Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
+                              menuData={ this.state.menuData.menuKitchen }
+                              storageKeyData={ this.state.storageKeyData }
+                              toggleModal={ this.toggleModal }
+                              elevation={ this.state.elevation }
+                              sunroomOn={ this.state.sunroomOn }
+                              cabinets={ this.state.cabinets }
+                              backsplash={ this.state.backsplash }
+                              counter = { this.state.counter }/>,
 
-        }[scene]}
-      </View>
-    );
+          }[scene]}
+        </View>
+      );
+    } else {
+      return (
+        <View>
+        </View>
+      )
+    }
   }
 }
 
