@@ -289,36 +289,43 @@ class Kitchen extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <Pano source={ asset(this.state.scenePano) }
-              onLoad={ this.sceneOnLoad }
-              onLoadEnd={ this.sceneOnLoadEnd }>
-          {this.props.elevation !== 'american classic' && this.props.sunroomOn ? (
-            <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-          ) : (
-            <View />
-          )}
-          {this.props.cabinets !== 'option1' ? (
-            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-          ) : (
-            <View />
-          )}
-          {this.props.backsplash !== 'option1' ? (
-            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-          ) : (
-            <View />
-          )}
-          {this.props.counter !== 'option1' ? (
-            <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-          ) : (
-            <View />
-          )}
-        </Pano>
-        <IconButton toggleModal={ this.props.toggleModal } />
-        {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
-      </View>
-    );
+    if (this.state.scenePano !== '') {
+      return (
+        <View>
+          <Pano source={ asset(this.state.scenePano) }
+                onLoad={ this.sceneOnLoad }
+                onLoadEnd={ this.sceneOnLoadEnd }>
+            {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano !== '' ? (
+              <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            ) : (
+              <View />
+            )}
+            {this.props.cabinets !== 'option1' && this.state.cabinetsPano !== '' ? (
+              <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            ) : (
+              <View />
+            )}
+            {this.props.backsplash !== 'option1' && this.state.backsplashPano !== '' ? (
+              <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            ) : (
+              <View />
+            )}
+            {this.props.counter !== 'option1' && this.state.counterPano !== '' ? (
+              <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            ) : (
+              <View />
+            )}
+          </Pano>
+          <IconButton toggleModal={ this.props.toggleModal } />
+          {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
+        </View>
+      );
+    } else {
+      return (
+        <View />
+      )
+    }
+
   }
 }
 

@@ -23,7 +23,6 @@ class FamilyRoom extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
     this.initScene(this.props);
   }
 
