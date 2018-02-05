@@ -16,6 +16,12 @@ import MenuVr from '../components/MenuVr';
 import PanoLayer from '../components/PanoLayer';
 import IconButton from '../components/IconButton';
 
+function decreasePanosLoading(state, props) {
+  return {
+    panosLoading: state.panosLoading - 1
+  };
+}
+
 class Kitchen extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +32,8 @@ class Kitchen extends Component {
       cabinetsPano: '',
       backsplashPano: '',
       counterPano: '',
+      sceneUpdated: false,
+      panosLoading: 0,
     };
   }
 
@@ -34,7 +42,13 @@ class Kitchen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.updateScene(nextProps);
+    if (this.props.elevation !== nextProps.elevation ||
+        this.props.backsplash !== nextProps.backsplash ||
+        this.props.cabinets !== nextProps.cabinets ||
+        this.props.counter !== nextProps.counter ||
+        this.props.sunroomOn !== nextProps.sunroomOn) {
+      this.updateScene(nextProps);
+    }
   }
 
   updateStateAndStorage = (panoKey, storageKey, uri) => {
@@ -174,15 +188,29 @@ class Kitchen extends Component {
       }
     });
     console.log(stateObj);
+    const updateNumber = Object.keys(stateObj).length;
+    this.initLoadingHandler(updateNumber);
     this.setState(stateObj);
   }
 
-  sceneOnLoad = () => {
-    //console.log('pano loading');
+  initLoadingHandler = async (updateNumber) => {
+    await this.setState({
+      sceneUpdated: false,
+      panosLoading: updateNumber
+    });
+    console.log(this.state.panosLoading);
   }
 
-  sceneOnLoadEnd = () => {
-    //console.log('pano loaded');
+  sceneOnLoad = () => {
+    console.log('pano loading');
+  }
+
+  sceneOnLoadEnd = async () => {
+    console.log('pano loaded');
+    if (this.state.panosLoading !== 0) {
+      await this.setState(decreasePanosLoading);
+      console.log(this.state.panosLoading);
+    }
   }
 
   render() {
