@@ -9,26 +9,28 @@ import {
 
 const IconButton = (props) => {
   return (
-    <VrButton style={ styles.iconContainer }
-              onClick={ props.toggleModal }>
-      <Image
-        style={ styles.icon }
-        source={ asset('icons/info-circle.png') }
-      />
-    </VrButton>
+    <View>
+      <VrButton style={ styles.iconContainer }
+                onClick={ props.toggleModal }>
+        <Image
+          style={ styles.icon }
+          source={ asset('icons/info-circle.png') }
+        />
+      </VrButton>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     borderColor: '#FFF',
     borderWidth: 0.025,
     borderRadius: 1,
-    paddingLeft: 0.3,
-    paddingRight: 0.3,
-    paddingTop: 0.2,
-    paddingBottom: 0.2,
+    width: 1.3,
+    height: 1.3,
     layoutOrigin: [0.5, 0.5],
     transform: [{translate: [7, -2, -14]},
                 {rotateY: -30}],
