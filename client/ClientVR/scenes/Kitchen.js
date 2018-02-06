@@ -131,24 +131,45 @@ class Kitchen extends Component {
     }
   }
 
+  handleSunroom = async (props) => {
+    if (props.elevation === 'bella vista') {
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png')
+        : console.log('sunroom off')
+    } else if (props.elevation === 'bella vista brick') {
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png')
+        : console.log('sunroom off');
+    }
+  }
+
   handleElevation = async (props) => {
     if (props.elevation === 'american classic') {
       return props.sunroomOn
         ? await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg')
         : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg')
+    } else if (props.elevation === 'bella vista' && props.elevation !== this.props.elevation) {
+      return await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg')
+    } else if (props.elevation === 'bella vista brick' && props.elevation !== this.props.elevation) {
+      return await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg')
+    }
+  }
+
+  initElevation = async (props) => {
+    if (props.elevation === 'american classic') {
+      return props.sunroomOn
+        ? await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg')
+        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg')
     } else if (props.elevation === 'bella vista') {
-      return props.sunroomOn
-        ? await this.updateManyStateAndStorage([['scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg'], ['sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png']])
-        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg')
+      return await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg')
     } else if (props.elevation === 'bella vista brick') {
-      return props.sunroomOn
-        ? await this.updateManyStateAndStorage([['scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg'], ['sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png']])
-        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg')
+      return await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg')
     }
   }
 
   initScene = async (props) => {
-    const result = await Promise.all([this.handleElevation(props),
+    const result = await Promise.all([this.initElevation(props),
+                                      this.handleSunroom(props),
                                       this.handleCabs(props),
                                       this.handleBacksplash(props),
                                       this.handleCounter(props)]);
@@ -161,6 +182,8 @@ class Kitchen extends Component {
       }
     });
     console.log(stateObj);
+    const updateNumber = Object.keys(stateObj).length;
+    this.initLoadingHandler(updateNumber);
     this.setState(stateObj);
   }
 
@@ -168,6 +191,9 @@ class Kitchen extends Component {
     const promiseArr = [];
     if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
       promiseArr.push(this.handleElevation(props));
+    }
+    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
+      promiseArr.push(this.handleSunroom(props));
     }
     if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
       promiseArr.push(this.handleCabs(props));
