@@ -32,7 +32,7 @@ class Kitchen extends Component {
       cabinetsPano: '',
       backsplashPano: '',
       counterPano: '',
-      sceneUpdated: false,
+      sceneLoading: false,
       panosLoading: 0,
     };
   }
@@ -48,6 +48,13 @@ class Kitchen extends Component {
         this.props.counter !== nextProps.counter ||
         this.props.sunroomOn !== nextProps.sunroomOn) {
       this.updateScene(nextProps);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.sceneLoading && this.state.panosLoading === 0) {
+      this.setState({sceneLoading: !this.state.sceneLoading})
+      console.log('scene loaded');
     }
   }
 
@@ -221,7 +228,7 @@ class Kitchen extends Component {
 
   initLoadingHandler = async (updateNumber) => {
     await this.setState({
-      sceneUpdated: false,
+      sceneLoading: true,
       panosLoading: updateNumber
     });
     console.log(this.state.panosLoading);
@@ -279,19 +286,5 @@ class Kitchen extends Component {
 
   }
 }
-
-const styles = StyleSheet.create({
-  text: {
-    backgroundColor: '#777879',
-    fontSize: 0.8,
-    layoutOrigin: [0.5, 0.5],
-    paddingLeft: 0.2,
-    paddingRight: 0.2,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    transform: [{translate: [7, -2, -14]},
-                {rotateY: -30}],
-  }
-});
 
 export default Kitchen;
