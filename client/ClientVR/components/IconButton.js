@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     width: 1.3,
     height: 1.3,
     layoutOrigin: [0.5, 0.5],
-    transform: [{translate: [7, -2, -14]},
+    transform: [{translate: [7.2, -2, -14]},
                 {rotateY: -30}],
   },
   icon: {
