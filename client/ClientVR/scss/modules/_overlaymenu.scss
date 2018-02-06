@@ -1,0 +1,98 @@
+.container {
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 10000000000000;
+  top: 0px;
+  left: 0px;
+  width: 60%;
+  height: 100%;
+  color: #fff;
+  background-color: rgba(0,0,0,0.9);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media screen and (min-width: 418px) and (max-width: 984px) {
+  .container {
+    width: 250px;
+  }
+}
+
+@media screen and (min-width: 985px) {
+  .container {
+    width: 20%;
+  }
+}
+
+.content {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 40px 0 40px 0;
+}
+.close {
+  width: 50px;
+  height: 50px;
+  margin-left: auto;
+  margin-top: -35px;
+  margin-right: -10px;
+  background: url('../icons/x.png') center center no-repeat;
+  background-size: 30px;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+.close:hover {
+  opacity: 1;
+}
+
+.menu {
+  margin-top: 1.25rem;
+}
+
+.menu-section:first-child .menu-header {
+  border-top: 2px solid #FFF;
+}
+
+.menu-section:last-child {
+  border-bottom: 1px solid #FFF;
+}
+
+.menu-section .menu-header {
+  margin: 0;
+  padding: 0.625rem 0 0.625rem 0;
+  border-top: 1px solid #FFF;
+  border-bottom: 1px solid #FFF;
+  text-transform: capitalize;
+}
+
+.menu-section .menu-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 0px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  transition: 0.5s ease-out;
+}
+
+.menu-section .menu-list.open {
+  max-height: 200px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.313rem;
+}
+
+.menu-list .menu-list-option {
+  padding: 0.313rem 0.625rem 0.313rem 0.625rem;
+  color: #000;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+}
+
+.menu-list .menu-list-option:hover {
+  background: rgba(0, 0, 0, 0.9);
+  color: #FFF;
+}

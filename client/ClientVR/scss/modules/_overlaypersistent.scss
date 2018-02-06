@@ -1,0 +1,64 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.btn-container-a {
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  right: 18px;
+  width: 35px;
+  height: 35px;
+  margin-left: auto;
+  vertical-align: top;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #FFF;
+  border-radius: 5px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.btn-container-b {
+  display: inline-block;
+  position: absolute;
+  top: 65px;
+  right: 18px;
+  width: 35px;
+  height: 35px;
+  margin-left: auto;
+  vertical-align: top;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #FFF;
+  border-radius: 5px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.btn-a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  pointer-events: auto;
+}
+
+.btn-a i, .btn-b i {
+  color: #FFF;
+}
+
+.btn-b {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+}

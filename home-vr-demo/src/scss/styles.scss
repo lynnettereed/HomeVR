@@ -1,0 +1,12 @@
+/* BASE - base styles, variables, mixins, and normalizing */
+
+@import "base/_variables.scss";
+@import "base/_mixins.scss";
+@import "base/_base.scss";
+
+/* LAYOUT - footer and header styles */
+
+/* MODULES - Individual site component styles */
+@import "modules/_buttons.scss";
+@import "modules/_sections.scss";
+@import "modules/_typography.scss";

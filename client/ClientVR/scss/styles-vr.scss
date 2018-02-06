@@ -1,0 +1,20 @@
+/* *******************************
+  ClientVR - Stylesheets
+  Author: Centro Digital
+  Version 0.0.1
+******************************* */
+
+/* BASE - base styles, variables, and mixins */
+
+@import "base/_variables.scss";
+@import "base/_mixins.scss";
+@import "base/_base.scss";
+
+/* LAYOUT - footer and header styles */
+
+/* MODULES - Individual site component styles */
+@import "modules/_buttons.scss";
+@import "modules/_typography.scss";
+@import "modules/_overlaymenu.scss";
+@import "modules/_overlaypersistent.scss";
+@import "modules/_overlaymodal.scss"
