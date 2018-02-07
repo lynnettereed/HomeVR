@@ -52,8 +52,13 @@ class Kitchen extends Component {
   }
 
   componentDidUpdate() {
+    this.updateLoadingHandler();
+  }
+
+  updateLoadingHandler = async () => {
     if (this.state.sceneLoading && this.state.panosLoading === 0) {
-      this.setState({sceneLoading: !this.state.sceneLoading})
+      await this.setState({sceneLoading: !this.state.sceneLoading});
+      this.props.toggleLoading(this.state.sceneLoading);
       console.log('scene loaded');
     }
   }
@@ -231,6 +236,7 @@ class Kitchen extends Component {
       sceneLoading: true,
       panosLoading: updateNumber
     });
+    this.props.toggleLoading(this.state.sceneLoading)
     console.log(this.state.panosLoading);
   }
 

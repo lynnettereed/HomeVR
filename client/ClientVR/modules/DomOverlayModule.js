@@ -5,10 +5,11 @@ import { Module } from 'react-vr-web';
 import MenuOverlay from '../components/MenuOverlay';
 import BtnboxOverlay from '../components/BtnboxOverlay';
 import ModalOverlay from '../components/ModalOverlay';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 // Module
 class DomOverlayModule extends Module {
-  constructor(overlayContainer, persistentContainer, modalContainer) {
+  constructor(overlayContainer, persistentContainer, modalContainer, loadingContainer) {
     super('DomOverlayModule');
 
     this._closeOverlay = this.closeOverlay.bind(this);
@@ -19,10 +20,13 @@ class DomOverlayModule extends Module {
     this._handleOptionClick = this.handleOptionClick.bind(this);
     this._openModal = this.openModal.bind(this);
     this._closeModal = this.closeModal.bind(this);
+    this._openLoadingOverlay = this.openLoadingOverlay.bind(this);
+    this._closeLoadingOverlay = this.closeLoadingOverlay.bind(this);
 
     this._overlayContainer = overlayContainer;
     this._persistentContainer = persistentContainer;
     this._modalContainer = modalContainer;
+    this._loadingContainer = loadingContainer;
   }
 
   // Open the overlay for display
@@ -87,9 +91,20 @@ class DomOverlayModule extends Module {
     );
   }
 
-  // Close the overlay
+  // Close the modal
   closeModal() {
     ReactDOM.unmountComponentAtNode(this._modalContainer);
+  }
+
+  openLoadingOverlay() {
+    ReactDOM.render(
+      <LoadingOverlay />,
+      this._loadingContainer
+    );
+  }
+
+  closeLoadingOverlay() {
+    ReactDOM.unmountComponentAtNode(this._loadingContainer);
   }
 }
 

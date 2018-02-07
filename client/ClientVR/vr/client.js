@@ -11,11 +11,13 @@ function init(bundle, parent, options) {
   const domOverlayContainer = document.createElement('div');
   const domPersistentContainer = document.createElement('div');
   const domModalContainer = document.createElement('div');
+  const domLoadingContainer = document.createElement('div');
   domOverlayContainer.id = 'dom-overlay';
   domPersistentContainer.id = 'persistent-overlay';
   domModalContainer.id = 'modal-overlay';
+  domLoadingContainer.id = 'loading-overlay';
   // Create an instance of the module, to be registered below.
-  const domOverlayModule = new DomOverlayModule(domOverlayContainer, domPersistentContainer, domModalContainer);
+  const domOverlayModule = new DomOverlayModule(domOverlayContainer, domPersistentContainer, domModalContainer, domLoadingContainer);
 
   const vr = new VRInstance(bundle, 'ClientVR', parent, {
     // Add custom options here
@@ -33,6 +35,7 @@ function init(bundle, parent, options) {
   vr.player._wrapper.appendChild(domOverlayContainer);
   vr.player._wrapper.appendChild(domPersistentContainer);
   vr.player._wrapper.appendChild(domModalContainer);
+  vr.player._wrapper.appendChild(domLoadingContainer);
 
   vr.render = function() {
     // Any custom behavior you want to perform on each frame goes here

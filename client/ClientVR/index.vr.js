@@ -36,6 +36,7 @@ export default class ClientVR extends React.Component {
       renderVrMenu: false,
       renderVrBtnbox: false,
       renderVrModal: false,
+      renderVrLoading: false,
       menuActive: false,
       sunroomOn: false,
       elevation: 'american classic',
@@ -167,6 +168,16 @@ export default class ClientVR extends React.Component {
     }
   }
 
+  toggleLoading = (isLoading) => {
+    if (VrHeadModel.inVR()) {
+      this.setState({renderVrLoading: !this.state.renderVrLoading});
+    } else if (isLoading) {
+      NativeModules.DomOverlayModule.openLoadingOverlay();
+    } else {
+      NativeModules.DomOverlayModule.closeLoadingOverlay();
+    }
+  }
+
   initSceneChange = (nextScene) => {
     if (nextScene === this.state.currentScene) {
       return;
@@ -202,6 +213,7 @@ export default class ClientVR extends React.Component {
                               menuData={ this.state.menuData.menuKitchen }
                               storageKeyData={ this.state.storageKeyData }
                               toggleModal={ this.toggleModal }
+                              toggleLoading={ this.toggleLoading }
                               elevation={ this.state.elevation }
                               sunroomOn={ this.state.sunroomOn }
                               cabinets={ this.state.cabinets }
