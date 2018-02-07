@@ -26,16 +26,9 @@ class FamilyRoom extends Component {
     this.initScene(this.props);
   }
 
-  componentDidMount() {
-
-  }
-
   componentWillReceiveProps(nextProps) {
-    //console.log(this.props);
-    //console.log(nextProps);
     this.updateScene(nextProps);
     this.updatePrefetchUris(nextProps.storageKeyData.kitchen.all);
-    console.log('received props');
   }
 
   initScene = (props) => {
@@ -45,7 +38,6 @@ class FamilyRoom extends Component {
   updateScene = (props) => {
     if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
       this.handleElevation(props);
-      console.log('elevation updated');
     }
   }
 
@@ -92,7 +84,6 @@ class FamilyRoom extends Component {
     } catch (err) {
       throw new Error(`failed to update prefetchUris: ${err}`);
     }
-    console.log('prefetchUris updated');
   }
 
   setPrefetchUris = async (keys) => {
@@ -106,7 +97,6 @@ class FamilyRoom extends Component {
 
   clearPrefetchUris = () => {
     this.setState({prefetchUris: []});
-    console.log('prefetchUris cleared');
   }
 
   buildPrefetchArr = async (keys) => {
@@ -116,14 +106,10 @@ class FamilyRoom extends Component {
       const key = keyValue[0];
       const value = keyValue[1];
       if (value !== null) {
-        console.log(`${key}: ${value}`);
         valueArr.push(value)
       } else {
         if (key === 'KitchenScenePano') {
-          console.log(`${key} not set...setting ${key} default`);
           valueArr.push('panos/Foster_Int_Kitchen_AmericanClassic.jpg');
-        } else {
-          console.log(`${key} not set`);
         }
       }
     });
@@ -142,7 +128,6 @@ class FamilyRoom extends Component {
         <Prefetch key={uri} source={asset(uri)} />
       );
     });
-    console.log(this.state.prefetchUris);
 
     return (
       <View>
