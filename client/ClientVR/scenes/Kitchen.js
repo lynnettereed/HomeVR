@@ -27,11 +27,11 @@ class Kitchen extends Component {
     super(props);
 
     this.state = {
-      scenePano: '',
-      sunroomPano: '',
-      cabinetsPano: '',
-      backsplashPano: '',
-      counterPano: '',
+      scenePano: [],
+      sunroomPano: [],
+      cabinetsPano: [],
+      backsplashPano: [],
+      counterPano: [],
       sceneLoading: false,
       panosLoading: 0,
     };
@@ -253,28 +253,28 @@ class Kitchen extends Component {
   }
 
   render() {
-    if (this.state.scenePano !== '') {
+    if (this.state.scenePano.length > 0) {
       return (
         <View>
           <Pano source={ asset(this.state.scenePano) }
                 onLoad={ this.sceneOnLoad }
                 onLoadEnd={ this.sceneOnLoadEnd }>
-            {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano !== '' ? (
+            {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano.length > 0 ? (
               <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
             ) : (
               <View />
             )}
-            {this.props.cabinets !== 'option1' && this.state.cabinetsPano !== '' ? (
+            {this.props.cabinets !== 'option1' && this.state.cabinetsPano.length > 0 ? (
               <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
             ) : (
               <View />
             )}
-            {this.props.backsplash !== 'option1' && this.state.backsplashPano !== '' ? (
+            {this.props.backsplash !== 'option1' && this.state.backsplashPano.length > 0 ? (
               <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
             ) : (
               <View />
             )}
-            {this.props.counter !== 'option1' && this.state.counterPano !== '' ? (
+            {this.props.counter !== 'option1' && this.state.counterPano.length > 0 ? (
               <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
             ) : (
               <View />
