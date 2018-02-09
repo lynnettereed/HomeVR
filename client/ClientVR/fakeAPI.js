@@ -110,6 +110,44 @@ const fakeAPI = {
     },
     all: ['KitchenScenePano', 'KitchenSunroomPano', 'KitchenCabinetsPano', 'KitchenBacksplashPano', 'KitchenCounterPano']
   },
+  panoUriData: {
+    kitchen: {
+      scene: {
+        americanClassic: [
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic0.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic1.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic2.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic3.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic4.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic5.jpg'
+        ],
+        americanClassicSunroom: [
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom0.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom1.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom2.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom3.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom4.jpg',
+          'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom5.jpg'
+        ],
+        bellaVista: [
+          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista0.jpg',
+          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista1.jpg',
+          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista2.jpg',
+          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista3.jpg',
+          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista4.jpg',
+          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista5.jpg'
+        ],
+        bellaVistaBrick: [
+          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick0.jpg',
+          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick1.jpg',
+          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick2.jpg',
+          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick3.jpg',
+          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick4.jpg',
+          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick5.jpg'
+        ]
+      }
+    }
+  }
   getMenuData: function() {
     return new Promise((resolve, reject) => {
       const menuDescriptor = Object.getOwnPropertyDescriptor(this, 'domMenuData');
@@ -124,9 +162,15 @@ const fakeAPI = {
   },
   getStorageKeyData: function() {
     return new Promise((resolve, reject) => {
-      const modalDescriptor = Object.getOwnPropertyDescriptor(this, 'storageKeyData');
-      modalDescriptor ? resolve(modalDescriptor.value) : reject(new Error('storage key data not found'));
+      const storageKeyDescriptor = Object.getOwnPropertyDescriptor(this, 'storageKeyData');
+      storageKeyDescriptor ? resolve(storageKeyDescriptor.value) : reject(new Error('storage key data not found'));
     });
+  }
+  getPanoUriData: function() {
+    return new Promise((resolve, reject) => {
+      const panoUriDescriptor = Object.getOwnPropertyDescriptor(this, 'panoUriData');
+      panoUriDescriptor ? resolve(panoUriDescriptor.value) : reject(new Error('pano uri data not found'));
+    })
   }
 }
 
