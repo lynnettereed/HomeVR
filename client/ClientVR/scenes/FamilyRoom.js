@@ -104,16 +104,33 @@ class FamilyRoom extends Component {
     const keyValues = await AsyncStorage.multiGet(keys);
     keyValues.forEach((keyValue) => {
       const key = keyValue[0];
-      const value = keyValue[1];
+      let value = keyValue[1];
+      if (isJsonString(value)) {
+        value = JSON.parse(value);
+      }
       if (value !== null) {
         valueArr.push(value)
       } else {
         if (key === 'KitchenScenePano') {
-          valueArr.push('panos/Foster_Int_Kitchen_AmericanClassic.jpg');
+          valueArr.push(['panos/Foster_Int_Kitchen_AmericanClassic0.jpg',
+                         'panos/Foster_Int_Kitchen_AmericanClassic1.jpg',
+                         'panos/Foster_Int_Kitchen_AmericanClassic2.jpg',
+                         'panos/Foster_Int_Kitchen_AmericanClassic3.jpg',
+                         'panos/Foster_Int_Kitchen_AmericanClassic4.jpg',
+                         'panos/Foster_Int_Kitchen_AmericanClassic5.jpg']);
         }
       }
     });
     return valueArr;
+
+    function isJsonString(str) {
+      try {
+        JSON.parse(str);
+      } catch (e) {
+        return false;
+      }
+      return true;
+    }
   }
 
   pushToPrefetchUris = async (valueArr) => {
@@ -124,9 +141,16 @@ class FamilyRoom extends Component {
 
   render() {
     const listPrefetch = this.state.prefetchUris.map((uri) => {
-      return (
-        <Prefetch key={uri} source={asset(uri)} />
-      );
+      if (uri.length) {
+        return (
+          <Prefetch key={uri} source=[{asset(uri[0])}, {asset(uri[1])}, {asset(uri[2])},
+                                      {asset(uri[3])}, {asset(uri[4])}, {asset(uri[5])}] />
+        );
+      } else {
+        return (
+          <Prefetch key={uri} source={asset(uri)} />
+        );
+      }
     });
 
     return (
