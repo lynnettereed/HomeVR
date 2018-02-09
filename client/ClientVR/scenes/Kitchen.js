@@ -178,30 +178,30 @@ class Kitchen extends Component {
                                                        'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom5.jpg'])
         : await this.buildPanoStateAndSetAsyncStorage('scenePano',
                                                       props.storageKeyData.kitchen.scene,
-                                                      ['panos/Foster_Int_Kitchen_AmericanClassic0.jpg',
-                                                       'panos/Foster_Int_Kitchen_AmericanClassic1.jpg',
-                                                       'panos/Foster_Int_Kitchen_AmericanClassic2.jpg',
-                                                       'panos/Foster_Int_Kitchen_AmericanClassic3.jpg',
-                                                       'panos/Foster_Int_Kitchen_AmericanClassic4.jpg',
-                                                       'panos/Foster_Int_Kitchen_AmericanClassic5.jpg'])
+                                                      ['panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic0.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic1.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic2.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic3.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic4.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic5.jpg'])
     } else if (props.elevation === 'bella vista' && props.elevation !== this.props.elevation) {
       return await this.buildPanoStateAndSetAsyncStorage('scenePano',
                                                          props.storageKeyData.kitchen.scene,
-                                                         ['panos/Foster_Int_Kitchen_BellaVista0.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVista1.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVista2.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVista3.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVista4.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVista5s.jpg']);
+                                                         ['panos/kitchen/BV/Foster_Int_Kitchen_BellaVista0.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista1.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista2.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista3.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista4.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista5s.jpg']);
     } else if (props.elevation === 'bella vista brick' && props.elevation !== this.props.elevation) {
       return await this.buildPanoStateAndSetAsyncStorage('scenePano',
                                                          props.storageKeyData.kitchen.scene,
-                                                         ['panos/Foster_Int_Kitchen_BellaVistaBrick0.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVistaBrick1.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVistaBrick2.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVistaBrick3.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVistaBrick4.jpg',
-                                                          'panos/Foster_Int_Kitchen_BellaVistaBrick5.jpg']);
+                                                         ['panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick0.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick1.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick2.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick3.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick4.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick5.jpg']);
     }
   }
 

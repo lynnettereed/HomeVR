@@ -112,12 +112,12 @@ class FamilyRoom extends Component {
         valueArr.push(value)
       } else {
         if (key === 'KitchenScenePano') {
-          valueArr.push(['panos/Foster_Int_Kitchen_AmericanClassic0.jpg',
-                         'panos/Foster_Int_Kitchen_AmericanClassic1.jpg',
-                         'panos/Foster_Int_Kitchen_AmericanClassic2.jpg',
-                         'panos/Foster_Int_Kitchen_AmericanClassic3.jpg',
-                         'panos/Foster_Int_Kitchen_AmericanClassic4.jpg',
-                         'panos/Foster_Int_Kitchen_AmericanClassic5.jpg']);
+          valueArr.push(['panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic0.jpg',
+                         'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic1.jpg',
+                         'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic2.jpg',
+                         'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic3.jpg',
+                         'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic4.jpg',
+                         'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic5.jpg']);
         }
       }
     });
