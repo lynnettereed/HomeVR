@@ -192,7 +192,7 @@ class Kitchen extends Component {
                                                           'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista2.jpg',
                                                           'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista3.jpg',
                                                           'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista4.jpg',
-                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista5s.jpg']);
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista5.jpg']);
     } else if (props.elevation === 'bella vista brick' && props.elevation !== this.props.elevation) {
       return await this.buildPanoStateAndSetAsyncStorage('scenePano',
                                                          props.storageKeyData.kitchen.scene,
@@ -208,12 +208,40 @@ class Kitchen extends Component {
   initElevation = async (props) => {
     if (props.elevation === 'american classic') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic_Sunroom.jpg')
-        : await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_AmericanClassic.jpg')
+        ? await this.buildPanoStateAndSetAsyncStorage('scenePano',
+                                                      props.storageKeyData.kitchen.scene,
+                                                      ['panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom0.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom1.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom2.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom3.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom4.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic_Sunroom5.jpg'])
+        : await this.buildPanoStateAndSetAsyncStorage('scenePano',
+                                                      props.storageKeyData.kitchen.scene,
+                                                      ['panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic0.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic1.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic2.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic3.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic4.jpg',
+                                                       'panos/kitchen/AC/Foster_Int_Kitchen_AmericanClassic5.jpg'])
     } else if (props.elevation === 'bella vista') {
-      return await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVista.jpg')
+      return await this.buildPanoStateAndSetAsyncStorage('scenePano',
+                                                         props.storageKeyData.kitchen.scene,
+                                                         ['panos/kitchen/BV/Foster_Int_Kitchen_BellaVista0.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista1.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista2.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista3.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista4.jpg',
+                                                          'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista5.jpg']);
     } else if (props.elevation === 'bella vista brick') {
-      return await this.updateStateAndStorage('scenePano', props.storageKeyData.kitchen.scene, 'panos/Foster_Int_Kitchen_BellaVistaBrick.jpg')
+      return await this.buildPanoStateAndSetAsyncStorage('scenePano',
+                                                         props.storageKeyData.kitchen.scene,
+                                                         ['panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick0.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick1.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick2.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick3.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick4.jpg',
+                                                          'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick5.jpg']);
     }
   }
 
@@ -294,11 +322,15 @@ class Kitchen extends Component {
     if (this.state.scenePano.length > 0) {
       return (
         <View>
-          <Pano source=[{asset(this.state.scenePano[0])}, {asset(this.state.scenePano[1])},
-                        {asset(this.state.scenePano[2])}, {asset(this.state.scenePano[3])},
-                        {asset(this.state.scenePano[4])}, {asset(this.state.scenePano[5])}]
-                onLoad={ this.sceneOnLoad }
-                onLoadEnd={ this.sceneOnLoadEnd }>
+          <Pano source= {
+            [
+              asset(this.state.scenePano[0]), asset(this.state.scenePano[1]),
+              asset(this.state.scenePano[2]), asset(this.state.scenePano[3]),
+              asset(this.state.scenePano[4]), asset(this.state.scenePano[5])
+            ]
+          }
+          onLoad={ this.sceneOnLoad }
+          onLoadEnd={ this.sceneOnLoadEnd }>
             {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano.length > 0 ? (
               <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
             ) : (
