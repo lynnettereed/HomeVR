@@ -147,7 +147,7 @@ const fakeAPI = {
         ]
       }
     }
-  }
+  },
   getMenuData: function() {
     return new Promise((resolve, reject) => {
       const menuDescriptor = Object.getOwnPropertyDescriptor(this, 'domMenuData');
@@ -165,7 +165,7 @@ const fakeAPI = {
       const storageKeyDescriptor = Object.getOwnPropertyDescriptor(this, 'storageKeyData');
       storageKeyDescriptor ? resolve(storageKeyDescriptor.value) : reject(new Error('storage key data not found'));
     });
-  }
+  },
   getPanoUriData: function() {
     return new Promise((resolve, reject) => {
       const panoUriDescriptor = Object.getOwnPropertyDescriptor(this, 'panoUriData');

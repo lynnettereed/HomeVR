@@ -47,6 +47,7 @@ export default class ClientVR extends React.Component {
       menuData: {},
       modalData: {},
       storageKeyData: {},
+      panoUriData: {},
       hasData: false,
     };
   }
@@ -65,16 +66,21 @@ export default class ClientVR extends React.Component {
   }
 
   fetchFakeApiData = () => {
-    Promise.all([fakeAPI.getMenuData(), fakeAPI.getModalData(), fakeAPI.getStorageKeyData()])
+    Promise.all([
+      fakeAPI.getMenuData(), fakeAPI.getModalData(),
+      fakeAPI.getStorageKeyData(), fakeAPI.getPanoUriData()
+    ])
     .then(data => {
       const menuData = data[0];
       const modalData = data[1];
       const storageKeyData = data[2];
+      const panoUriData = data[3];
 
       this.setState({
         menuData: menuData,
         modalData: modalData,
-        storageKeyData: storageKeyData
+        storageKeyData: storageKeyData,
+        panoUriData: panoUriData
       });
     }).then(() => {
       AsyncStorageUtils.clearAsyncStorage(this.state.storageKeyData.all);
@@ -207,11 +213,13 @@ export default class ClientVR extends React.Component {
             FamilyRoom: <FamilyRoom renderVrMenu={ this.state.renderVrMenu }
                                     menuData={ this.state.menuData.menuFamilyRoom }
                                     storageKeyData={ this.state.storageKeyData }
+                                    panoUriData={ this.state.panoUriData }
                                     elevation={ this.state.elevation }
                                     sunroomOn={ this.state.sunroomOn }/>,
             Kitchen: <Kitchen renderVrMenu={ this.state.renderVrMenu }
                               menuData={ this.state.menuData.menuKitchen }
                               storageKeyData={ this.state.storageKeyData }
+                              panoUriData={ this.state.panoUriData }
                               toggleModal={ this.toggleModal }
                               toggleLoading={ this.toggleLoading }
                               elevation={ this.state.elevation }
