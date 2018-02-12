@@ -63,81 +63,50 @@ class Kitchen extends Component {
     }
   }
 
-  updateStateAndStorage = (panoKey, storageKey, uri) => {
-    AsyncStorageUtils.setPano(storageKey, uri);
-    const stateObj = {
-      key: panoKey,
-      value: uri
-    }
-    return [stateObj];
-  }
-
-  buildPanoStateAndSetAsyncStorage = (stateKey, storageKey, uriArray) => {
-    const uriString = JSON.stringify(uriArray);
+  buildPanoStateAndSetAsyncStorage = (stateKey, storageKey, uri) => {
+    let uriString;
+    uri instanceof Array ? uriString = JSON.stringify(uri) : uriString = uri;
     const stateObj = {
       key: stateKey,
-      value: uriArray
+      value: uri
     };
-    AsyncStorageUtils.setPano(storageKey, uriString);
+    AsyncStorageUtils.setPano(storageKey, uri);
     return [stateObj];
-  }
-
-  updateManyStateAndStorage = (stateStorageArr) => {
-    const storageArr = [];
-    const stateObjArr = []
-
-    stateStorageArr.forEach(el => {
-      const storageKey = el[1];
-      const storageVal = el[2];
-      const storageArrEntry = [storageKey, storageVal];
-      storageArr.push(storageArrEntry);
-
-      const objKey = el[0];
-      const objVal = el[2];
-      const stateObjArrEntry = {
-        key: objKey,
-        value: objVal
-      }
-      stateObjArr.push(stateObjArrEntry);
-    });
-
-    AsyncStorageUtils.setManyPano(...storageArr);
-    return stateObjArr;
   }
 
   handleCabs = async (props) => {
     if (props.cabinets === 'option2') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'cabinetsPano',
           props.storageKeyData.kitchen.cabinets,
           props.panoUriData.kitchen.cabinets.sunroom.option2
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'cabinetsPano',
           props.storageKeyData.kitchen.cabinets,
           props.panoUriData.kitchen.cabinets.option2
         );
     } else if (props.cabinets === 'option3') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'cabinetsPano',
           props.storageKeyData.kitchen.cabinets,
           props.panoUriData.kitchen.cabinets.sunroom.option3
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'cabinetsPano',
           props.storageKeyData.kitchen.cabinets,
           props.panoUriData.kitchen.cabinets.option3
         );
     } else if (props.cabinets === 'option4') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'cabinetsPano',
           props.storageKeyData.kitchen.cabinets,
           props.panoUriData.kitchen.cabinets.sunroom.option4
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'cabinetsPano',
           props.storageKeyData.kitchen.cabinets,
           props.panoUriData.kitchen.cabinets.option4
@@ -148,36 +117,36 @@ class Kitchen extends Component {
   handleBacksplash = async (props) =>  {
     if (props.backsplash === 'option2') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'backsplashPano',
           props.storageKeyData.kitchen.backsplash,
           props.panoUriData.kitchen.backsplash.sunroom.option2
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'backsplashPano',
           props.storageKeyData.kitchen.backsplash,
           props.panoUriData.kitchen.backsplash.option2
         );
     } else if (props.backsplash === 'option3') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'backsplashPano',
           props.storageKeyData.kitchen.backsplash,
           props.panoUriData.kitchen.backsplash.sunroom.option3
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'backsplashPano',
           props.storageKeyData.kitchen.backsplash,
           props.panoUriData.kitchen.backsplash.option3
         );
     } else if (props.backsplash === 'option4') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'backsplashPano',
           props.storageKeyData.kitchen.backsplash,
           props.panoUriData.kitchen.backsplash.sunroom.option4
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'backsplashPano',
           props.storageKeyData.kitchen.backsplash,
           props.panoUriData.kitchen.backsplash.option4
@@ -188,36 +157,36 @@ class Kitchen extends Component {
   handleCounter = async (props) => {
     if (props.counter === 'option2') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'counterPano',
           props.storageKeyData.kitchen.counter,
           props.panoUriData.kitchen.counter.sunroom.option2
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'counterPano',
           props.storageKeyData.kitchen.counter,
           props.panoUriData.kitchen.counter.option2
         );
     } else if (props.counter === 'option3') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'counterPano',
           props.storageKeyData.kitchen.counter,
           props.panoUriData.kitchen.counter.sunroom.option3
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'counterPano',
           props.storageKeyData.kitchen.counter,
           props.panoUriData.kitchen.counter.option3
         );
     } else if (props.counter === 'option4') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'counterPano',
           props.storageKeyData.kitchen.counter,
           props.panoUriData.kitchen.counter.sunroom.option4
         )
-        : await this.updateStateAndStorage(
+        : await this.buildPanoStateAndSetAsyncStorage(
           'counterPano',
           props.storageKeyData.kitchen.counter,
           props.panoUriData.kitchen.counter.option4
@@ -228,7 +197,7 @@ class Kitchen extends Component {
   handleSunroom = async (props) => {
     if (props.elevation === 'bella vista') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'sunroomPano',
           props.storageKeyData.kitchen.sunroom,
           props.panoUriData.kitchen.sunroom.bellaVista
@@ -236,7 +205,7 @@ class Kitchen extends Component {
         : console.log('sunroom off')
     } else if (props.elevation === 'bella vista brick') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage(
+        ? await this.buildPanoStateAndSetAsyncStorage(
           'sunroomPano',
           props.storageKeyData.kitchen.sunroom,
           props.panoUriData.kitchen.sunroom.bellaVistaBrick
