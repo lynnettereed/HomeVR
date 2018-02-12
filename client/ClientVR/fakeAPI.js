@@ -157,7 +157,17 @@ const fakeAPI = {
         sunroom: {
           option2: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash2.png',
           option3: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash3.png',
-          option4: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash4.png',
+          option4: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash4.png'
+        }
+      },
+      cabinets: {
+        option2: 'panos/kitchen/cabinets/Kitchen_AC_Cabs2.png',
+        option3: 'panos/kitchen/cabinets/Kitchen_AC_Cabs3.png',
+        option4: 'panos/kitchen/cabinets/Kitchen_AC_Cabs4.png',
+        sunroom: {
+          option2: 'panos/kitchen/cabinets/Kitchen_AC_Sunroom_Cabs2.png',
+          option3: 'panos/kitchen/cabinets/Kitchen_AC_Sunroom_Cabs3.png',
+          option4: 'panos/kitchen/cabinets/Kitchen_AC_Sunroom_Cabs4.png'
         }
       }
     }

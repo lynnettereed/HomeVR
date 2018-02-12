@@ -108,16 +108,40 @@ class Kitchen extends Component {
   handleCabs = async (props) => {
     if (props.cabinets === 'option2') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs2.png')
-        : await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Cabs2.png')
+        ? await this.updateStateAndStorage(
+          'cabinetsPano',
+          props.storageKeyData.kitchen.cabinets,
+          props.panoUriData.kitchen.cabinets.sunroom.option2
+        )
+        : await this.updateStateAndStorage(
+          'cabinetsPano',
+          props.storageKeyData.kitchen.cabinets,
+          props.panoUriData.kitchen.cabinets.option2
+        );
     } else if (props.cabinets === 'option3') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs3.png')
-        : await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Cabs3.png')
+        ? await this.updateStateAndStorage(
+          'cabinetsPano',
+          props.storageKeyData.kitchen.cabinets,
+          props.panoUriData.kitchen.cabinets.sunroom.option3
+        )
+        : await this.updateStateAndStorage(
+          'cabinetsPano',
+          props.storageKeyData.kitchen.cabinets,
+          props.panoUriData.kitchen.cabinets.option3
+        );
     } else if (props.cabinets === 'option4') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Sunroom_Cabs4.png')
-        : await this.updateStateAndStorage('cabinetsPano', props.storageKeyData.kitchen.cabinets, 'layers/Kitchen_AC_Cabs4.png')
+        ? await this.updateStateAndStorage(
+          'cabinetsPano',
+          props.storageKeyData.kitchen.cabinets,
+          props.panoUriData.kitchen.cabinets.sunroom.option4
+        )
+        : await this.updateStateAndStorage(
+          'cabinetsPano',
+          props.storageKeyData.kitchen.cabinets,
+          props.panoUriData.kitchen.cabinets.option4
+        );
     }
   }
 
