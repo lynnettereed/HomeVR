@@ -124,16 +124,40 @@ class Kitchen extends Component {
   handleBacksplash = async (props) =>  {
     if (props.backsplash === 'option2') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Sunroom_Backsplash2.png')
-        : await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Backsplash2.png')
+        ? await this.updateStateAndStorage(
+          'backsplashPano',
+          props.storageKeyData.kitchen.backsplash,
+          props.panoUriData.kitchen.backsplash.sunroom.option2
+        )
+        : await this.updateStateAndStorage(
+          'backsplashPano',
+          props.storageKeyData.kitchen.backsplash,
+          props.panoUriData.kitchen.backsplash.option2
+        );
     } else if (props.backsplash === 'option3') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Sunroom_Backsplash3.png')
-        : await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Backsplash3.png')
+        ? await this.updateStateAndStorage(
+          'backsplashPano',
+          props.storageKeyData.kitchen.backsplash,
+          props.panoUriData.kitchen.backsplash.sunroom.option3
+        )
+        : await this.updateStateAndStorage(
+          'backsplashPano',
+          props.storageKeyData.kitchen.backsplash,
+          props.panoUriData.kitchen.backsplash.option3
+        );
     } else if (props.backsplash === 'option4') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Sunroom_Backsplash4.png')
-        : await this.updateStateAndStorage('backsplashPano', props.storageKeyData.kitchen.backsplash, 'layers/Kitchen_AC_Backsplash4.png')
+        ? await this.updateStateAndStorage(
+          'backsplashPano',
+          props.storageKeyData.kitchen.backsplash,
+          props.panoUriData.kitchen.backsplash.sunroom.option4
+        )
+        : await this.updateStateAndStorage(
+          'backsplashPano',
+          props.storageKeyData.kitchen.backsplash,
+          props.panoUriData.kitchen.backsplash.option4
+        );
     }
   }
 
@@ -314,7 +338,7 @@ class Kitchen extends Component {
                     asset(this.state.scenePano[2]), asset(this.state.scenePano[3]),
                     asset(this.state.scenePano[4]), asset(this.state.scenePano[5])
                   ]
-                } 
+                }
           />
           {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano.length > 0 ? (
             <PanoLayer radius={990}

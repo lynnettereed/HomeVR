@@ -149,6 +149,16 @@ const fakeAPI = {
       sunroom: {
         bellaVista: 'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista_Sunroom.png',
         bellaVistaBrick: 'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png',
+      },
+      backsplash: {
+        option2: 'panos/kitchen/backsplash/Kitchen_AC_Backsplash2.png',
+        option3: 'panos/kitchen/backsplash/Kitchen_AC_Backsplash3.png',
+        option4: 'panos/kitchen/backsplash/Kitchen_AC_Backsplash4.png',
+        sunroom: {
+          option2: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash2.png',
+          option3: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash3.png',
+          option4: 'panos/kitchen/backsplash/Kitchen_AC_Sunroom_Backsplash4.png',
+        }
       }
     }
   },
