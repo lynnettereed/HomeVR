@@ -16,7 +16,7 @@ class FamilyRoom extends Component {
     super(props);
 
     this.state = {
-      scenePano: 'panos/Foster_Int_FamilyRoom_AmericanClassic.jpg',
+      scenePano: '',
       sunroomPano: '',
       prefetchUris: [],
     };
@@ -69,7 +69,7 @@ class FamilyRoom extends Component {
           ],
           [
             props.storageKeyData.kitchen.sunroom,
-            'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png'
+            JSON.stringify(props.panoUriData.kitchen.sunroom.bellaVista)
           ]
         );
       } else {
@@ -92,7 +92,7 @@ class FamilyRoom extends Component {
           ],
           [
             props.storageKeyData.kitchen.sunroom,
-            'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png'
+            JSON.stringify(props.panoUriData.kitchen.sunroom.bellaVistaBrick)
           ]
         );
       } else {

@@ -156,11 +156,19 @@ class Kitchen extends Component {
   handleSunroom = async (props) => {
     if (props.elevation === 'bella vista') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVista_Sunroom.png')
+        ? await this.updateStateAndStorage(
+          'sunroomPano',
+          props.storageKeyData.kitchen.sunroom,
+          props.panoUriData.kitchen.sunroom.bellaVista
+        )
         : console.log('sunroom off')
     } else if (props.elevation === 'bella vista brick') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('sunroomPano', props.storageKeyData.kitchen.sunroom, 'panos/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png')
+        ? await this.updateStateAndStorage(
+          'sunroomPano',
+          props.storageKeyData.kitchen.sunroom,
+          props.panoUriData.kitchen.sunroom.bellaVistaBrick
+        )
         : console.log('sunroom off');
     }
   }
@@ -298,36 +306,40 @@ class Kitchen extends Component {
     if (this.state.scenePano.length > 0) {
       return (
         <View>
-          <Pano source= {
-            [
-              asset(this.state.scenePano[0]), asset(this.state.scenePano[1]),
-              asset(this.state.scenePano[2]), asset(this.state.scenePano[3]),
-              asset(this.state.scenePano[4]), asset(this.state.scenePano[5])
-            ]
-          }
-          onLoad={ this.sceneOnLoad }
-          onLoadEnd={ this.sceneOnLoadEnd }>
-            {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano.length > 0 ? (
-              <PanoLayer radius={990} source={ asset(this.state.sunroomPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-            ) : (
-              <View />
-            )}
-            {this.props.cabinets !== 'option1' && this.state.cabinetsPano.length > 0 ? (
-              <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-            ) : (
-              <View />
-            )}
-            {this.props.backsplash !== 'option1' && this.state.backsplashPano.length > 0 ? (
-              <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-            ) : (
-              <View />
-            )}
-            {this.props.counter !== 'option1' && this.state.counterPano.length > 0 ? (
-              <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
-            ) : (
-              <View />
-            )}
-          </Pano>
+          <Pano onLoad={ this.sceneOnLoad }
+                onLoadEnd={ this.sceneOnLoadEnd }
+                source={
+                  [
+                    asset(this.state.scenePano[0]), asset(this.state.scenePano[1]),
+                    asset(this.state.scenePano[2]), asset(this.state.scenePano[3]),
+                    asset(this.state.scenePano[4]), asset(this.state.scenePano[5])
+                  ]
+                } 
+          />
+          {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano.length > 0 ? (
+            <PanoLayer radius={990}
+                       onLoad={this.sceneOnLoad}
+                       onLoadEnd={this.sceneOnLoadEnd}
+                       source={ asset(this.state.sunroomPano) }
+            />
+          ) : (
+            <View />
+          )}
+          {this.props.cabinets !== 'option1' && this.state.cabinetsPano.length > 0 ? (
+            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+          ) : (
+            <View />
+          )}
+          {this.props.backsplash !== 'option1' && this.state.backsplashPano.length > 0 ? (
+            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+          ) : (
+            <View />
+          )}
+          {this.props.counter !== 'option1' && this.state.counterPano.length > 0 ? (
+            <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+          ) : (
+            <View />
+          )}
           <IconButton toggleModal={ this.props.toggleModal } />
           {this.props.renderVrMenu && <MenuVr text={ this.props.vrMenuContent } />}
         </View>

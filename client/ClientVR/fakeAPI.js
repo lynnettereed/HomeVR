@@ -145,6 +145,10 @@ const fakeAPI = {
           'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick4.jpg',
           'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick5.jpg'
         ]
+      },
+      sunroom: {
+        bellaVista: 'panos/kitchen/BV/Foster_Int_Kitchen_BellaVista_Sunroom.png',
+        bellaVistaBrick: 'panos/kitchen/BVB/Foster_Int_Kitchen_BellaVistaBrick_Sunroom.png',
       }
     }
   },
