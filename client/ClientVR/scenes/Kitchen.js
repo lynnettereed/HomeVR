@@ -188,16 +188,40 @@ class Kitchen extends Component {
   handleCounter = async (props) => {
     if (props.counter === 'option2') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Sunroom_Counter2.png')
-        : await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Counter2.png')
+        ? await this.updateStateAndStorage(
+          'counterPano',
+          props.storageKeyData.kitchen.counter,
+          props.panoUriData.kitchen.counter.sunroom.option2
+        )
+        : await this.updateStateAndStorage(
+          'counterPano',
+          props.storageKeyData.kitchen.counter,
+          props.panoUriData.kitchen.counter.option2
+        );
     } else if (props.counter === 'option3') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Sunroom_Counter3.png')
-        : await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Counter3.png')
+        ? await this.updateStateAndStorage(
+          'counterPano',
+          props.storageKeyData.kitchen.counter,
+          props.panoUriData.kitchen.counter.sunroom.option3
+        )
+        : await this.updateStateAndStorage(
+          'counterPano',
+          props.storageKeyData.kitchen.counter,
+          props.panoUriData.kitchen.counter.option3
+        );
     } else if (props.counter === 'option4') {
       return props.sunroomOn
-        ? await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Sunroom_Counter4.png')
-        : await this.updateStateAndStorage('counterPano', props.storageKeyData.kitchen.counter, 'layers/Kitchen_AC_Counter4.png')
+        ? await this.updateStateAndStorage(
+          'counterPano',
+          props.storageKeyData.kitchen.counter,
+          props.panoUriData.kitchen.counter.sunroom.option4
+        )
+        : await this.updateStateAndStorage(
+          'counterPano',
+          props.storageKeyData.kitchen.counter,
+          props.panoUriData.kitchen.counter.option4
+        );
     }
   }
 

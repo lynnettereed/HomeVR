@@ -169,6 +169,16 @@ const fakeAPI = {
           option3: 'panos/kitchen/cabinets/Kitchen_AC_Sunroom_Cabs3.png',
           option4: 'panos/kitchen/cabinets/Kitchen_AC_Sunroom_Cabs4.png'
         }
+      },
+      counter: {
+        option2: 'panos/kitchen/counter/Kitchen_AC_Counter2.png',
+        option3: 'panos/kitchen/counter/Kitchen_AC_Counter3.png',
+        option4: 'panos/kitchen/counter/Kitchen_AC_Counter4.png',
+        sunroom: {
+          option2: 'panos/kitchen/counter/Kitchen_AC_Sunroom_Counter2.png',
+          option3: 'panos/kitchen/counter/Kitchen_AC_Sunroom_Counter3.png',
+          option4: 'panos/kitchen/counter/Kitchen_AC_Sunroom_Counter4.png'
+        }
       }
     }
   },
