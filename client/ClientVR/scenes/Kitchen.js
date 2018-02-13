@@ -15,6 +15,7 @@ import AsyncStorageUtils from '../utils/AsyncStorageUtils';
 import MenuVr from '../components/MenuVr';
 import PanoLayer from '../components/PanoLayer';
 import IconButton from '../components/IconButton';
+import PanoSwitch from '../components/PanoSwitch';
 
 function decreasePanosLoading(state, props) {
   return {
@@ -34,6 +35,9 @@ class Kitchen extends Component {
       counterPano: [],
       sceneLoading: false,
       panosLoading: 0,
+      updatePhase: 'A',
+      showLayerA: false,
+      showLayerB: true,
     };
   }
 
@@ -55,23 +59,66 @@ class Kitchen extends Component {
     this.updateLoadingHandler();
   }
 
-  updateLoadingHandler = async () => {
-    if (this.state.sceneLoading && this.state.panosLoading === 0) {
-      await this.setState({sceneLoading: !this.state.sceneLoading});
-      this.props.toggleLoading(this.state.sceneLoading);
-      console.log('scene loaded');
-    }
+  initScene = async (props) => {
+    const result = await Promise.all(
+      [
+        this.initElevation(props),
+        this.handleSunroom(props),
+        this.handleCabs(props),
+        this.handleBacksplash(props),
+        this.handleCounter(props)
+      ]
+    );
+    const stateObj = {};
+    result.forEach(el => {
+      if (el) {
+        el.forEach(item => {
+          stateObj[item.key] = item.value;
+        });
+      }
+    });
+    console.log(stateObj);
+    const updateNumber = Object.keys(stateObj).length;
+    this.initLoadingHandler(updateNumber);
+    // TODO: set updatePhase to 'A'
+    this.setState(stateObj);
   }
 
-  buildPanoStateAndSetAsyncStorage = (stateKey, storageKey, uri) => {
-    let uriString;
-    uri instanceof Array ? uriString = JSON.stringify(uri) : uriString = uri;
-    const stateObj = {
-      key: stateKey,
-      value: uri
-    };
-    AsyncStorageUtils.setPano(storageKey, uri);
-    return [stateObj];
+  updateScene = async (props) => {
+    const promiseArr = [];
+    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
+      promiseArr.push(this.handleElevation(props));
+    }
+    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
+      promiseArr.push(this.handleSunroom(props));
+    }
+    if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
+      promiseArr.push(this.handleCabs(props));
+    }
+    if (props.backsplash !== this.props.backsplash || props.sunroomOn !== this.props.sunroomOn) {
+      promiseArr.push(this.handleBacksplash(props));
+    }
+    if (props.counter !== this.props.counter || props.sunroomOn !== this.props.sunroomOn) {
+      promiseArr.push(this.handleCounter(props));
+    }
+    const result = await Promise.all([...promiseArr]);
+    const stateObj = {};
+    result.forEach(el => {
+      if (el) {
+        el.forEach(item => {
+          stateObj[item.key] = item.value;
+        });
+      }
+    });
+    console.log(stateObj);
+    const updateNumber = Object.keys(stateObj).length;
+    this.initLoadingHandler(updateNumber);
+    if (this.state.updatePhase === 'A') {
+      this.setState({updatePhase: 'B'});
+    } else {
+      this.setState({updatePhase: 'A'});
+    }
+    this.setState(stateObj);
   }
 
   handleCabs = async (props) => {
@@ -270,56 +317,15 @@ class Kitchen extends Component {
     }
   }
 
-  initScene = async (props) => {
-    const result = await Promise.all([this.initElevation(props),
-                                      this.handleSunroom(props),
-                                      this.handleCabs(props),
-                                      this.handleBacksplash(props),
-                                      this.handleCounter(props)]);
-    const stateObj = {};
-    result.forEach(el => {
-      if (el) {
-        el.forEach(item => {
-          stateObj[item.key] = item.value;
-        });
-      }
-    });
-    console.log(stateObj);
-    const updateNumber = Object.keys(stateObj).length;
-    this.initLoadingHandler(updateNumber);
-    this.setState(stateObj);
-  }
-
-  updateScene = async (props) => {
-    const promiseArr = [];
-    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
-      promiseArr.push(this.handleElevation(props));
-    }
-    if (props.elevation !== this.props.elevation || props.sunroomOn !== this.props.sunroomOn) {
-      promiseArr.push(this.handleSunroom(props));
-    }
-    if (props.cabinets !== this.props.cabinets || props.sunroomOn !== this.props.sunroomOn) {
-      promiseArr.push(this.handleCabs(props));
-    }
-    if (props.backsplash !== this.props.backsplash || props.sunroomOn !== this.props.sunroomOn) {
-      promiseArr.push(this.handleBacksplash(props));
-    }
-    if (props.counter !== this.props.counter || props.sunroomOn !== this.props.sunroomOn) {
-      promiseArr.push(this.handleCounter(props));
-    }
-    const result = await Promise.all([...promiseArr]);
-    const stateObj = {};
-    result.forEach(el => {
-      if (el) {
-        el.forEach(item => {
-          stateObj[item.key] = item.value;
-        });
-      }
-    });
-    console.log(stateObj);
-    const updateNumber = Object.keys(stateObj).length;
-    this.initLoadingHandler(updateNumber);
-    this.setState(stateObj);
+  buildPanoStateAndSetAsyncStorage = (stateKey, storageKey, uri) => {
+    let uriString;
+    uri instanceof Array ? uriString = JSON.stringify(uri) : uriString = uri;
+    const stateObj = {
+      key: stateKey,
+      value: uri
+    };
+    AsyncStorageUtils.setPano(storageKey, uri);
+    return [stateObj];
   }
 
   initLoadingHandler = async (updateNumber) => {
@@ -329,6 +335,20 @@ class Kitchen extends Component {
     });
     this.props.toggleLoading(this.state.sceneLoading)
     console.log(this.state.panosLoading);
+  }
+
+  updateLoadingHandler = async () => {
+    if (this.state.sceneLoading && this.state.panosLoading === 0) {
+      await this.setState({
+        sceneLoading: !this.state.sceneLoading,
+      });
+      this.props.toggleLoading(this.state.sceneLoading);
+      this.setState({
+        showLayerA: !this.state.showLayerA,
+        showLayerB: !this.state.showLayerB
+      });
+      console.log('scene loaded');
+    }
   }
 
   sceneOnLoad = () => {
@@ -344,6 +364,9 @@ class Kitchen extends Component {
   }
 
   render() {
+    console.log(this.state.updatePhase);
+    console.log(this.state.showLayerA);
+    console.log(this.state.showLayerB);
     if (this.state.scenePano.length > 0) {
       return (
         <View>
@@ -357,27 +380,52 @@ class Kitchen extends Component {
                   ]
                 }
           />
-          {this.props.elevation !== 'american classic' && this.props.sunroomOn && this.state.sunroomPano.length > 0 ? (
-            <PanoLayer radius={990}
-                       onLoad={this.sceneOnLoad}
-                       onLoadEnd={this.sceneOnLoadEnd}
-                       source={ asset(this.state.sunroomPano) }
+          {this.props.elevation !== 'american classic' && this.props.sunroomOn &&
+           this.state.sunroomPano.length > 0 ? (
+            <PanoSwitch radius={990}
+                        panoOnLoad={this.sceneOnLoad}
+                        panoOnLoadEnd={this.sceneOnLoadEnd}
+                        showLayerA={this.state.showLayerA}
+                        showLayerB={this.state.showLayerB}
+                        updatePhase={this.state.updatePhase}
+                        uri={this.state.sunroomPano}
             />
           ) : (
             <View />
           )}
           {this.props.cabinets !== 'option1' && this.state.cabinetsPano.length > 0 ? (
-            <PanoLayer radius={980} source={ asset(this.state.cabinetsPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            <PanoSwitch radius={980}
+                        panoOnLoad={this.sceneOnLoad}
+                        panoOnLoadEnd={this.sceneOnLoadEnd}
+                        showLayerA={this.state.showLayerA}
+                        showLayerB={this.state.showLayerB}
+                        updatePhase={this.state.updatePhase}
+                        uri={this.state.cabinetsPano}
+            />
           ) : (
             <View />
           )}
           {this.props.backsplash !== 'option1' && this.state.backsplashPano.length > 0 ? (
-            <PanoLayer radius={970} source={ asset(this.state.backsplashPano) } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            <PanoSwitch radius={970}
+                        panoOnLoad={this.sceneOnLoad}
+                        panoOnLoadEnd={this.sceneOnLoadEnd}
+                        showLayerA={this.state.showLayerA}
+                        showLayerB={this.state.showLayerB}
+                        updatePhase={this.state.updatePhase}
+                        uri={this.state.backsplashPano}
+            />
           ) : (
             <View />
           )}
           {this.props.counter !== 'option1' && this.state.counterPano.length > 0 ? (
-            <PanoLayer radius={960} source={ asset(this.state.counterPano)  } onLoad={this.sceneOnLoad} onLoadEnd={this.sceneOnLoadEnd} />
+            <PanoSwitch radius={960}
+                        panoOnLoad={this.sceneOnLoad}
+                        panoOnLoadEnd={this.sceneOnLoadEnd}
+                        showLayerA={this.state.showLayerA}
+                        showLayerB={this.state.showLayerB}
+                        updatePhase={this.state.updatePhase}
+                        uri={this.state.counterPano}
+            />
           ) : (
             <View />
           )}
