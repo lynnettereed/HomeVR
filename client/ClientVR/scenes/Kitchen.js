@@ -364,21 +364,16 @@ class Kitchen extends Component {
   }
 
   render() {
-    console.log(this.state.updatePhase);
-    console.log(this.state.showLayerA);
-    console.log(this.state.showLayerB);
     if (this.state.scenePano.length > 0) {
       return (
         <View>
-          <Pano onLoad={ this.sceneOnLoad }
-                onLoadEnd={ this.sceneOnLoadEnd }
-                source={
-                  [
-                    asset(this.state.scenePano[0]), asset(this.state.scenePano[1]),
-                    asset(this.state.scenePano[2]), asset(this.state.scenePano[3]),
-                    asset(this.state.scenePano[4]), asset(this.state.scenePano[5])
-                  ]
-                }
+          <PanoSwitch radius={1000}
+                      panoOnLoad={this.sceneOnLoad}
+                      panoOnLoadEnd={this.sceneOnLoadEnd}
+                      showLayerA={this.state.showLayerA}
+                      showLayerB={this.state.showLayerB}
+                      updatePhase={this.state.updatePhase}
+                      uri={this.state.scenePano}
           />
           {this.props.elevation !== 'american classic' && this.props.sunroomOn &&
            this.state.sunroomPano.length > 0 ? (

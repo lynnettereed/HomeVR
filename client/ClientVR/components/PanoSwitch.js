@@ -39,12 +39,27 @@ class PanoSwitch extends Component {
   }
 
   render() {
-    console.log(`updatePhase: ${this.props.updatePhase}`);
-    console.log(`uri: ${this.props.uri}`);
-    console.log(`panoUriA: ${this.state.panoUriA}`);
-    console.log(`panoUriB: ${this.state.panoUriB}`);
-    console.log(`showLayerA: ${this.props.showLayerA}`);
-    console.log(`showLayerB: ${this.props.showLayerB}`);
+    // console.log(`updatePhase: ${this.props.updatePhase}`);
+    // console.log(`uri: ${this.props.uri}`);
+    // console.log(`panoUriA: ${this.state.panoUriA}`);
+    // console.log(`panoUriB: ${this.state.panoUriB}`);
+    // console.log(`showLayerA: ${this.props.showLayerA}`);
+    // console.log(`showLayerB: ${this.props.showLayerB}`);
+
+    const determineSource = (uri) => {
+      if (uri instanceof Array) {
+        return (
+          [
+            asset(uri[0]), asset(uri[1]),
+            asset(uri[2]), asset(uri[3]),
+            asset(uri[4]), asset(uri[5])
+          ]
+        );
+      } else {
+        return (asset(uri));
+      }
+    }
+
     if (this.state.panoUriA.length > 0 || this.state.panoUriB.length > 0) {
       return (
         <View>
@@ -52,7 +67,7 @@ class PanoSwitch extends Component {
             <PanoLayer radius={this.props.radius} onLoad={this.props.panoOnLoad}
                        onLoadEnd={this.props.panoOnLoadEnd}
                        style={{ display: this.props.showLayerA ? 'flex' : 'none' }}
-                       source={asset(this.state.panoUriA)}
+                       source={determineSource(this.state.panoUriA)}
             />
           ) : (
             <View />
@@ -61,7 +76,7 @@ class PanoSwitch extends Component {
             <PanoLayer radius={this.props.radius} onLoad={this.props.panoOnLoad}
                        onLoadEnd={this.props.panoOnLoadEnd}
                        style={{ display: this.props.showLayerB ? 'flex' : 'none' }}
-                       source={asset(this.state.panoUriB)}
+                       source={determineSource(this.state.panoUriB)}
             />
           ) : (
             <View />
