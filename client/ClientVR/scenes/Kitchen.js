@@ -80,7 +80,6 @@ class Kitchen extends Component {
     console.log(stateObj);
     const updateNumber = Object.keys(stateObj).length;
     this.initLoadingHandler(updateNumber);
-    // TODO: set updatePhase to 'A'
     this.setState(stateObj);
   }
 
@@ -263,16 +262,14 @@ class Kitchen extends Component {
 
   handleElevation = async (props) => {
     if (props.elevation === 'american classic') {
-      return props.sunroomOn
-        ? await this.buildPanoStateAndSetAsyncStorage(
+      let uri;
+      props.sunroomOn
+        ? uri = props.panoUriData.kitchen.scene.americanClassicSunroom
+        : uri = props.panoUriData.kitchen.scene.americanClassic
+      return await this.buildPanoStateAndSetAsyncStorage(
           'scenePano',
           props.storageKeyData.kitchen.scene,
-          props.panoUriData.kitchen.scene.americanClassicSunroom
-        )
-        : await this.buildPanoStateAndSetAsyncStorage(
-          'scenePano',
-          props.storageKeyData.kitchen.scene,
-          props.panoUriData.kitchen.scene.americanClassic
+          uri
         );
     } else if (props.elevation === 'bella vista' && props.elevation !== this.props.elevation) {
       return await this.buildPanoStateAndSetAsyncStorage(
@@ -377,7 +374,7 @@ class Kitchen extends Component {
           />
           {this.props.elevation !== 'american classic' && this.props.sunroomOn &&
            this.state.sunroomPano.length > 0 ? (
-            <PanoSwitch radius={990}
+            <PanoSwitch radius={950}
                         panoOnLoad={this.sceneOnLoad}
                         panoOnLoadEnd={this.sceneOnLoadEnd}
                         showLayerA={this.state.showLayerA}
@@ -389,7 +386,7 @@ class Kitchen extends Component {
             <View />
           )}
           {this.props.cabinets !== 'option1' && this.state.cabinetsPano.length > 0 ? (
-            <PanoSwitch radius={980}
+            <PanoSwitch radius={900}
                         panoOnLoad={this.sceneOnLoad}
                         panoOnLoadEnd={this.sceneOnLoadEnd}
                         showLayerA={this.state.showLayerA}
@@ -401,7 +398,7 @@ class Kitchen extends Component {
             <View />
           )}
           {this.props.backsplash !== 'option1' && this.state.backsplashPano.length > 0 ? (
-            <PanoSwitch radius={970}
+            <PanoSwitch radius={850}
                         panoOnLoad={this.sceneOnLoad}
                         panoOnLoadEnd={this.sceneOnLoadEnd}
                         showLayerA={this.state.showLayerA}
@@ -413,13 +410,14 @@ class Kitchen extends Component {
             <View />
           )}
           {this.props.counter !== 'option1' && this.state.counterPano.length > 0 ? (
-            <PanoSwitch radius={960}
+            <PanoSwitch radius={800}
                         panoOnLoad={this.sceneOnLoad}
                         panoOnLoadEnd={this.sceneOnLoadEnd}
                         showLayerA={this.state.showLayerA}
                         showLayerB={this.state.showLayerB}
                         updatePhase={this.state.updatePhase}
                         uri={this.state.counterPano}
+                        option={this.props.counter}
             />
           ) : (
             <View />
