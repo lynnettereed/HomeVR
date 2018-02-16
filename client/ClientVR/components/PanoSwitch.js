@@ -26,7 +26,7 @@ class PanoSwitch extends Component {
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setPanoSource(this.props.updatePhase, this.props.uri);
   }
 
